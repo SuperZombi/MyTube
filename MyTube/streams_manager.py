@@ -77,9 +77,9 @@ class StreamsManager:
 			filtered = filter(lambda x: not x.isMuxed, filtered)
 
 		if max_res:
-			filtered = filter(lambda x: x.get("height") <= max_res, filtered)
+			filtered = filter(lambda x: x.get("res") <= max_res, filtered)
 		if min_res:
-			filtered = filter(lambda x: x.get("height") >= min_res, filtered)
+			filtered = filter(lambda x: x.get("res") >= min_res, filtered)
 		if max_fps:
 			filtered = filter(lambda x: x.get("fps") <= max_fps, filtered)
 		if min_fps:
@@ -88,8 +88,7 @@ class StreamsManager:
 		if custom: filtered = filter(custom, filtered)
 		return StreamsManager(self.videoId, list(filtered))
 
-	def order_by(self, attribute_name: str, sub:str="", reverse=True) -> "StreamsManager":
-		attr = "height" if attribute_name == "res" else attribute_name
+	def order_by(self, attr:str, sub:str="", reverse=True) -> "StreamsManager":
 		if sub:
 			order_func = lambda x: (x.get(attr), x.get(sub))
 		else:

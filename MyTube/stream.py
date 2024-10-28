@@ -10,6 +10,15 @@ class Stream:
 	def get(self, attribute_name, default=0):
 		return getattr(self, attribute_name, default)
 
+	@property
+	def w(self): return self.width
+	@property
+	def h(self): return self.height
+	
+	@property
+	def res(self):
+		return self.height if self.width > self.height else self.width
+	
 	def add_video_info(self,
 		videoCodec:str,
 		videoExt:str,
@@ -70,10 +79,10 @@ class Stream:
 
 	def __repr__(self):
 		if self.isVideo:
-			return f"Video({self.height}p)"
+			return f"Video({self.res}p)"
 		elif self.isAudio:
 			return f"Audio({self.audioBitrate}kbps)"
 		elif self.isMuxed:
-			return f"Muxed({self.height}p)"
+			return f"Muxed({self.res}p)"
 		else:
 			return f"Stream({self.format_id})"
