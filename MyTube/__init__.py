@@ -1,7 +1,7 @@
 import yt_dlp
 from datetime import datetime
 from .utils import YouTube_Channel
-from .stream import StreamsManager
+from .streams_manager import StreamsManager
 
 
 
