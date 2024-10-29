@@ -1,4 +1,10 @@
 import MyTube
+import asyncio
+
+# file = tempfile.mkstemp()
+# file.close()
+# print(file)
+
 
 # link = "https://www.youtube.com/watch?v=GB5KEphbIWc"
 link = "https://www.youtube.com/watch?v=kVJgey4F23c"
@@ -19,3 +25,24 @@ yt = MyTube.YouTube(link)
 # 	print(stream)
 
 # stream = yt.streams.filter(only_muxed=True).first()
+# file = stream.download("downloads")
+# print(file)
+
+
+video = yt.streams.filter(only_video=True, no_muxed=True, max_res=480).order_by("res").first()
+audio = yt.streams.best_audio()
+stream = yt.streams.filter(only_muxed=True).first()
+# file = yt.download(video=stream)("downloads")
+# print(file)
+
+def mb(bytes_value):
+    return f"{round(bytes_value / (1024 * 1024))} MB"
+
+async def progress(current, total):
+	print(mb(current), "/", mb(total), end="\r")
+
+
+async def main():
+    file = await yt.download(video=video, audio=audio)("downloads", on_progress=progress)
+
+asyncio.run(main())

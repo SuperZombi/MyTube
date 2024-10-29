@@ -1,8 +1,13 @@
+from .utils import get_file_path
+import requests
+# from tqdm import tqdm
+
 class Stream:
-	def __init__(self, format_id:str, url:str, filesize:int):
-		self.format_id = format_id
+	def __init__(self, itag:str, url:str, filesize:int, metadata:dict=None):
+		self.itag = itag
 		self.url = url
 		self.filesize = filesize
+		self.metadata = metadata or {}
 		self.isVideo = False
 		self.isAudio = False
 		self.isMuxed = False
@@ -14,10 +19,8 @@ class Stream:
 	def w(self): return self.width
 	@property
 	def h(self): return self.height
-	
 	@property
-	def res(self):
-		return self.height if self.width > self.height else self.width
+	def res(self): return min(self.height, self.width)
 	
 	def add_video_info(self,
 		videoCodec:str,
@@ -75,7 +78,7 @@ class Stream:
 		elif self.isMuxed:
 			return f"Muxed({self.width}x{self.height}.{self.videoExt} [{self.fps}fps]{' ['+self.language+']' if self.language else ''} {self.videoCodec}+{self.audioCodec})"
 		else:
-			return f"Stream(id={self.format_id})"
+			return f"Stream(id={self.itag})"
 
 	def __repr__(self):
 		if self.isVideo:
@@ -85,4 +88,49 @@ class Stream:
 		elif self.isMuxed:
 			return f"Muxed({self.res}p)"
 		else:
-			return f"Stream({self.format_id})"
+			return f"Stream({self.itag})"
+
+
+	def download(self,
+		output_folder:str=None,
+		filename:str=None,
+		on_progress=None,
+		on_complete=None
+	) -> str:
+		if self.isVideo or self.isMuxed:
+			extension = self.videoExt
+		elif self.isAudio:
+			extension = self.audioExt
+
+		file_path = get_file_path(
+			filename=filename or self.metadata.get("title"),
+			prefix=extension,
+			folder=output_folder
+		)
+
+		bytes_remaining = self.filesize
+		response = requests.get(self.url, stream=True)
+		with open(file_path, "wb") as handle:
+			# for data in tqdm(response.iter_content()):
+			for data in response.iter_content():
+				handle.write(data)
+
+
+		# with open(file_path, "wb") as file:
+		# 	try:
+		# 		for chunk in request.stream(stream.url):
+		# 			bytes_remaining -= len(chunk)
+		# 			file.write(chunk)
+		# 			if on_progress: await on_progress(stream, chunk, bytes_remaining)
+		# 	except HTTPError as e:
+		# 		if e.code != 404: raise
+
+		# 		for chunk in request.seq_stream(stream.url):
+		# 			bytes_remaining -= len(chunk)
+		# 			file.write(chunk)
+		# 			if on_progress: await on_progress(stream, chunk, bytes_remaining)
+
+		
+		# if on_complete:
+		# 	on_complete(file_path)
+		return file_path

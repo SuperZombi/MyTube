@@ -2,6 +2,7 @@ import yt_dlp
 from datetime import datetime
 from .utils import YouTube_Channel
 from .streams_manager import StreamsManager
+from .downloader import Downloader
 
 
 
@@ -28,6 +29,10 @@ class YouTube:
 	@property
 	def title(self) -> str:
 		return str(self._vid_info.get("title"))
+
+	@property
+	def author(self) -> str:
+		return str(self._vid_info.get("channel"))
 
 	@property
 	def description(self) -> str:
@@ -66,9 +71,16 @@ class YouTube:
 	@property
 	def streams(self) -> StreamsManager:
 		self._formats = self._vid_info.get('formats', [])
-		streamsManager = StreamsManager(self.videoId)
-		streamsManager.parse(self._formats)
+		streamsManager = StreamsManager()
+		streamsManager.parse(self._formats, metadata=self.metadata)
 		return streamsManager
+
+	@property
+	def metadata(self) -> dict:
+		return {
+			"title": self.title,
+			"author": self.author
+		}
 
 	@property
 	def channel(self) -> YouTube_Channel:
@@ -77,3 +89,6 @@ class YouTube:
 		name = self._vid_info.get("channel")
 		followers = int(self._vid_info.get("channel_follower_count"))
 		return YouTube_Channel(id=id, url=url, name=name, followers=followers)
+
+	def download(self, video=None, audio=None) -> Downloader:
+		return Downloader(video, audio, self.metadata)

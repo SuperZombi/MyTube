@@ -1,25 +1,25 @@
 from .stream import Stream
 
 class StreamsManager:
-	def __init__(self, videoId, streams:list=None):
-		self.videoId = videoId
+	def __init__(self, streams:list=None):
 		self.streams = streams if streams else []
 
-	def __str__(self): return f"StreamsManager({self.videoId})"
+	def __str__(self): return f"StreamsManager({len(self.streams)} streams)"
 	def __repr__(self): return self.__str__()
 	def __len__(self): return len(self.streams)
 	def __iter__(self): return iter(self.streams)
 
-	def parse(self, formats:list) -> None:
+	def parse(self, formats:list, metadata:dict=None) -> None:
 		for format in formats:
 			if format.get('format_note') == 'storyboard': continue
 			if format.get('protocol') == "m3u8_native": continue
 
 			allow_append = True
 			stream = Stream(
-				format_id=str(format.get('format_id')),
+				itag=str(format.get('format_id')),
 				url=format.get('url'),
-				filesize = int(format.get('filesize_approx'))
+				filesize = int(format.get('filesize', format.get('filesize_approx'))),
+				metadata=metadata
 			)
 			if format.get('acodec') != 'none' and format.get('vcodec') != 'none':
 				stream.add_muxed_info(
@@ -86,19 +86,17 @@ class StreamsManager:
 			filtered = filter(lambda x: x.get("fps") >= min_fps, filtered)
 
 		if custom: filtered = filter(custom, filtered)
-		return StreamsManager(self.videoId, list(filtered))
+		return StreamsManager(list(filtered))
 
 	def order_by(self, attr:str, sub:str="", reverse=True) -> "StreamsManager":
 		if sub:
 			order_func = lambda x: (x.get(attr), x.get(sub))
 		else:
 			order_func = lambda x: x.get(attr)
-		return StreamsManager(self.videoId, sorted(self.streams,
-			key=order_func, reverse=reverse)
-		)
+		return StreamsManager(sorted(self.streams, key=order_func, reverse=reverse))
 
 	def reverse(self) -> "StreamsManager":
-		return StreamsManager(self.videoId, list(reversed(self.streams)))
+		return StreamsManager(list(reversed(self.streams)))
 
 	def first(self) -> Stream:
 		if len(self) > 0:
