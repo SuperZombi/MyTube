@@ -112,3 +112,7 @@ class StreamsManager:
 		return self.filter(only_video=True, no_muxed=True).order_by("res", "fps").first()
 	def best_audio(self) -> Stream:
 		return self.filter(only_audio=True).order_by("audioBitrate").first()
+
+	def get(self, itag:str):
+		"""Get stream by itag"""
+		return next((x for x in self.streams if x.itag == str(itag)), None)

@@ -1,13 +1,11 @@
-# import requests
-from .stream import Stream
-from .utils import get_file_path
+import os
 import aiohttp
-# import asyncio
 import tempfile
+from .utils import get_file_path
 
 
 class Downloader:
-	def __init__(self, video:Stream=None, audio:Stream=None, metadata:dict=None):
+	def __init__(self, video:"Stream"=None, audio:"Stream"=None, metadata:dict=None):
 		self.videoStream = video if (video and (video.isVideo or video.isMuxed)) else None
 		self.audioStream = audio if (audio and audio.isAudio) else None
 		self.metadata = metadata or {}
@@ -22,7 +20,7 @@ class Downloader:
 		output_folder:str=None,
 		filename:str=None,
 		on_progress=None
-	):
+	) -> str:
 		if self.videoStream:
 			extension = self.videoStream.videoExt
 		elif self.audioStream:
@@ -43,25 +41,27 @@ class Downloader:
 			async def progressTwo(current, total):
 				await on_progress(self.videoStream.filesize+current, filesize)
 
-			print("Downloading video", self.videoStream.filesize)
-			# videofile = tempfile.TemporaryFile(suffix=f'.{self.videoStream.videoExt}',delete=False).name
-			# await self._download_stream(self.videoStream.url, videofile, progressOne)
-			await self._download_stream(self.videoStream.url, target_filepath, progressOne)
+			print("Downloading video")
+			videofile = tempfile.TemporaryFile(delete=False).name
+			await self._download_stream(self.videoStream.url, videofile, progressOne)
 
-			# print("Downloading audio", self.audioStream.filesize)
-			# audiofile = tempfile.TemporaryFile(delete=False).name
-			# await self._download_stream(self.audioStream.url, audiofile, progressTwo)
+			print("Downloading audio")
+			audiofile = tempfile.TemporaryFile(delete=False).name
+			await self._download_stream(self.audioStream.url, audiofile, progressTwo)
 
-			# print(videofile)
-			# print(audiofile)
+			print(videofile)
+			print(audiofile)
 
 
-		# elif self.videoStream:
-		# 	filesize = self.videoStream.filesize
-		# 	print("Downloading video")
-		# 	filename = tempfile.TemporaryFile(suffix=f".{self.videoStream.videoExt}", delete=False).name
-		# 	await self._download_stream(self.videoStream.url, filename)
-		# 	return filename
+		elif self.videoStream:
+			print("Downloading video")
+			await self._download_stream(self.videoStream.url, target_filepath, on_progress)
+			return filename
+
+		elif self.audioStream:
+			print("Downloading audio")
+			await self._download_stream(self.audioStream.url, target_filepath, on_progress)
+			return filename
 
 
 
@@ -80,4 +80,4 @@ class Downloader:
 					file.write(chunk)
 					downloaded += len(chunk)
 					await on_progress(downloaded, file_size)
-		
+	
