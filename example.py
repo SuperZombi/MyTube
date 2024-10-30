@@ -45,11 +45,14 @@ def mb(bytes_value):
 async def progress(current, total):
 	print(mb(current), "/", mb(total), end="\r")
 
+async def ffmpeg_progress(current, total):
+	print(round(current * 100 / total), "%", end="\r")
+
 
 async def main():
-	# file = await yt.download(video=video, audio=audio)("downloads", on_progress=progress)
+	file = await yt.download(video=video, audio=audio)("downloads", on_progress=progress, ffmpeg_progress=ffmpeg_progress)
 	# file = await yt.download(video=stream)("downloads", on_progress=progress)
 	# file = await yt.download(audio=audio)("downloads", on_progress=progress)
-	await stream.download("downloads", on_progress=progress)
+	# await stream.download("downloads", on_progress=progress)
 
 asyncio.run(main())

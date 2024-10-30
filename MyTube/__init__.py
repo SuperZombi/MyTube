@@ -7,6 +7,7 @@ from .downloader import Downloader
 
 
 class YouTube:
+	__version__ = "1.0.0"
 	def __init__(self, link):
 		self.link = link
 		self._url = ""

@@ -41,3 +41,8 @@ def file_exists(file:str) -> str:
 		return file_exists(new_name+extension)
 	return file
 
+def to_seconds(kwargs: dict) -> int:
+	hour = int(kwargs.get("hour", 0))
+	minute = int(kwargs.get("min", 0))
+	sec = int(kwargs.get("sec", 0))
+	return (hour*3600) + (minute*60) + sec
