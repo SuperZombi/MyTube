@@ -44,15 +44,16 @@ class Downloader:
 				await on_progress(self.videoStream.filesize+current, filesize)
 
 			print("Downloading video", self.videoStream.filesize)
-			videofile = tempfile.TemporaryFile(suffix=f'.{self.videoStream.videoExt}',delete=False).name
-			await self._download_stream(self.videoStream.url, videofile, progressOne)
+			# videofile = tempfile.TemporaryFile(suffix=f'.{self.videoStream.videoExt}',delete=False).name
+			# await self._download_stream(self.videoStream.url, videofile, progressOne)
+			await self._download_stream(self.videoStream.url, target_filepath, progressOne)
 
-			print("Downloading audio", self.audioStream.filesize)
-			audiofile = tempfile.TemporaryFile(delete=False).name
-			await self._download_stream(self.audioStream.url, audiofile, progressTwo)
+			# print("Downloading audio", self.audioStream.filesize)
+			# audiofile = tempfile.TemporaryFile(delete=False).name
+			# await self._download_stream(self.audioStream.url, audiofile, progressTwo)
 
-			print(videofile)
-			print(audiofile)
+			# print(videofile)
+			# print(audiofile)
 
 
 		# elif self.videoStream:
@@ -67,30 +68,16 @@ class Downloader:
 	async def _download_stream(self, url, filename, on_progress=None):
 		on_progress = on_progress or (lambda x,y:None)
 		async with aiohttp.ClientSession(headers=self.HEADERS) as session:
-			async with session.get(url) as resp:
-				file_size = int(resp.headers.get('Content-Length', 0))
-				with open(filename, "wb") as file:
-					downloaded = 0
-					async for chunk in resp.content.iter_chunked(self.CHUNK_SIZE):
-						file.write(chunk)
-						downloaded += len(chunk)
-						await on_progress(downloaded, file_size)
-					# while True:
-					# 	chunk = await response.content.read(self.CHUNK_SIZE)
-					# 	if not chunk: break
-					# 	file.write(chunk)
-					# 	downloaded += len(chunk)
-					# 	await on_progress(downloaded, file_size)
-
-
-
-
-		# response = requests.get(url, stream=True)
-		# file_size = int(response.headers.get('content-length', 0))
-		# print(f"File size: {file_size}")
-
-		# with open(filename, "wb") as file:
-		# 	for chunk in response.iter_content(self.CHUNK_SIZE):
-		# 		if chunk:
-		# 			file.write(chunk)
-		# 			print(f"Downloaded {file.tell()} / {file_size}")
+			resp_head = await session.head(url)
+			file_size = int(resp_head.headers.get('Content-Length'))
+			downloaded = 0
+			with open(filename, "wb") as file:
+				while downloaded < file_size:
+					stop_pos = min(downloaded + self.CHUNK_SIZE, file_size) - 1
+					resp = await session.get(url + f"&range={downloaded}-{stop_pos}")
+					chunk = await resp.content.read()
+					if not chunk: break
+					file.write(chunk)
+					downloaded += len(chunk)
+					await on_progress(downloaded, file_size)
+		

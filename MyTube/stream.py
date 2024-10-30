@@ -108,12 +108,24 @@ class Stream:
 			folder=output_folder
 		)
 
+
 		bytes_remaining = self.filesize
-		response = requests.get(self.url, stream=True)
-		with open(file_path, "wb") as handle:
-			# for data in tqdm(response.iter_content()):
-			for data in response.iter_content():
-				handle.write(data)
+		print(bytes_remaining)
+		with open(file_path, "wb") as file:
+			for chunk in self._stream(self.url):
+				bytes_remaining -= len(chunk)
+				file.write(chunk)
+				print(bytes_remaining)
+
+
+
+
+		# bytes_remaining = self.filesize
+		# response = requests.get(self.url, stream=True)
+		# with open(file_path, "wb") as handle:
+		# 	# for data in tqdm(response.iter_content()):
+		# 	for data in response.iter_content():
+		# 		handle.write(data)
 
 
 		# with open(file_path, "wb") as file:
@@ -134,3 +146,17 @@ class Stream:
 		# if on_complete:
 		# 	on_complete(file_path)
 		return file_path
+
+
+	def _stream(self, url):
+		CHUNK_SIZE = 10*1024*1024
+		downloaded = 0
+		file_size = self.filesize
+		while downloaded < file_size:
+			stop_pos = min(downloaded + CHUNK_SIZE, file_size) - 1
+			response = requests.get(self.url + f"&range={downloaded}-{stop_pos}")
+			chunk = response.content
+			if not chunk: break
+			downloaded += len(chunk)
+			yield chunk
+	
