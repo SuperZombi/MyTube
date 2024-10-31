@@ -1,6 +1,6 @@
 import yt_dlp
 from datetime import datetime
-from .utils import YouTube_Channel
+from .utils import Channel, Thumbnail
 from .streams_manager import StreamsManager
 from .downloader import Downloader
 
@@ -14,7 +14,7 @@ class YouTube:
 		self._vid_info = None
 		self._formats = None
 
-		with yt_dlp.YoutubeDL({'quiet': True}) as ydl:
+		with yt_dlp.YoutubeDL({'quiet': True, 'noplaylist': True}) as ydl:
 			self._vid_info = ydl.extract_info(self.link, download=False)
 			self._url = self._vid_info.get("webpage_url")
 
@@ -33,7 +33,11 @@ class YouTube:
 
 	@property
 	def author(self) -> str:
-		return str(self._vid_info.get("channel"))
+		trash = " - Topic"
+		channel_name = self._vid_info.get("channel")
+		if channel_name.endswith(trash):
+			channel_name = channel_name[:-len(trash)]
+		return str(channel_name)
 
 	@property
 	def description(self) -> str:
@@ -60,9 +64,8 @@ class YouTube:
 		return int(self._vid_info.get("comment_count"))
 	
 	@property
-	def thumbnail(self) -> str:
-		"""Thumbnail URL"""
-		return str(self._vid_info.get("thumbnail"))
+	def thumbnail(self) -> Thumbnail:
+		return Thumbnail(self._vid_info.get("thumbnail"))
 
 	@property
 	def upload_date(self) -> datetime:
@@ -80,16 +83,17 @@ class YouTube:
 	def metadata(self) -> dict:
 		return {
 			"title": self.title,
-			"author": self.author
+			"author": self.author,
+			"thumbnail": self.thumbnail
 		}
 
 	@property
-	def channel(self) -> YouTube_Channel:
+	def channel(self) -> Channel:
 		id = self._vid_info.get("channel_id")
 		url = self._vid_info.get("channel_url")
-		name = self._vid_info.get("channel")
+		name = self.author
 		followers = int(self._vid_info.get("channel_follower_count"))
-		return YouTube_Channel(id=id, url=url, name=name, followers=followers)
+		return Channel(id=id, url=url, name=name, followers=followers)
 
 	def download(self, video=None, audio=None) -> Downloader:
 		return Downloader(video, audio, self.metadata)

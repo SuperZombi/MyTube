@@ -91,15 +91,10 @@ class Stream:
 			return f"Stream({self.itag})"
 
 
-	async def download(self,
-		output_folder:str=None,
-		filename:str=None,
-		on_progress=None
-	) -> str:
+	async def download(self, *args, **kwargs) -> str:
 		if self.isVideo or self.isMuxed:
 			dwnl = Downloader(video=self, metadata=self.metadata)
 		else:
 			dwnl = Downloader(audio=self, metadata=self.metadata)
-
-		return await dwnl(output_folder=output_folder, filename=filename, on_progress=on_progress)
+		return await dwnl(*args, **kwargs)
 	

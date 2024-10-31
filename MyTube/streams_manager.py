@@ -18,7 +18,7 @@ class StreamsManager:
 			stream = Stream(
 				itag=str(format.get('format_id')),
 				url=format.get('url'),
-				filesize = int(format.get('filesize', format.get('filesize_approx'))),
+				filesize = int(format.get('filesize') or format.get('filesize_approx')),
 				metadata=metadata
 			)
 			if format.get('acodec') != 'none' and format.get('vcodec') != 'none':

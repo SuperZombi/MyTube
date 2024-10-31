@@ -8,7 +8,8 @@ import asyncio
 
 
 # link = "https://www.youtube.com/watch?v=GB5KEphbIWc"
-link = "https://www.youtube.com/watch?v=kVJgey4F23c"
+# link = "https://www.youtube.com/watch?v=kVJgey4F23c"
+link = "https://youtube.com/watch?v=_ETMRwYSOY4"
 yt = MyTube.YouTube(link)
 
 # streams = yt.streams.filter(
@@ -23,7 +24,7 @@ yt = MyTube.YouTube(link)
 # print(yt.streams.best_audio())
 
 # for stream in streams:
-# 	print(stream)
+# 	print(stream, stream.itag)
 
 # stream = yt.streams.filter(only_muxed=True).first()
 # file = stream.download("downloads")
@@ -50,9 +51,9 @@ async def ffmpeg_progress(current, total):
 
 
 async def main():
-	file = await yt.download(video=video, audio=audio)("downloads", on_progress=progress, ffmpeg_progress=ffmpeg_progress)
+	# file = await yt.download(video=video, audio=audio)("downloads", on_progress=progress, ffmpeg_progress=ffmpeg_progress)
 	# file = await yt.download(video=stream)("downloads", on_progress=progress)
-	# file = await yt.download(audio=audio)("downloads", on_progress=progress)
+	file = await yt.download(audio=audio)("downloads", on_progress=progress)
 	# await stream.download("downloads", on_progress=progress)
 
 asyncio.run(main())
