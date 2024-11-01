@@ -8,6 +8,7 @@ body {
 }
 :root{
 	--main-color: #4CAF50;
+	--side-bar: #333;
 }
 
 .wrapper{
@@ -15,7 +16,7 @@ body {
 	height: 100vh;
 }
 .sidebar{
-	background-color: #333;
+	background-color: var(--side-bar);
 	color: white;
 	min-width: fit-content;
 	width: 250px;
@@ -59,6 +60,30 @@ body {
 	padding: 0.5rem;
 }
 
+.chapters{
+	display: flex;
+	user-select: none;
+	font-size: 1.1rem;
+	justify-content: center;
+	gap: 1rem;
+	padding: 0;
+	margin-bottom: 0;
+}
+.chapters li{
+	list-style-type: none;
+}
+.chapters li a{
+	text-decoration: none;
+	color: inherit;
+}
+.chapters li a:hover{
+	text-decoration: underline;
+}
+.chapters li:not(:first-child)::before{
+	content: "|";
+	padding-right: 1rem;
+}
+
 
 .sidebar .header {
 	text-align: center;
@@ -93,13 +118,16 @@ body {
 	color: inherit;
 	text-decoration: none;
 }
+.sidebar ul li a.selected{
+	background: color-mix(in srgb, var(--side-bar) 75%, white);
+}
 .sidebar ul li a:hover{
-	background: #666;
+	background: color-mix(in srgb, var(--side-bar) 70%, white);
 }
 
 
 .sidebar details[open]{
-	background: #444;
+	background: color-mix(in srgb, var(--side-bar) 90%, white);
 }
 
 .sidebar details summary{
@@ -107,13 +135,13 @@ body {
 	position: relative;
 }
 .sidebar details[open] summary{
-	background: #555;
+	background: color-mix(in srgb, var(--side-bar) 82%, white);
 }
-.sidebar details[open] summary a{
-	pointer-events: none;
+.sidebar details summary:hover{
+	background: color-mix(in srgb, var(--side-bar) 70%, white);
 }
 
-.sidebar details summary:before{
+.sidebar details > summary::before{
 	font-family: "Font Awesome 6 Free";
 	font-weight: 400;
 	content: "\f0fe";
@@ -121,9 +149,9 @@ body {
 	top: 50%;
 	transform: translateY(-50%);
 	padding: 0.5rem;
-	cursor: pointer;
+	pointer-events: none;
 }
-.sidebar details[open] summary:before{
+.sidebar details[open] > summary::before{
 	content: "\f146";
 }
 .sidebar ul li ul li a{

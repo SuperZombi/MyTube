@@ -17,12 +17,11 @@
 			</div>
 			<nav>
 				<ul>
-					<li><a href="#">Text</a></li>
 					<li>
-						<details>
-							<summary><a href="#">Text</a></summary>
+						<details open>
+							<summary><a href="#">Api</a></summary>
 							<ul>
-								<li><a href="#">Text</a></li>
+								<li><a href="#" class="selected">YouTube</a></li>
 								<li><a href="#">Text</a></li>
 								<li><a href="#">Text</a></li>
 								<li><a href="#">Text</a></li>
@@ -45,6 +44,11 @@
 				</ul>
 				<hr>
 				<h2>YouTube Object</h2>
+				<ul class="chapters">
+					<li><a href="#constructor">Constructor</a></li>
+					<li><a href="#properties">Properties</a></li>
+					<li><a href="#methods">Methods</a></li>
+				</ul>
 			</div>
 			<div class="main-content">
 				<section id="constructor">
@@ -173,5 +177,14 @@ yt.download(video=True, audio=False)
 			</div>
 		</div>
 	</div>
+
+<!-- <script type="text/javascript">
+	document.querySelectorAll(".sidebar details summary").forEach(el=>{
+		el.onclick = _=>{
+			let details = el.closest("details")
+			details.open = !details.open
+		}
+	})
+</script> -->
 </body>
 </html>
