@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>MyTube Docs • YouTube</title>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width'>
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
+	<link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar">
+			<div class="header">
+				<h2><a href="#">MyTube</a></h2>
+				<img src="https://shields.io/badge/version-1.0.0-blue">
+			</div>
+			<nav>
+				<ul>
+					<li><a href="#">Text</a></li>
+					<li>
+						<details>
+							<summary><a href="#">Text</a></summary>
+							<ul>
+								<li><a href="#">Text</a></li>
+								<li><a href="#">Text</a></li>
+								<li><a href="#">Text</a></li>
+								<li><a href="#">Text</a></li>
+							</ul>
+						</details>
+					</li>
+					<li><a href="#">Text</a></li>
+					<li><a href="#">Text</a></li>
+					<li><a href="#">Text</a></li>
+				</ul>
+			</nav>
+		</div>
+		
+		<div class="content">
+			<div class="header">
+				<ul class="breadcrumbs">
+					<li><a href="#">Docs</a></li>
+					<li><a href="#">API</a></li>
+					<li><a>YouTube</a></li>
+				</ul>
+				<hr>
+				<h2>YouTube Object</h2>
+			</div>
+			<div class="main-content">
+				<section id="constructor">
+					<h2>Constructor<a href="#constructor" class="linker"></a></h2>
+					<h3><pre><code>class YouTube(link: str)</code></pre></h3>
+					<p>Initializes the YouTube object with the provided video link.</p>
+					<h3>Parameters:</h3>
+					<ul>
+						<li><strong>link</strong><a href="#" class="type">str</a>: The URL to the YouTube video.</li>
+					</ul>
+				</section>
+
+				<section id="properties">
+					<h2>Properties<a href="#properties" class="linker"></a></h2>
+
+					<h3 id="YouTube.videoId">
+						<pre>
+							<code>videoId</code>
+							<a href="#" class="type">str</a>
+							<a href="#YouTube.videoId" class="linker"></a>
+						</pre>
+					</h3>
+					<p>Returns the unique identifier of the video.</p>
+
+					<h3 id="YouTube.title">
+						<pre>
+							<code>title</code>
+							<a href="#" class="type">str</a>
+							<a href="#YouTube.title" class="linker"></a>
+						</pre>
+					</h3>
+					<p>Returns the title of the video.</p>
+
+					<h3 id="YouTube.author">
+						<pre>
+							<code>author</code>
+							<a href="#" class="type">str</a>
+							<a href="#YouTube.author" class="linker"></a>
+						</pre></h3>
+					<p>Returns the name of the channel that uploaded the video.</p>
+
+					<h3 id="YouTube.description">
+						<pre>
+							<code>description</code>
+							<a href="#" class="type">str</a>
+							<a href="#YouTube.description" class="linker"></a>
+						</pre>
+					</h3>
+					<p>Returns the description of the video.</p>
+
+					<h3 id="YouTube.duration">
+						<pre>
+							<code>duration</code>
+							<a href="#" class="type">int</a>
+							<a href="#YouTube.duration" class="linker"></a>
+						</pre>
+					</h3>
+					<p>Returns the duration of the video in seconds.</p>
+
+
+					<!-- <h3><code>views</code></h3>
+					<p>Returns the view count of the video.</p>
+					<pre><code>yt.views  # Returns: int</code></pre>
+
+					<h3><code>likes</code></h3>
+					<p>Returns the like count of the video.</p>
+					<pre><code>yt.likes  # Returns: int</code></pre>
+
+					<h3><code>comments</code></h3>
+					<p>Returns the comment count of the video.</p>
+					<pre><code>yt.comments  # Returns: int</code></pre>
+
+					<h3><code>thumbnail</code></h3>
+					<p>Returns the thumbnail of the video.</p>
+					<pre><code>yt.thumbnail  # Returns: Thumbnail object</code></pre>
+
+					<h3><code>upload_date</code></h3>
+					<p>Returns the upload date of the video.</p>
+					<pre><code>yt.upload_date  # Returns: datetime</code></pre>
+
+					<h3><code>streams</code></h3>
+					<p>Returns the available video and audio streams for download.</p>
+					<pre><code>yt.streams  # Returns: StreamsManager object</code></pre>
+
+					<h3><code>metadata</code></h3>
+					<p>Returns metadata information of the video.</p>
+					<pre><code>yt.metadata  # Returns: dict</code></pre>
+
+					<h3><code>channel</code></h3>
+					<p>Returns the channel information that uploaded the video.</p>
+					<pre><code>yt.channel  # Returns: Channel object</code></pre> -->
+				</section>
+
+				<section id="methods">
+					<h2>Methods<a href="#methods" class="linker"></a></h2>
+
+					<h3 id="YouTube.download">
+						<pre>
+							<code>download(video=None, audio=None)</code>
+							<a href="#YouTube.download" class="linker"></a>
+						</pre>
+					</h3>
+					<p>Downloads the video or audio stream based on the provided options.</p>
+					<h3>Parameters:</h3>
+					<ul>
+						<li><strong>video</strong><a href="#" class="type">MyTube.Stream</a>: Optional</li>
+						<li><strong>audio</strong><a href="#" class="type">MyTube.Stream</a>: Optional</li>
+					</ul>
+				</section>
+
+				<section id="example">
+					<h2>Example<a href="#methods" class="linker"></a></h2>
+<pre><code>from my_library import YouTube
+
+yt = YouTube("https://www.youtube.com/watch?v=example")
+
+print(yt.title)        # Title of the video
+print(yt.author)       # Author (channel name)
+print(yt.views)        # Number of views
+print(yt.duration)     # Video duration in seconds
+
+# Download the video
+yt.download(video=True, audio=False)
+</code></pre>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
