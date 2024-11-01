@@ -1,6 +1,14 @@
-<img src="https://shields.io/badge/version-1.0.0-blue">
+<h1 align="center">MyTube</h1>
 
-MyTube is a wrapper around [yt-dlp](https://github.com/yt-dlp/yt-dlp) that is similar in functionality to [pytube](https://github.com/pytube/pytube).
+<p align="center">
+    <img src="github/images/icon.png" height="128px" align="center">
+</p>
+<p align="center">
+    <img src="https://shields.io/badge/version-1.0.0-blue">
+</p>
+<p align="center">
+    MyTube is a wrapper around <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> that is similar in functionality to <a href="https://github.com/pytube/pytube">pytube</a>.
+</p>
 
 I made it because I was tired of pytube being unstable and throwing errors over time.
 
