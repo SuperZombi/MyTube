@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>MyTube • Quick Start</title>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width'>
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
+	<link rel="stylesheet" href="http://192.168.1.104/data/styles/main.css">
+	<script src="http://192.168.1.104/data/scripts/main.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar"></div>
+		<div class="content">
+			<div class="header">
+				<h2>Quick Start</h2>
+				<ul class="chapters">
+					<li><a href="#installation">Installation</a></li>
+					<li><a href="#usage">Usage</a></li>
+				</ul>
+			</div>
+			<div class="main-content">
+				<section id="installation">
+					<h2>Installation<a href="#installation" class="linker"></a></h2>
+					<ol>
+						<li>Download <a href="https://ffmpeg.org/download.html" target="_blank">FFmpeg</a> and add it to $PATH.</li>
+						<li>
+							Install <a href="https://github.com/yt-dlp/yt-dlp" target="_blank">yt-dlp</a> via pip:
+							<pre><code>pip install yt-dlp</code></pre>
+						</li>
+					</ol>
+				</section>
+				<section id="usage">
+					<h2>Usage<a href="#usage" class="linker"></a></h2>
+<pre><code>import MyTube
+import asyncio</code></pre>
+<pre><code>link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+yt = MyTube.YouTube(link)</code></pre>
+					<h3 id="usage.get_video_info">Get video info<a href="#usage.get_video_info" class="linker"></a></h3>
+<pre><code>print(yt.title)
+print(yt.author)
+print(yt.duration)
+</code></pre>
+<pre><code>>>> Rick Astley - Never Gonna Give You Up (Official Music Video)
+>>> Rick Astley
+>>> 212
+</code></pre>
+					<p>Find out more about other properties <a href="../api/youtube/#properties">here</a>.</p>
+
+
+					<h3 id="usage.get_streams">Get streams<a href="#usage.get_streams" class="linker"></a></h3>
+<pre><code>muxed_stream = yt.streams.filter(only_muxed=True).first()
+</code></pre>
+					<p>A muxed stream is a single stream that contains both audio and video data combined (or "multiplexed") together in one file. </p>
+					<p>Unfortunately, the quality of these streams leaves much to be desired (usually 360p or 720p)</p>
+					<p>Therefore, it is recommended to select streams separately and merge them.</p>
+<pre><code>video = yt.streams.best_video()
+audio = yt.streams.best_audio()
+</code></pre>
+					<p>Learn more about ways to filter streams <a href="#">here</a>.</p>
+
+
+					<h3 id="usage.downloading">Downloading<a href="#usage.downloading" class="linker"></a></h3>
+					<p>The downloader works asynchronously.</p>
+<pre><code>async def main():
+	await yt.download(video=video, audio=audio)()
+
+asyncio.run(main())	
+</code></pre>
+					<p>If you want to track the download progress you can define the progress function.</p>
+<pre><code>async def progress(current, total):
+	print(current, "/", total, end="\r")
+
+async def main():
+	file = await yt.download(video=video, audio=audio)(
+		"downloads", on_progress=progress
+	)
+
+asyncio.run(main())	
+</code></pre>
+					<p>More information about downloading <a href="#">here</a>.</p>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
