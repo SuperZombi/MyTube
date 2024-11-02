@@ -27,6 +27,9 @@ function load_sidebar() {
 		if (!data){return}
 		let string = data.replace(/\${(.*?)\}/g, (match, contents)=>{ return eval(contents) })
 		document.querySelector(".sidebar").innerHTML = string
+		document.querySelector("#menuToggle").onclick = _=>{
+			document.querySelector(".sidebar").classList.toggle("open")
+		}
 		let current = document.querySelector(`.sidebar a[href="${origin + current_url}"]`)
 		if (current){
 			current.removeAttribute("href")
