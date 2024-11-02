@@ -27,9 +27,9 @@
 			<div class="main-content">
 				<section id="constructor">
 					<h2>Constructor<a href="#constructor" class="linker"></a></h2>
-					<h3><pre><code>class YouTube(link)</code></pre></h3>
+					<h4><pre><code>class YouTube(link)</code></pre></h4>
 					<ul>Initializes the YouTube object with the provided video link.</ul>
-					<h3>Parameters:</h3>
+					<h4>Parameters:</h4>
 					<ul>
 						<li><strong>link</strong><a class="type">str</a>: The URL to the YouTube video.</li>
 					</ul>
@@ -38,125 +38,126 @@
 				<section id="properties">
 					<h2>Properties<a href="#properties" class="linker"></a></h2>
 
-					<h3 id="YouTube.videoId">
+					<h4 id="YouTube.videoId">
 						<pre>
 							<code>videoId</code>
 							<a class="type">str</a>
 							<a href="#YouTube.videoId" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the unique identifier of the video.</ul>
 
-					<h3 id="YouTube.title">
+					<h4 id="YouTube.title">
 						<pre>
 							<code>title</code>
 							<a class="type">str</a>
 							<a href="#YouTube.title" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the title of the video.</ul>
 
-					<h3 id="YouTube.author">
+					<h4 id="YouTube.author">
 						<pre>
 							<code>author</code>
 							<a class="type">str</a>
 							<a href="#YouTube.author" class="linker"></a>
-						</pre></h3>
+						</pre>
+					</h4>
 					<ul>Returns the name of the channel that uploaded the video.</ul>
 
-					<h3 id="YouTube.description">
+					<h4 id="YouTube.description">
 						<pre>
 							<code>description</code>
 							<a class="type">str</a>
 							<a href="#YouTube.description" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the description of the video.</ul>
 
-					<h3 id="YouTube.duration">
+					<h4 id="YouTube.duration">
 						<pre>
 							<code>duration</code>
 							<a class="type">int</a>
 							<a href="#YouTube.duration" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the duration of the video in seconds.</ul>
 
-					<h3 id="YouTube.views">
+					<h4 id="YouTube.views">
 						<pre>
 							<code>views</code>
 							<a class="type">int</a>
 							<a href="#YouTube.views" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the view count of the video.</ul>
 
-					<h3 id="YouTube.likes">
+					<h4 id="YouTube.likes">
 						<pre>
 							<code>likes</code>
 							<a class="type">int</a>
 							<a href="#YouTube.likes" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the like count of the video.</ul>
 
-					<h3 id="YouTube.comments">
+					<h4 id="YouTube.comments">
 						<pre>
 							<code>comments</code>
 							<a class="type">int</a>
 							<a href="#YouTube.comments" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the comment count of the video.</ul>
 
-					<h3 id="YouTube.upload_date">
+					<h4 id="YouTube.upload_date">
 						<pre>
 							<code>upload_date</code>
 							<a class="type">datetime</a>
 							<a href="#YouTube.upload_date" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the upload date of the video.</ul>
 
-					<h3 id="YouTube.channel">
+					<h4 id="YouTube.channel">
 						<pre>
 							<code>channel</code>
 							<a href="#" class="type">MyTube.Channel</a>
 							<a href="#YouTube.channel" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the channel information that uploaded the video.</ul>
 					
-					<h3 id="YouTube.thumbnail">
+					<h4 id="YouTube.thumbnail">
 						<pre>
 							<code>thumbnail</code>
 							<a href="#" class="type">MyTube.Thumbnail</a>
 							<a href="#YouTube.thumbnail" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the thumbnail of the video.</ul>
 
-					<h3 id="YouTube.streams">
+					<h4 id="YouTube.streams">
 						<pre>
 							<code>streams</code>
 							<a href="#" class="type">MyTube.StreamsManager</a>
 							<a href="#YouTube.streams" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Returns the available video and audio streams for download.</ul>
 				</section>
 
 				<section id="methods">
 					<h2>Methods<a href="#methods" class="linker"></a></h2>
 
-					<h3 id="YouTube.download">
+					<h4 id="YouTube.download">
 						<pre>
 							<code>download(video, audio)</code>
 							<a href="#YouTube.download" class="linker"></a>
 						</pre>
-					</h3>
+					</h4>
 					<ul>Downloads the video or audio stream based on the provided options.</ul>
-					<h3>Parameters:</h3>
+					<h4>Parameters:</h4>
 					<ul>
 						<li><strong>video</strong><a href="#" class="type">MyTube.Stream</a>: Optional</li>
 						<li><strong>audio</strong><a href="#" class="type">MyTube.Stream</a>: Optional</li>
@@ -165,7 +166,7 @@
 
 				<section id="example">
 					<h2>Example<a href="#example" class="linker"></a></h2>
-<pre><code>import MyTube
+<pre class="code"><code>import MyTube
 
 yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 

@@ -1,7 +1,7 @@
 body {
 	margin: 0; padding: 0;
 	font-family: sans-serif;
-	background-color: #f4f4f4;
+	background: #f4f4f4;
 }
 * {
 	box-sizing: border-box;
@@ -9,6 +9,7 @@ body {
 :root{
 	--main-color: #4CAF50;
 	--side-bar: #333;
+	--body-color: #eee;
 }
 
 a[target="_blank"]{
@@ -20,7 +21,7 @@ a[target="_blank"]{
 	height: 100vh;
 }
 .sidebar .wrapper{
-	background-color: var(--side-bar);
+	background: var(--side-bar);
 	color: white;
 	min-width: fit-content;
 	width: 250px;
@@ -34,7 +35,7 @@ a[target="_blank"]{
 	width: 100%;
 	height: 100%;
 	overflow-y: auto;
-	background: #eee;
+	background: var(--body-color);
 	padding: 0 2rem;
 }
 .content .header{
@@ -193,10 +194,20 @@ a[target="_blank"]{
 .main-content h2 {
 	color: var(--main-color);
 	border-bottom: 2px solid var(--main-color);
-	padding-bottom: 5px;
-	padding-top: 5px;
 	display: flex;
 	align-items: center;
+}
+.main-content h2,
+.main-content h3{
+	position: sticky;
+	top: 0;
+	background: var(--body-color);
+	z-index: 1;
+	padding: 0.5rem 0;
+	margin: 0;
+}
+.main-content h4 code{
+	font-size: 0.9rem;
 }
 .main-content .linker{
 	color: black;
@@ -221,21 +232,50 @@ a[target="_blank"]{
 	text-wrap: balance;
 }
 .main-content pre {
-	background-color: color-mix(in srgb, var(--main-color) 20%, transparent);
+	background: color-mix(in srgb, var(--main-color) 20%, transparent);
 	padding: 15px;
 	border-left: 5px solid var(--main-color);
 	overflow-x: auto;
 	border-radius: 5px 10px 10px 5px;
-	position: relative;
 	display: flex;
 	align-items: center;
+}
+.main-content div:has(pre){
+	position: relative;
 }
 .main-content code {
 	font-family: monospace;
 	tab-size: 2rem;
 }
+.main-content pre .copy-code{
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	padding: 5px;
+	border-radius: 8px;
+	transform: translateY(-50%);
+	background: color-mix(in srgb, var(--main-color) 50%, white);
+	color: #444;
+	cursor: pointer;
+	border: none;
+	display: none;
+}
+.main-content pre .copy-code.pined{
+	top: 10px;
+	transform: translateY(0);
+}
+.main-content pre .copy-code::after{
+	content: "\f24d";
+	font-family: "Font Awesome 6 Free";
+}
+.main-content pre:hover .copy-code{
+	display: block;
+}
+.main-content pre .copy-code:active{
+	background: color-mix(in srgb, var(--main-color) 60%, white);
+}
 .main-content .type{
-	background-color: color-mix(in srgb, var(--main-color) 50%, transparent);
+	background: color-mix(in srgb, var(--main-color) 50%, transparent);
 	color: white;
 	padding: 2px 4px;
 	border-radius: 6px;
@@ -272,6 +312,11 @@ a[target="_blank"]{
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
+	padding-left: 1.2rem;
+}
+.main-content ol pre{
+	transform: translateX(-1.2rem);
+	width: calc(100% + 1.2rem);
 }
 
 

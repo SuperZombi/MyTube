@@ -6,6 +6,7 @@ window.onload=_=>{
 	buildBreadcrumbs()
 	initDataTypesLinks()
 	initLinkerCopy()
+	initCodeCopy()
 	if (window.location.hash){
 		document.getElementById(window.location.hash.split("#").at(-1)).scrollIntoView();
 	}
@@ -83,6 +84,27 @@ function initLinkerCopy(){
 	document.querySelectorAll(".linker").forEach(el=>{
 		el.onclick = _=>{copyText(el.href)}
 		el.title = "Copy link"
+	})
+}
+function initCodeCopy(){
+	function wrap(el) {
+		let wrapper = document.createElement("div")
+		el.parentNode.insertBefore(wrapper, el);
+		wrapper.appendChild(el);
+	}
+	document.querySelectorAll("pre.code").forEach(el=>{
+		let span = document.createElement("button")
+		span.classList.add("copy-code")
+		el.appendChild(span)
+		if (el.clientHeight > 70){
+			span.classList.add("pined")
+		}
+		wrap(el)
+		span.title = "Copy code"
+		span.onclick = _=>{
+			let text = el.querySelector("code").innerText.replaceAll("	", "    ")
+			copyText(text)
+		}
 	})
 }
 function copyText(text) {
