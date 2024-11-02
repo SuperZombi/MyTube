@@ -1,4 +1,4 @@
-var origin = "http://192.168.1.104"
+var origin = "https://superzombi.github.io/MyTube"
 load_icon()
 
 window.onload=_=>{
@@ -12,8 +12,13 @@ window.onload=_=>{
 	}
 }
 
+function relativePath(){
+	let href = window.location.origin+window.location.pathname.toLocaleLowerCase()
+	return href.replace(origin.toLocaleLowerCase(), '')
+}
+
 function load_icon(){
-	let url = new URL("data/images/icon.png", origin)
+	let url = new URL("data/images/icon.png", `${origin}/`)
 	let link = document.createElement('link');
 	link.rel = 'icon';
 	link.href = url
@@ -22,8 +27,8 @@ function load_icon(){
 
 
 function load_sidebar() {
-	let url = new URL("data/htmls/sidebar.html", origin)
-	let current_url = window.location.pathname.toLowerCase().split(".html")[0]
+	let url = new URL("data/htmls/sidebar.html", `${origin}/`)
+	let current_url = relativePath().split("index.html")[0]
 	fetch(url.href).then(res=>{if (res.ok){return res.text()}}).then(data=>{
 		if (!data){return}
 		let string = data.replace(/\${(.*?)\}/g, (match, contents)=>{ return eval(contents) })
@@ -45,8 +50,7 @@ function load_sidebar() {
 function buildBreadcrumbs(){
 	let breadcrumbs = document.querySelector(".breadcrumbs")
 	if (!breadcrumbs){return}
-	let relativeUrl = window.location.pathname.replace(origin, '')
-	let path = relativeUrl.split('/').filter(Boolean)
+	let path = relativePath().split('/').filter(Boolean)
 	
 	function makeLi(name, url){
 		let li = document.createElement("li")
