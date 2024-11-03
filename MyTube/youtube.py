@@ -13,7 +13,7 @@ class YouTube:
 		self._vid_info = None
 		self._formats = None
 
-		with yt_dlp.YoutubeDL({'quiet': True, 'noplaylist': True}) as ydl:
+		with yt_dlp.YoutubeDL({'quiet': True, 'noplaylist': True, "no_warnings":True}) as ydl:
 			self._vid_info = ydl.extract_info(self.link, download=False)
 			self._url = self._vid_info.get("webpage_url")
 
