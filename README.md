@@ -4,7 +4,7 @@
     <img src="https://raw.githubusercontent.com/SuperZombi/MyTube/main/github/images/icon.png" height="128px" align="center">
 </p>
 <p align="center">
-    <img src="https://shields.io/badge/version-1.0.0-blue">
+    <img src="https://shields.io/badge/version-1.0.1-blue">
 </p>
 <p align="center">
     <a href="https://superzombi.github.io/MyTube/">Documentation</a>

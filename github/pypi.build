@@ -1,0 +1,15 @@
+{
+    "folder": "C:/Users/rost/Downloads/MyTube",
+    "package_name": "MyTube-dlp",
+    "version": "1.0.1",
+    "description": "Python YouTube Downloader",
+    "readme": "C:/Users/rost/Downloads/README.md",
+    "username": "Super_Zombi",
+    "email": "super.zombi.yt@gmail.com",
+    "github": "https://github.com/SuperZombi/MyTube",
+    "docs": "https://superzombi.github.io/MyTube/",
+    "python_ver": "3.9",
+    "dependencies": [
+        "yt-dlp"
+    ]
+}

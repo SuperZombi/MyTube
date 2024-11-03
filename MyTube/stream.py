@@ -21,6 +21,12 @@ class Stream:
 	def h(self): return self.height
 	@property
 	def res(self): return min(self.height, self.width)
+	@property
+	def lang(self): return self.language
+	@property
+	def abr(self): return self.audioBitrate
+	@property
+	def asr(self): return self.audioSamplerate
 	
 	def add_video_info(self,
 		videoCodec:str,
