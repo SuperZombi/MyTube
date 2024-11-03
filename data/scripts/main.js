@@ -8,7 +8,20 @@ window.onload=_=>{
 	initLinkerCopy()
 	initCodeCopy()
 	if (window.location.hash){
-		document.getElementById(window.location.hash.split("#").at(-1)).scrollIntoView();
+		scrollToHash()
+	}
+	window.addEventListener("hashchange", _=>{ scrollToHash() });
+}
+
+function scrollToHash(){
+	let target = document.getElementById(window.location.hash.split("#").at(-1))
+	if (target){
+		let elementPosition = target.getBoundingClientRect().top;
+		let offsetPosition = elementPosition
+		if (target.querySelector("pre")){
+			offsetPosition = elementPosition - target.offsetHeight;	
+		}
+		document.querySelector(".content").scrollBy({top: offsetPosition});
 	}
 }
 
