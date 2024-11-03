@@ -11,6 +11,7 @@ window.onload=_=>{
 		scrollToHash()
 	}
 	window.addEventListener("hashchange", _=>{ scrollToHash() });
+	initCodeExection()
 }
 
 function scrollToHash(){
@@ -87,6 +88,7 @@ function initDataTypesLinks(){
 	let typesUrls = {
 		"int": "https://docs.python.org/3/library/functions.html#int",
 		"str": "https://docs.python.org/3/library/stdtypes.html#str",
+		"bool": "https://docs.python.org/3/library/functions.html#bool",
 		"datetime": "https://docs.python.org/3/library/datetime.html#datetime.datetime"
 	}
 	document.querySelectorAll("a.type").forEach(el=>{
@@ -131,4 +133,29 @@ function copyText(text) {
 	textArea.select();
 	document.execCommand('copy');
 	document.body.removeChild(textArea);
+}
+
+const sleep = ms => new Promise(res=>setTimeout(res,ms))
+function initCodeExection(){
+	document.querySelectorAll(".execute").forEach(details=>{
+		let area = details.querySelector("pre")
+		let code = details.querySelector("pre code")
+		let lines = code.innerHTML.split("\n")
+		let timeout = lines.length > 10 ? 25 : 50;
+		details.addEventListener("toggle", async ()=>{
+			code.innerHTML = ""
+			if (details.open){
+				area.scrollIntoView();
+				await sleep(1000);
+				for (let i=0; i<lines.length;i++){
+					code.innerHTML += lines[i]
+					if (i != lines.length - 1){
+						code.innerHTML += "\n"
+					}
+					area.scrollIntoView();
+					await sleep(timeout);
+				}
+			}
+		})
+	})
 }

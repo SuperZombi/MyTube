@@ -227,6 +227,9 @@ a[target="_blank"]{
 .main-content ul {
 	list-style-type: none;
 }
+.main-content ul li{
+	margin: 0.5rem 0;
+}
 .main-content p {
 	text-wrap: balance;
 }
@@ -326,6 +329,35 @@ pre.art code{
 	user-select: none;
 }
 
+.main-content .execute{
+	margin: 1rem 0;
+}
+.main-content .execute summary{
+	display: inline-flex;
+	cursor: pointer;
+	font-size: 1rem;
+	gap: 0.25rem;
+	padding: 6px 10px;
+	border-radius: 8px;
+	border: none;
+	color: #fff;
+	background: var(--main-color);
+	user-select: none;
+	border-bottom: 2px solid color-mix(in srgb, var(--main-color) 75%, black);
+}
+.main-content .execute summary:active{
+	border-bottom: 0;
+	margin-top: 2px;
+}
+.main-content .execute summary::before{
+	content: "\f144";
+	font-family: "Font Awesome 6 Free";
+	font-weight: bold;
+}
+.main-content .execute summary::after{
+	content: "Execute";
+}
+
 
 
 @media only screen and (max-width: 600px) {
@@ -360,5 +392,8 @@ pre.art code{
 	}
 	.main-content .linker{
 		visibility: visible;
+	}
+	.main-content ul {
+		padding-left: 1.2rem;
 	}
 }
