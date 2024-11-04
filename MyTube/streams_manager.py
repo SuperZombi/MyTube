@@ -115,4 +115,6 @@ class StreamsManager:
 
 	def get(self, itag:str) -> Stream:
 		"""Get stream by itag"""
-		return next((x for x in self.streams if x.itag == str(itag)), None)
+		stream = next((x for x in self.streams if x.itag == str(itag)), None)
+		if stream: return stream
+		raise ValueError(f"Stream({itag}) not found")
