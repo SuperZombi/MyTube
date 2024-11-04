@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>MyTube • Streams Manager</title>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width'>
+	<meta property="og:title" content="MyTube Documentation">
+	<meta property="og:description" content="Python YouTube Downloader">
+	<meta property="og:image" content="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
+	<link rel="stylesheet" href="https://superzombi.github.io/MyTube/data/styles/main.css">
+	<script src="https://superzombi.github.io/MyTube/data/scripts/main.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar"></div>
+		
+		<div class="content">
+			<div class="header">
+				<ul class="breadcrumbs"></ul>
+				<hr>
+				<h2>Streams Manager Object</h2>
+				<ul class="chapters">
+					<li><a href="#constructor">Constructor</a></li>
+					<li><a href="#properties">Properties</a></li>
+					<li><a href="#methods">Methods</a></li>
+					<li><a href="#example">Example</a></li>
+				</ul>
+			</div>
+			<div class="main-content">
+				<section>
+					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
+					<h4><pre><code>class StreamsManager(streams)</code></pre></h4>
+					<ul>Performs filtering and sorting operations to easily select a stream.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>streams</strong></td>
+							<td><a class="type">list</a></td>
+							<td>A list of <a href="../stream">Stream</a> objects.</td>
+						</tr>
+					</table></ul>
+				</section>
+
+				<section>
+					<h2 id="properties">Properties<a href="#properties" class="linker"></a></h2>
+
+					<h4 id="StreamsManager.streams">
+						<pre>
+							<code>streams</code>
+							<a class="type">list</a>
+							<a href="#StreamsManager.streams" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>A list of <a href="../stream">Stream</a> objects.</ul>
+				</section>
+
+				<section>
+					<h2 id="methods">Methods<a href="#methods" class="linker"></a></h2>
+
+					<h4 id="StreamsManager.len">
+						<pre>
+							<code>len()</code>
+							<a class="type">int</a>
+							<a href="#StreamsManager.len" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the number of streams managed by the instance.
+						<pre class="code"><code>len(yt.streams)</code></pre>
+					</ul>
+
+					<h4 id="StreamsManager.iter">
+						<pre>
+							<code>iter()</code>
+							<a href="#StreamsManager.iter" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Allows iteration over the list of streams.
+						<pre class="code"><code>for stream in yt.streams:<br>	print(stream)</code></pre>
+					</ul>
+					<hr>
+
+					<h4 id="StreamsManager.filter">
+						<pre>
+							<code>filter(**kwargs) -></code>
+							<a class="type" href="#constructor">StreamsManager</a>
+							<a href="#StreamsManager.filter" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Filters the streams based on various options.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>only_video</strong></td>
+							<td><a class="type">bool</a></td>
+							<td>Filters to only include streams with video (either video-only or muxed).</td>
+						</tr>
+						<tr>
+							<td><strong>only_audio</strong></td>
+							<td><a class="type">bool</a></td>
+							<td>Filters to only include audio-only streams.</td>
+						</tr>
+						<tr>
+							<td><strong>only_muxed</strong></td>
+							<td><a class="type">bool</a></td>
+							<td>Filters to only include streams that contain both audio and video.</td>
+						</tr>
+						<tr>
+							<td><strong>no_muxed</strong></td>
+							<td><a class="type">bool</a></td>
+							<td>Filters out muxed streams (leaves only single video or audio streams).</td>
+						</tr>
+						<tr>
+							<td><strong>max_res</strong></td>
+							<td><a class="type">int</a></td>
+							<td>Maximum <a href="../stream/#Stream.res">video resolution</a> of the streams to be included.</td>
+						</tr>
+						<tr>
+							<td><strong>min_res</strong></td>
+							<td><a class="type">int</a></td>
+							<td>Minimum <a href="../stream/#Stream.res">video resolution</a> of the streams to be included.</td>
+						</tr>
+						<tr>
+							<td><strong>max_fps</strong></td>
+							<td><a class="type">int</a></td>
+							<td>Maximum <a href="../stream/#Stream.fps">video fps</a> (frames per second) of the streams to be included.</td>
+						</tr>
+						<tr>
+							<td><strong>min_fps</strong></td>
+							<td><a class="type">int</a></td>
+							<td>Minimum <a href="../stream/#Stream.fps">video fps</a> (frames per second) of the streams to be included.</td>
+						</tr>
+						<tr>
+							<td><strong>custom</strong></td>
+							<td><a class="type">func</a></td>
+							<td>A custom filter function that takes a <a href="../stream/">stream</a> as input and returns a<a class="type">bool</a>.</td>
+						</tr>
+					</table></ul>
+					<hr>
+
+					<h4 id="StreamsManager.order_by">
+						<pre>
+							<code>order_by(attr, sub, reverse) -></code>
+							<a class="type" href="#constructor">StreamsManager</a>
+							<a href="#StreamsManager.order_by" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Sorts the streams based on a specified attribute and optional secondary attribute.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>attr</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The primary attribute to sort by.</td>
+						</tr>
+						<tr>
+							<td><strong>sub</strong></td>
+							<td><a class="type">str</a></td>
+							<td>A secondary attribute for sorting. (Optional)</td>
+						</tr>
+						<tr>
+							<td><strong>reverse</strong></td>
+							<td><a class="type">bool</a></td>
+							<td>Whether to sort in descending order. (Defaults to True)</td>
+						</tr>
+					</table></ul>
+					<hr>
+
+					<h4 id="StreamsManager.best_video">
+						<pre>
+							<code>best_video() -></code>
+							<a class="type" href="../stream/">Stream</a>
+							<a href="#StreamsManager.best_video" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the best available video stream based on <a href="../stream/#Stream.res">resolution</a> and <a href="../stream/#Stream.fps">fps</a>.</ul>
+
+					<h4 id="StreamsManager.best_audio">
+						<pre>
+							<code>best_audio() -></code>
+							<a class="type" href="../stream/">Stream</a>
+							<a href="#StreamsManager.best_audio" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the best available audio stream based on <a href="../stream/#Stream.audioBitrate">bitrate</a>.</ul>
+					<hr>
+
+					<h4 id="StreamsManager.reverse">
+						<pre>
+							<code>reverse() -></code>
+							<a class="type" href="#constructor">StreamsManager</a>
+							<a href="#StreamsManager.reverse" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Reverses the order of the streams.</ul>
+					
+					<h4 id="StreamsManager.first">
+						<pre>
+							<code>first() -></code>
+							<a class="type" href="../stream/">Stream</a>
+							<a href="#StreamsManager.first" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the first stream in the list.</ul>
+					
+					<h4 id="StreamsManager.last">
+						<pre>
+							<code>last() -></code>
+							<a class="type" href="../stream/">Stream</a>
+							<a href="#StreamsManager.last" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the last stream in the list.</ul>
+					
+					<h4 id="StreamsManager.get">
+						<pre>
+							<code>get(itag) -></code>
+							<a class="type" href="../stream/">Stream</a>
+							<a href="#StreamsManager.get" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Get stream by <a href="../stream/#Stream.itag">itag</a>.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>itag</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The unique identifier of the stream.</td>
+						</tr>
+					</table></ul>
+				</section>
+
+				<section>
+					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
+
+					<h3 id="example.get_all_streams">
+						Get all streams<a href="#example.get_all_streams" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+
+print(f"Streams count: {len(yt.streams)}")
+for stream in yt.streams:
+	print(stream)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>Streams count: 28
+
+Audio(30.m4a [en] mp4a.40.5)
+Audio(31.webm [en] opus)
+Audio(48.m4a [en] mp4a.40.5)
+Audio(46.webm [en] opus)
+Audio(61.webm [en] opus)
+Audio(129.m4a [en] mp4a.40.2)
+Audio(129.webm [en] opus)
+Video(256x144.mp4 [13fps] avc1.4d400b)
+Video(256x144.webm [13fps] vp9)
+Video(256x144.mp4 [25fps] av01.0.00M.08)
+Video(256x144.mp4 [25fps] avc1.4D400C)
+Video(256x144.webm [25fps] vp09.00.11.08)
+Video(426x240.mp4 [25fps] av01.0.00M.08)
+Video(426x240.mp4 [25fps] avc1.4D4015)
+Video(426x240.webm [25fps] vp09.00.20.08)
+Video(640x360.mp4 [25fps] av01.0.01M.08)
+Video(640x360.mp4 [25fps] avc1.4D401E)
+Muxed(640x360.mp4 [25fps] [en] avc1.42001E+mp4a.40.2)
+Video(640x360.webm [25fps] vp09.00.21.08)
+Video(854x480.mp4 [25fps] av01.0.04M.08)
+Video(854x480.mp4 [25fps] avc1.4D401E)
+Video(854x480.webm [25fps] vp09.00.30.08)
+Video(1280x720.mp4 [25fps] av01.0.05M.08)
+Video(1280x720.mp4 [25fps] avc1.4D401F)
+Video(1280x720.webm [25fps] vp09.00.31.08)
+Video(1920x1080.mp4 [25fps] av01.0.08M.08)
+Video(1920x1080.mp4 [25fps] avc1.640028)
+Video(1920x1080.webm [25fps] vp09.00.40.08)
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.get_video_streams">
+						Get video streams<a href="#example.get_video_streams" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+
+streams = yt.streams.filter(
+	only_video=True, no_muxed=True
+).order_by("res", "fps")
+
+for stream in streams:
+	print(stream)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>Video(1920x1080.mp4 [25fps] av01.0.08M.08)
+Video(1920x1080.mp4 [25fps] avc1.640028)
+Video(1920x1080.webm [25fps] vp09.00.40.08)
+Video(1280x720.mp4 [25fps] av01.0.05M.08)
+Video(1280x720.mp4 [25fps] avc1.4D401F)
+Video(1280x720.webm [25fps] vp09.00.31.08)
+Video(854x480.mp4 [25fps] av01.0.04M.08)
+Video(854x480.mp4 [25fps] avc1.4D401E)
+Video(854x480.webm [25fps] vp09.00.30.08)
+Video(640x360.mp4 [25fps] av01.0.01M.08)
+Video(640x360.mp4 [25fps] avc1.4D401E)
+Video(640x360.webm [25fps] vp09.00.21.08)
+Video(426x240.mp4 [25fps] av01.0.00M.08)
+Video(426x240.mp4 [25fps] avc1.4D4015)
+Video(426x240.webm [25fps] vp09.00.20.08)
+Video(256x144.mp4 [25fps] av01.0.00M.08)
+Video(256x144.mp4 [25fps] avc1.4D400C)
+Video(256x144.webm [25fps] vp09.00.11.08)
+Video(256x144.mp4 [13fps] avc1.4d400b)
+Video(256x144.webm [13fps] vp9)
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.get_audio_streams">
+						Get audio streams<a href="#example.get_audio_streams" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+
+streams = yt.streams.filter(only_audio=True).order_by("abr").streams
+
+for stream in streams:
+	print(stream)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>Audio(129.m4a [en] mp4a.40.2)
+Audio(129.webm [en] opus)
+Audio(61.webm [en] opus)
+Audio(48.m4a [en] mp4a.40.5)
+Audio(46.webm [en] opus)
+Audio(31.webm [en] opus)
+Audio(30.m4a [en] mp4a.40.5)	
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.get_best_streams">
+						Get best streams<a href="#example.get_best_streams" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+
+print("Best video stream:")
+video = yt.streams.best_video()
+print(video)
+
+print("Best audio stream:")
+video = yt.streams.best_audio()
+print(video)
+
+print("Best muxed stream:")
+muxed = yt.streams.filter(only_muxed=True).order_by("res").first()
+print(muxed)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>Best video stream:
+Video(1920x1080.mp4 [25fps] av01.0.08M.08)
+
+Best audio stream:
+Audio(129.m4a [en] mp4a.40.2)
+
+Best muxed stream:
+Muxed(640x360.mp4 [25fps] [en] avc1.42001E+mp4a.40.2)
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.limit_video_resolution">
+						Limit video resolution<a href="#example.limit_video_resolution" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+
+streams = yt.streams.filter(
+	only_video=True, no_muxed=True, max_res=720, min_res=480
+).order_by("res", "fps")
+
+for stream in streams:
+	print(stream)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>Video(1280x720.mp4 [25fps] av01.0.05M.08)
+Video(1280x720.mp4 [25fps] avc1.4D401F)
+Video(1280x720.webm [25fps] vp09.00.31.08)
+Video(854x480.mp4 [25fps] av01.0.04M.08)
+Video(854x480.mp4 [25fps] avc1.4D401E)
+Video(854x480.webm [25fps] vp09.00.30.08)
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.get_stream_with_specific_language">
+						Get stream with specific language<a href="#example.get_stream_with_specific_language" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+
+de_stream = yt.streams.filter(only_audio=True,
+	custom=lambda x: x.get("lang") == "de"
+).order_by("abr").first()
+
+print("Audio stream in German:")
+print(de_stream)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>Audio stream in German:
+Audio(129.m4a [de] mp4a.40.2)
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.get_stream_by_itag">
+						Get stream by itag<a href="#example.get_stream_by_itag" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+
+for stream in yt.streams.filter(only_video=True, min_res=720):
+	print(stream.itag, stream)
+
+stream = yt.streams.get("248")
+print("Target stream:")
+print(stream)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>398 Video(1280x720.mp4 [25fps] av01.0.05M.08)
+136 Video(1280x720.mp4 [25fps] avc1.4D401F)
+247 Video(1280x720.webm [25fps] vp09.00.31.08)
+399 Video(1920x1080.mp4 [25fps] av01.0.08M.08)
+137 Video(1920x1080.mp4 [25fps] avc1.640028)
+248 Video(1920x1080.webm [25fps] vp09.00.40.08)
+
+Target stream:
+Video(1920x1080.webm [25fps] vp09.00.40.08)
+</code></pre>
+</details>
+					
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

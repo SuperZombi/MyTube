@@ -5,6 +5,9 @@
 	<title>MyTube • Stream</title>
 	<meta charset="UTF-8">
 	<meta name='viewport' content='width=device-width'>
+	<meta property="og:title" content="MyTube Documentation">
+	<meta property="og:description" content="Python YouTube Downloader">
+	<meta property="og:image" content="https://superzombi.github.io/MyTube/data/images/icon.png">
 	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
 	<link rel="stylesheet" href="https://superzombi.github.io/MyTube/data/styles/main.css">
 	<script src="https://superzombi.github.io/MyTube/data/scripts/main.js"></script>
@@ -31,11 +34,23 @@
 					<h4><pre><code>class Stream(itag, url, filesize)</code></pre></h4>
 					<ul>Represents a media stream from YouTube, which can be either a video, an audio stream, or a combined (muxed) stream.</ul>
 					<h4>Parameters:</h4>
-					<ul>
-						<li><strong>itag</strong><a class="type">str</a>: Identifier tag for the stream.</li>
-						<li><strong>url</strong><a class="type">str</a>: The URL of the stream.</li>
-						<li><strong>filesize</strong><a class="type">int</a>: Size of the stream file in bytes.</li>
-					</ul>
+					<ul><table>
+						<tr>
+							<td><strong>itag</strong></td>
+							<td><a class="type">str</a></td>
+							<td>Identifier tag for the stream.</td>
+						</tr>
+						<tr>
+							<td><strong>url</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The URL of the stream.</td>
+						</tr>
+						<tr>
+							<td><strong>filesize</strong></td>
+							<td><a class="type">int</a></td>
+							<td>Size of the stream file in bytes.</td>
+						</tr>
+					</table></ul>
 				</section>
 
 				<section>
@@ -255,10 +270,18 @@
 					</h4>
 					<ul>Retrieves the value of any attribute in the Stream object by its name.<br>If the attribute does not exist, it returns the provided default value.</ul>
 					<h4>Parameters:</h4>
-					<ul>
-						<li><strong>attribute_name</strong><a class="type">str</a>: The name of the attribute to retrieve.</li>
-						<li><strong>default</strong><a class="type">Any</a>: The value to return if the attribute is not found (defaults to 0).</li>
-					</ul>
+					<ul><table>
+						<tr>
+							<td><strong>attribute_name</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The name of the attribute to retrieve.</td>
+						</tr>
+						<tr>
+							<td><strong>default</strong></td>
+							<td><a class="type">Any</a></td>
+							<td>The value to return if the attribute is not found (defaults to 0).</td>
+						</tr>
+					</table></ul>
 					<hr>
 
 					<h4 id="Stream.add_video_info">
@@ -269,13 +292,33 @@
 					</h4>
 					<ul>Adds specific metadata related to video streams. It also sets the <a href="#Stream.isVideo">isVideo</a> flag to True, marking this stream as a video stream.</ul>
 					<h4>Parameters:</h4>
-					<ul>
-						<li><strong>videoCodec</strong><a class="type">str</a>: The codec used for the video stream.</li>
-						<li><strong>videoExt</strong><a class="type">str</a>: The file extension of the video stream.</li>
-						<li><strong>width</strong><a class="type">int</a>: The width of the video in pixels.</li>
-						<li><strong>height</strong><a class="type">int</a>: The height of the video in pixels.</li>
-						<li><strong>fps</strong><a class="type">int</a>: The frame rate (frames per second) of the video.</li>
-					</ul>
+					<ul><table>
+						<tr>
+							<td><strong>videoCodec</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The codec used for the video stream.</td>
+						</tr>
+						<tr>
+							<td><strong>videoExt</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The file extension of the video stream.</td>
+						</tr>
+						<tr>
+							<td><strong>width</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The width of the video in pixels.</td>
+						</tr>
+						<tr>
+							<td><strong>height</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The height of the video in pixels.</td>
+						</tr>
+						<tr>
+							<td><strong>fps</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The frame rate (frames per second) of the video.</td>
+						</tr>
+					</table></ul>
 					<hr>
 
 					<h4 id="Stream.add_audio_info">
@@ -286,13 +329,33 @@
 					</h4>
 					<ul>Adds specific metadata related to audio streams. It also sets the <a href="#Stream.isAudio">isAudio</a> flag to True, marking this stream as a audio stream.</ul>
 					<h4>Parameters:</h4>
-					<ul>
-						<li><strong>audioCodec</strong><a class="type">str</a>: The codec used for the audio stream.</li>
-						<li><strong>audioExt</strong><a class="type">str</a>: The file extension of the audio stream.</li>
-						<li><strong>language</strong><a class="type">str</a>: The language of the audio stream.</li>
-						<li><strong>audioBitrate</strong><a class="type">int</a>: The audio bitrate in kilobits per second (kbps).</li>
-						<li><strong>audioSamplerate</strong><a class="type">int</a>: The sample rate of the audio stream in Hertz (Hz).</li>
-					</ul>
+					<ul><table>
+						<tr>
+							<td><strong>audioCodec</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The codec used for the audio stream.</td>
+						</tr>
+						<tr>
+							<td><strong>audioExt</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The file extension of the audio stream.</td>
+						</tr>
+						<tr>
+							<td><strong>language</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The language of the audio stream.</td>
+						</tr>
+						<tr>
+							<td><strong>audioBitrate</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The audio bitrate in kilobits per second (kbps).</td>
+						</tr>
+						<tr>
+							<td><strong>audioSamplerate</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The sample rate of the audio stream in Hertz (Hz).</td>
+						</tr>
+					</table></ul>
 					<hr>
 
 					<h4 id="Stream.add_muxed_info">
@@ -303,16 +366,48 @@
 					</h4>
 					<ul>Adds metadata for streams that contain both video and audio (muxed streams). It also sets the <a href="#Stream.isMuxed">isMuxed</a> flag to True, marking this stream as a multiplexed stream.</ul>
 					<h4>Parameters:</h4>
-					<ul>
-						<li><strong>videoCodec</strong><a class="type">str</a>: The codec used for the video portion of the stream.</li>
-						<li><strong>videoExt</strong><a class="type">str</a>: The file extension of the muxed stream.</li>
-						<li><strong>width</strong><a class="type">int</a>: The width of the video in pixels.</li>
-						<li><strong>height</strong><a class="type">int</a>: The height of the video in pixels.</li>
-						<li><strong>fps</strong><a class="type">int</a>: The frame rate (frames per second) of the video.</li>
-						<li><strong>audioCodec</strong><a class="type">str</a>: The codec used for the audio portion of the stream.</li>
-						<li><strong>language</strong><a class="type">str</a>: The language of the audio stream.</li>
-						<li><strong>audioSamplerate</strong><a class="type">int</a>: The sample rate of the audio stream in Hertz (Hz).</li>
-					</ul>
+					<ul><table>
+						<tr>
+							<td><strong>videoCodec</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The codec used for the video portion of the stream.</td>
+						</tr>
+						<tr>
+							<td><strong>videoExt</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The file extension of the muxed stream.</td>
+						</tr>
+						<tr>
+							<td><strong>width</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The width of the video in pixels.</td>
+						</tr>
+						<tr>
+							<td><strong>height</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The height of the video in pixels.</td>
+						</tr>
+						<tr>
+							<td><strong>fps</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The frame rate (frames per second) of the video.</td>
+						</tr>
+						<tr>
+							<td><strong>audioCodec</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The codec used for the audio portion of the stream.</td>
+						</tr>
+						<tr>
+							<td><strong>language</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The language of the audio stream.</td>
+						</tr>
+						<tr>
+							<td><strong>audioSamplerate</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The sample rate of the audio stream in Hertz (Hz).</td>
+						</tr>
+					</table></ul>
 					<hr>
 
 					<h4 id="Stream.download">
@@ -323,13 +418,15 @@
 					</h4>
 					<ul>Downloading the stream asynchronously. Depending on the type of stream (video, audio, or muxed), it initializes an instance of the <a href="#">Downloader</a> class and starts the download.</ul>
 					<h4>Returns:</h4>
-					<ul>
-						<li><a class="type">str</a>: The file path where the stream is saved after the download is complete.</li>
-					</ul>
+					<ul><table>
+						<tr>
+							<td></td>
+							<td><a class="type">str</a></td>
+							<td>The file path where the stream is saved after the download is complete.</td>
+						</tr>
+					</table></ul>
 					<h4>Parameters:</h4>
-					<ul>
-						See in <a href="#" class="type">MyTube.Downloader.__call__()</a>
-					</ul>
+					<ul>See in<a href="#" class="type">MyTube.Downloader.__call__()</a></ul>
 				</section>
 
 				<section>

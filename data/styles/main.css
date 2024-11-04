@@ -204,6 +204,7 @@ a[target="_blank"]{
 	z-index: 1;
 	padding: 0.5rem 0;
 	margin: 0;
+	margin-top: 0.5rem;
 }
 .main-content h4 code{
 	font-size: 0.9rem;
@@ -357,6 +358,26 @@ pre.art code{
 .main-content .execute summary::after{
 	content: "Execute";
 }
+.main-content .execute pre{
+	background: #bebebe;
+	border-color: #367fff;
+}
+
+.main-content table{
+	border-collapse: collapse;
+	border-radius: 5px;
+	overflow: hidden;
+	filter: drop-shadow(0 2px 3px lightgrey);
+}
+.main-content table tr:nth-child(odd){
+	background-color: #e2e2e2;
+}
+.main-content table tr:nth-child(even){
+	background: var(--body-color);
+}
+.main-content table tr td{
+	padding: 10px;
+}
 
 
 
@@ -395,5 +416,14 @@ pre.art code{
 	}
 	.main-content ul {
 		padding-left: 1.2rem;
+	}
+	.main-content ul:has(table) {
+		padding-left: 0;
+	}
+	.main-content table{
+		width: 100%;
+	}
+	.main-content table tr td{
+		padding: 5px;
 	}
 }

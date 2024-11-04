@@ -70,11 +70,11 @@ function buildBreadcrumbs(){
 		let li = document.createElement("li")
 		let a = document.createElement("a")
 		if (url){a.href = url}
-		a.innerHTML = name
+		a.innerHTML = name.replaceAll("_", " ")
 		li.appendChild(a)
 		breadcrumbs.appendChild(li)
 	}
-	makeLi("Docs", origin)
+	makeLi("docs", origin)
 	for (let i=0; i<path.length;i++){
 		let origin_url = origin + "/" + path[i]
 		if (i == path.length -1){
@@ -89,6 +89,7 @@ function initDataTypesLinks(){
 		"int": "https://docs.python.org/3/library/functions.html#int",
 		"str": "https://docs.python.org/3/library/stdtypes.html#str",
 		"bool": "https://docs.python.org/3/library/functions.html#bool",
+		"list": "https://docs.python.org/3/library/stdtypes.html#list",
 		"datetime": "https://docs.python.org/3/library/datetime.html#datetime.datetime"
 	}
 	document.querySelectorAll("a.type").forEach(el=>{
@@ -145,14 +146,14 @@ function initCodeExection(){
 		details.addEventListener("toggle", async ()=>{
 			code.innerHTML = ""
 			if (details.open){
-				area.scrollIntoView();
+				area.scrollIntoView({block: "center", behavior: "smooth"});
 				await sleep(1000);
 				for (let i=0; i<lines.length;i++){
 					code.innerHTML += lines[i]
 					if (i != lines.length - 1){
 						code.innerHTML += "\n"
 					}
-					area.scrollIntoView();
+					area.scrollIntoView({block: "center"});
 					await sleep(timeout);
 				}
 			}

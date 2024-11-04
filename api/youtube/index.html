@@ -5,6 +5,9 @@
 	<title>MyTube • YouTube</title>
 	<meta charset="UTF-8">
 	<meta name='viewport' content='width=device-width'>
+	<meta property="og:title" content="MyTube Documentation">
+	<meta property="og:description" content="Python YouTube Downloader">
+	<meta property="og:image" content="https://superzombi.github.io/MyTube/data/images/icon.png">
 	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
 	<link rel="stylesheet" href="https://superzombi.github.io/MyTube/data/styles/main.css">
 	<script src="https://superzombi.github.io/MyTube/data/scripts/main.js"></script>
@@ -31,9 +34,13 @@
 					<h4><pre><code>class YouTube(link)</code></pre></h4>
 					<ul>Initializes the YouTube object with the provided video link.</ul>
 					<h4>Parameters:</h4>
-					<ul>
-						<li><strong>link</strong><a class="type">str</a>: The URL to the YouTube video.</li>
-					</ul>
+					<ul><table>
+						<tr>
+							<td><strong>link</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The URL to the YouTube video.</td>
+						</tr>
+					</table></ul>
 				</section>
 
 				<section>
@@ -159,10 +166,18 @@
 					</h4>
 					<ul>Initializes the <a href="#">Downloader</a> based on the provided video or audio stream parameters.</ul>
 					<h4>Parameters:</h4>
-					<ul>
-						<li><strong>video</strong><a href="../stream/" class="type">MyTube.Stream</a>: Optional</li>
-						<li><strong>audio</strong><a href="../stream/" class="type">MyTube.Stream</a>: Optional</li>
-					</ul>
+					<ul><table>
+						<tr>
+							<td><strong>video</strong></td>
+							<td><a href="../stream/" class="type">MyTube.Stream</a></td>
+							<td>Optional</td>
+						</tr>
+						<tr>
+							<td><strong>audio</strong></td>
+							<td><a href="../stream/" class="type">MyTube.Stream</a></td>
+							<td>Optional</td>
+						</tr>
+					</table></ul>
 				</section>
 
 				<section>
