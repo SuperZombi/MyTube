@@ -283,11 +283,13 @@ a[target="_blank"]{
 	padding: 2px 4px;
 	border-radius: 6px;
 	text-decoration: none;
-	margin-left: 0.35rem;
 	font-size: 0.85rem;
 	user-select: none;
 	font-weight: bold;
 	font-family: monospace;
+}
+.main-content * ~ .type{
+	margin-left: 0.35rem;
 }
 
 .main-content .pages {
@@ -377,6 +379,9 @@ pre.art code{
 }
 .main-content table tr td{
 	padding: 10px;
+}
+.main-content table tr td:empty{
+	padding: 0 !important;
 }
 
 

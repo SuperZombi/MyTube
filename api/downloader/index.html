@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>MyTube • Downloader</title>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width'>
+	<link rel="icon" href="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<meta property="og:title" content="MyTube Documentation">
+	<meta property="og:description" content="Python YouTube Downloader">
+	<meta property="og:image" content="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
+	<link rel="stylesheet" href="https://superzombi.github.io/MyTube/data/styles/main.css">
+	<script src="https://superzombi.github.io/MyTube/data/scripts/main.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar"></div>
+		
+		<div class="content">
+			<div class="header">
+				<ul class="breadcrumbs"></ul>
+				<hr>
+				<h2>Downloader Object</h2>
+				<ul class="chapters">
+					<li><a href="#constructor">Constructor</a></li>
+					<li><a href="#properties">Properties</a></li>
+					<li><a href="#methods">Methods</a></li>
+					<li><a href="#example">Example</a></li>
+				</ul>
+			</div>
+			<div class="main-content">
+				<section>
+					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
+					<h4><pre><code>class Downloader(video, audio, metadata)</code></pre></h4>
+					<ul>Initializes the YouTube object with the provided video link.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>video</strong></td>
+							<td><a class="type" href="../stream">MyTube.Stream</a></td>
+							<td>Video stream object. (Optional)</td>
+						</tr>
+						<tr>
+							<td><strong>audio</strong></td>
+							<td><a class="type" href="../stream">MyTube.Stream</a></td>
+							<td>Audio stream object. (Optional)</td>
+						</tr>
+						<tr>
+							<td><strong>metadata</strong></td>
+							<td><a class="type">dict</a></td>
+							<td>Data for embedding in media file.</td>
+						</tr>
+					</table></ul>
+				</section>
+
+				<section>
+					<h2 id="properties">Properties<a href="#properties" class="linker"></a></h2>
+
+					<h4 id="Downloader.CHUNK_SIZE">
+						<pre>
+							<code>CHUNK_SIZE</code>
+							<a class="type">int</a>
+							<a href="#Downloader.CHUNK_SIZE" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The size of the data that will be downloaded from the media stream at a time. (Default is 10MB)</ul>
+
+					<h4 id="Downloader.FFMPEG">
+						<pre>
+							<code>FFMPEG</code>
+							<a class="type">str</a>
+							<a href="#Downloader.FFMPEG" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Path to <a href="https://ffmpeg.org/" target="_blank">FFmpeg.exe</a>. The default is just "ffmpeg", assuming FFmpeg is available in the system $PATH.</ul>
+				</section>
+
+				<section>
+					<h2 id="methods">Methods<a href="#methods" class="linker"></a></h2>
+
+					<h4 id="Downloader.call">
+						<pre>
+							<code>async call(output_folder, filename, **kwargs) -></code><a class="type">str</a>
+							<a href="#Downloader.call" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Executes the download asynchronously. Can download video-only, audio-only, or both, and save them with the specified extensions and metadata.</ul>
+					<h4>Returns:</h4>
+					<ul><table>
+						<tr>
+							<td></td>
+							<td><a class="type">str</a></td>
+							<td>The path to the downloaded file.</td>
+						</tr>
+					</table></ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>output_folder</strong></td>
+							<td><a class="type">str</a></td>
+							<td>Directory where the downloaded file will be saved.</td>
+						</tr>
+						<tr>
+							<td><strong>filename</strong></td>
+							<td><a class="type">str</a></td>
+							<td>Name for the downloaded file. Defaults to the title from metadata if available.</td>
+						</tr>
+						<tr>
+							<td><strong>video_ext</strong></td>
+							<td><a class="type">str</a></td>
+							<td>Preferred extension for the video file (<code>mp4</code>, <code>webm</code>).</td>
+						</tr>
+						<tr>
+							<td><strong>audio_ext</strong></td>
+							<td><a class="type">str</a></td>
+							<td>Preferred extension for the audio file. Defaults to <code>mp3</code>.</td>
+						</tr>
+						<tr>
+							<td><strong>add_audio_metadata</strong></td>
+							<td><a class="type">bool</a></td>
+							<td>If True, metadata (like title, author) is added to the audio file.</td>
+						</tr>
+						<tr>
+							<td><strong>on_progress</strong></td>
+							<td><a class="type">func</a></td>
+							<td>An async callback function to track download progress.</td>
+						</tr>
+						<tr>
+							<td><strong>ffmpeg_progress</strong></td>
+							<td><a class="type">func</a></td>
+							<td>An async callback function to track FFmpeg processing progress.</td>
+						</tr>
+					</table></ul>
+				</section>
+
+				<section>
+					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
+					<h3 id="example.downloading_video">
+						Downloading video<a href="#example.downloading_video" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+import asyncio
+
+def mb(bytes_value):
+	return f"{round(bytes_value / (1024 * 1024))} MB"
+
+async def progress(current, total):
+	print(mb(current), "/", mb(total), end="\r")
+
+async def ffmpeg_progress(current, total):
+	print("Merging:", round(current * 100 / total), "%", end="\r")
+
+
+async def main():
+	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	video = yt.streams.best_video()
+	audio = yt.streams.best_audio()
+	print(video)
+	print(audio)
+
+	file = await yt.download(video=video, audio=audio)(
+		"downloads", on_progress=progress, ffmpeg_progress=ffmpeg_progress
+	)
+	print(file)
+
+asyncio.run(main())
+</code></pre>
+<details class="execute" speed="100"><summary></summary>
+<pre><code>Video(1920x1080.mp4 [25fps] av01.0.08M.08)
+Audio(129.m4a [en] mp4a.40.2)
+
+0 MB / 31 MB
+[pause]
+10 MB / 31 MB
+[pause]
+20 MB / 31 MB
+[pause]
+28 MB / 31 MB
+[pause]
+31 MB / 31 MB
+
+Merging: 0 %
+[pause]
+Merging: 15 %
+[pause]
+Merging: 30 %
+[pause]
+Merging: 46 %
+[pause]
+Merging: 61 %
+[pause]
+Merging: 77 %
+[pause]
+Merging: 94 %
+[pause]
+Merging: 100 %
+
+C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music Video).mp4
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.downloading_music">
+						Downloading music<a href="#example.downloading_music" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+import asyncio
+
+def mb(bytes_value):
+	return f"{round(bytes_value / (1024 * 1024))} MB"
+
+async def progress(current, total):
+	print(mb(current), "/", mb(total), end="\r")
+
+
+async def main():
+	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	audio = yt.streams.best_audio()
+	print(audio)
+
+	file = await yt.download(audio=audio)("downloads", "music", on_progress=progress)
+	print(file)
+
+asyncio.run(main())
+</code></pre>
+<details class="execute" speed="100"><summary></summary>
+<pre><code>Audio(129.m4a [en] mp4a.40.2)
+
+0 MB / 3 MB
+[pause]
+3 MB / 3 MB
+
+C:\Python\MyTube\downloads\music.mp3
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.downloading_muxed">
+						Downloading muxed<a href="#example.downloading_muxed" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+import asyncio
+
+def mb(bytes_value):
+	return f"{round(bytes_value / (1024 * 1024))} MB"
+
+async def progress(current, total):
+	print(mb(current), "/", mb(total), end="\r")
+
+
+async def main():
+	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	stream = yt.streams.filter(only_muxed=True).first()
+	print(stream)
+
+	file = await yt.download(video=stream)("downloads", on_progress=progress)
+	print(file)
+
+asyncio.run(main())
+</code></pre>
+<details class="execute" speed="100"><summary></summary>
+<pre><code>Muxed(640x360.mp4 [25fps] [en] avc1.42001E+mp4a.40.2)
+
+0 MB / 9 MB
+[pause]
+9 MB / 9 MB
+
+C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music Video) (1).mp4
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.downloading_stream">
+						Downloading stream<a href="#example.downloading_stream" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+import asyncio
+
+def mb(bytes_value):
+	return f"{round(bytes_value / (1024 * 1024))} MB"
+
+async def progress(current, total):
+	print(mb(current), "/", mb(total), end="\r")
+
+
+async def main():
+	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+
+	stream = yt.streams.filter(
+		only_video=True, no_muxed=True, max_res=720
+	).order_by("res").first()
+	
+	print(stream)
+
+	file = await stream.download("downloads", on_progress=progress)
+	print(file)
+
+asyncio.run(main())
+</code></pre>
+<details class="execute" speed="100"><summary></summary>
+<pre><code>Video(1280x720.mp4 [25fps] av01.0.05M.08)
+
+0 MB / 15 MB
+[pause]
+10 MB / 15 MB
+[pause]
+15 MB / 15 MB
+
+C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music Video) (2).mp4
+</code></pre>
+</details>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

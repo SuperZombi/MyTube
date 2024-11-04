@@ -81,6 +81,7 @@ function initDataTypesLinks(){
 		"str": "https://docs.python.org/3/library/stdtypes.html#str",
 		"bool": "https://docs.python.org/3/library/functions.html#bool",
 		"list": "https://docs.python.org/3/library/stdtypes.html#list",
+		"dict": "https://docs.python.org/3/library/stdtypes.html#dict",
 		"datetime": "https://docs.python.org/3/library/datetime.html#datetime.datetime"
 	}
 	document.querySelectorAll("a.type").forEach(el=>{
@@ -134,15 +135,23 @@ function initCodeExection(){
 		let code = details.querySelector("pre code")
 		let lines = code.innerHTML.split("\n")
 		let timeout = lines.length > 10 ? 25 : 50;
+		if (details.getAttribute("speed")){
+			timeout = parseInt(details.getAttribute("speed"))
+		}
 		details.addEventListener("toggle", async ()=>{
 			code.innerHTML = ""
 			if (details.open){
 				area.scrollIntoView({block: "center", behavior: "smooth"});
 				await sleep(1000);
 				for (let i=0; i<lines.length;i++){
-					code.innerHTML += lines[i]
-					if (i != lines.length - 1){
-						code.innerHTML += "\n"
+					let line = lines[i]
+					if (line == "[pause]"){
+						await sleep(1000);
+					} else {
+						code.innerHTML += line
+						if (i != lines.length - 1){
+							code.innerHTML += "\n"
+						}
 					}
 					area.scrollIntoView({block: "center"});
 					await sleep(timeout);
