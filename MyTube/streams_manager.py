@@ -59,8 +59,8 @@ class StreamsManager:
 		only_audio:bool=None,
 		only_muxed:bool=None,
 		no_muxed:bool=None,
-		max_res:int=None, # max video height
-		min_res:int=None, # min video height
+		max_res:int=None, # max video res
+		min_res:int=None, # min video res
 		max_fps:int=None, # max video fps
 		min_fps:int=None, # min video fps
 		custom=None # custom filter function
@@ -113,6 +113,6 @@ class StreamsManager:
 	def best_audio(self) -> Stream:
 		return self.filter(only_audio=True).order_by("audioBitrate").first()
 
-	def get(self, itag:str):
+	def get(self, itag:str) -> Stream:
 		"""Get stream by itag"""
 		return next((x for x in self.streams if x.itag == str(itag)), None)
