@@ -1,5 +1,4 @@
 var origin = "https://superzombi.github.io/MyTube"
-load_icon()
 
 window.onload=_=>{
 	load_sidebar()
@@ -29,14 +28,6 @@ function scrollToHash(){
 function relativePath(){
 	let href = window.location.origin+window.location.pathname.toLocaleLowerCase()
 	return href.replace(origin.toLocaleLowerCase(), '')
-}
-
-function load_icon(){
-	let url = new URL("data/images/icon.png", `${origin}/`)
-	let link = document.createElement('link');
-	link.rel = 'icon';
-	link.href = url
-	document.head.appendChild(link);
 }
 
 
