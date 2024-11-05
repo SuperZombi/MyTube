@@ -29,6 +29,7 @@ class Thumbnail:
 		if not self._raw: self._parse()
 		filepath = get_file_path(random_filename(), "jpg", folder)
 		self._save(self._raw, filepath, quality=quality)
+		return filepath
 
 	def _save(self, entity, filepath, quality=None):
 		options = {
