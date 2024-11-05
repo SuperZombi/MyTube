@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>MyTube • Channel</title>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width'>
+	<link rel="icon" href="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<meta property="og:title" content="MyTube Documentation">
+	<meta property="og:description" content="Python YouTube Downloader">
+	<meta property="og:image" content="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
+	<link rel="stylesheet" href="https://superzombi.github.io/MyTube/data/styles/main.css">
+	<script src="https://superzombi.github.io/MyTube/data/scripts/main.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar"></div>
+		
+		<div class="content">
+			<div class="header">
+				<ul class="breadcrumbs"></ul>
+				<hr>
+				<h2>Channel Object</h2>
+				<ul class="chapters">
+					<li><a href="#constructor">Constructor</a></li>
+					<li><a href="#properties">Properties</a></li>
+					<li><a href="#example">Example</a></li>
+				</ul>
+			</div>
+			<div class="main-content">
+				<section>
+					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
+					<h4><pre><code>class Channel(id, url, name, followers)</code></pre></h4>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>id</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The unique identifier of the YouTube channel. (from URL)</td>
+						</tr>
+						<tr>
+							<td><strong>url</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The URL of the YouTube channel.</td>
+						</tr>
+						<tr>
+							<td><strong>name</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The name of the YouTube channel.</td>
+						</tr>
+						<tr>
+							<td><strong>followers</strong></td>
+							<td><a class="type">int</a></td>
+							<td>Count of subscribers of the channel.</td>
+						</tr>
+					</table></ul>
+				</section>
+
+				<section>
+					<h2 id="properties">Properties<a href="#properties" class="linker"></a></h2>
+
+					<h4 id="Channel.id">
+						<pre>
+							<code>id</code>
+							<a class="type">str</a>
+							<a href="#Channel.id" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The unique identifier of the YouTube channel.</ul>
+
+					<h4 id="Channel.url">
+						<pre>
+							<code>url</code>
+							<a class="type">str</a>
+							<a href="#Channel.url" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The URL of the YouTube channel.</ul>
+
+					<h4 id="Channel.name">
+						<pre>
+							<code>name</code>
+							<a class="type">str</a>
+							<a href="#Channel.name" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The name of the YouTube channel.</ul>
+
+					<h4 id="Channel.followers">
+						<pre>
+							<code>followers</code>
+							<a class="type">int</a>
+							<a href="#Channel.followers" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Count of subscribers of the channel.</ul>
+				</section>
+
+				<section>
+					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
+<pre class="code"><code>import MyTube
+
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+
+print(yt.channel.id)
+print(yt.channel.url)
+print(yt.channel.name)
+print(yt.channel.followers)
+</code></pre>
+
+<details class="execute"><summary></summary>
+<pre><code>>>> UCuAXFkgsw1L7xaCfnd5JJOw
+>>> https://www.youtube.com/channel/UCuAXFkgsw1L7xaCfnd5JJOw
+>>> Rick Astley
+>>> 4190000
+</code></pre>
+</details>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
