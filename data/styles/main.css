@@ -432,3 +432,40 @@ pre.art code{
 		padding: 5px;
 	}
 }
+
+@media print {
+	* {
+		filter: none !important;
+	}
+	.sidebar {
+		display: none;
+	}
+	.content {
+		overflow-y: unset;
+	}
+	pre {
+		white-space: break-spaces;
+		page-break-inside: avoid;
+		page-break-after: auto;
+	}
+	h1, h2, h3, h4, h5{
+		position: unset !important;
+		page-break-after: avoid;
+	}
+	table {
+		border-collapse: separate !important;
+		border: 1px solid grey;
+	}
+	table {
+		page-break-inside: avoid;
+		page-break-after: auto;
+	}
+	table tr {
+		page-break-inside: avoid;
+		page-break-after: auto;
+	}
+	table tfoot thead {
+		break-inside: auto;
+		overflow: hidden;
+	}
+}
