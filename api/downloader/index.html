@@ -132,6 +132,15 @@
 							<td>An async callback function to track FFmpeg processing progress.</td>
 						</tr>
 					</table></ul>
+
+					<hr>
+					<h4 id="Downloader.abort">
+						<pre>
+							<code>abort()</code>
+							<a href="#Downloader.abort" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Stops the downloading process and file merging.</ul>
 				</section>
 
 				<section>
@@ -307,6 +316,35 @@ asyncio.run(main())
 C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music Video) (2).mp4
 </code></pre>
 </details>
+
+					<hr>
+					<h3 id="example.aborting">
+						Aborting process<a href="#example.aborting" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+import asyncio
+from threading import Timer
+
+def mb(bytes_value):
+	return f"{round(bytes_value / (1024 * 1024))} MB"
+
+async def progress(current, total):
+	print(mb(current), "/", mb(total), end="\r")
+
+
+async def main():
+	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	video = yt.streams.best_video()
+	audio = yt.streams.best_audio()
+	print(video)
+	print(audio)
+
+	downloader = yt.download(video=video, audio=audio)
+	Timer(2, lambda: downloader.abort()).start()
+	file = await downloader("downloads", on_progress=progress)
+
+asyncio.run(main())
+</code></pre>
 				</section>
 			</div>
 		</div>
