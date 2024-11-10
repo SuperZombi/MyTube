@@ -1,4 +1,4 @@
-__version__ = "1.0.2"
+__version__ = "1.1.0"
 
 from .youtube import YouTube
 from .downloader import Downloader

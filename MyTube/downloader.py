@@ -11,6 +11,7 @@ class Downloader:
 		self.videoStream = video if (video and (video.isVideo or video.isMuxed)) else None
 		self.audioStream = audio if (audio and audio.isAudio) else None
 		self.metadata = metadata or {}
+		self.can_download = True
 		self.CHUNK_SIZE = 10*1024*1024
 		self.HEADERS = {
 			"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
@@ -25,6 +26,9 @@ class Downloader:
 		)
 
 	async def _default_progress(self, current, total): return
+
+	def abort(self):
+		self.can_download = False
 
 	async def __call__(self,
 		output_folder:str=None,
@@ -62,16 +66,20 @@ class Downloader:
 				await on_progress(self.videoStream.filesize+current, filesize)
 
 			videofile = tempfile.TemporaryFile(delete=False).name
-			await self._download_stream(self.videoStream.url, videofile, progressOne)
-
 			audiofile = tempfile.TemporaryFile(delete=False).name
-			await self._download_stream(self.audioStream.url, audiofile, progressTwo)
 
-			if extension != prefer_ext:
-				await self._mix(videofile, audiofile, filepath_prefer, ffmpeg_progress, v_copy=False)
-				return_file = filepath_prefer
-			else:
-				await self._mix(videofile, audiofile, target_filepath, ffmpeg_progress)
+			if self.can_download:
+				await self._download_stream(self.videoStream.url, videofile, progressOne)
+
+			if self.can_download:
+				await self._download_stream(self.audioStream.url, audiofile, progressTwo)
+
+			if self.can_download:
+				if extension != prefer_ext:
+					await self._mix(videofile, audiofile, filepath_prefer, ffmpeg_progress, v_copy=False)
+					return_file = filepath_prefer
+				else:
+					await self._mix(videofile, audiofile, target_filepath, ffmpeg_progress)
 			
 			os.remove(videofile)
 			os.remove(audiofile)
@@ -113,7 +121,7 @@ class Downloader:
 				codecs.extend(["-c:v", "copy"])
 			codecs.extend(["-c:a", "libmp3lame"])
 		else:
-			codecs.extend(["-c", "copy"])
+			codecs.extend(["-c:v", "copy"])
 		await self._ffmpeg(["-i", video, "-i", audio, *codecs, target], progress)
 
 
@@ -143,28 +151,35 @@ class Downloader:
 	async def _download_stream(self, url, filename, on_progress=None):
 		on_progress = on_progress or self._default_progress
 		async with aiohttp.ClientSession(headers=self.HEADERS) as session:
-			resp_head = await session.head(url)
+			resp_head = await session.get(url)
 			file_size = int(resp_head.headers.get('Content-Length'))
 			downloaded = 0
 			await on_progress(downloaded, file_size)
 			with open(filename, "wb") as file:
 				while downloaded < file_size:
-					stop_pos = min(downloaded + self.CHUNK_SIZE, file_size) - 1
-					resp = await session.get(url + f"&range={downloaded}-{stop_pos}")
-					chunk = await resp.content.read()
-					if not chunk: break
-					file.write(chunk)
-					downloaded += len(chunk)
-					await on_progress(downloaded, file_size)
+					if self.can_download:
+						stop_pos = min(downloaded + self.CHUNK_SIZE, file_size) - 1
+						resp = await session.get(url + f"&range={downloaded}-{stop_pos}")
+						chunk = await resp.content.read()
+						if not chunk: break
+						file.write(chunk)
+						downloaded += len(chunk)
+						await on_progress(downloaded, file_size)
+					else: break
 
 
 	async def _ffmpeg(self, command, on_progress=None):
 		on_progress = on_progress or self._default_progress
 		total_duration = 0
+		if not self.can_download: return 1
 		process = subprocess.Popen([self.FFMPEG, "-hide_banner"] + command, encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 		with process.stdout as pipe:
 			history = []
 			for raw_line in pipe:
+				if not self.can_download:
+					process.terminate()
+					process.wait()
+					return 1
 				line = raw_line.strip()
 				history.append(line)
 				if total_duration == 0:
@@ -183,4 +198,3 @@ class Downloader:
 			print("\n".join(history))
 			raise RuntimeError(f"FFMPEG error occurred: [{history[-1]}]")
 		return process.returncode
-	

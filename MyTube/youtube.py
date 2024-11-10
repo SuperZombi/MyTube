@@ -94,5 +94,5 @@ class YouTube:
 		followers = int(self._vid_info.get("channel_follower_count"))
 		return Channel(id=id, url=url, name=name, followers=followers)
 
-	def download(self, video=None, audio=None) -> Downloader:
-		return Downloader(video, audio, self.metadata)
+	def download(self, video=None, audio=None, metadata=None) -> Downloader:
+		return Downloader(video, audio, (metadata or self.metadata))
