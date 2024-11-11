@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>MyTube • Subtitles</title>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width'>
+	<link rel="icon" href="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<meta property="og:title" content="MyTube Documentation">
+	<meta property="og:description" content="Python YouTube Downloader">
+	<meta property="og:image" content="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
+	<link rel="stylesheet" href="https://superzombi.github.io/MyTube/data/styles/main.css">
+	<script src="https://superzombi.github.io/MyTube/data/scripts/main.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar"></div>
+		
+		<div class="content">
+			<div class="header">
+				<ul class="breadcrumbs"></ul>
+				<hr>
+				<h2>Subtitles Object</h2>
+				<ul class="chapters">
+					<li><a href="#constructor">Constructor</a></li>
+					<li><a href="#properties">Properties</a></li>
+					<li><a href="#example">Example</a></li>
+				</ul>
+			</div>
+			<div class="main-content">
+				<section>
+					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
+					<h4><pre><code>class Subtitles(lang_code, lang_name, ext, url)</code></pre></h4>
+					<ul>Represents a subtitle file for a video.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>lang_code</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The language code. (<code>'en', 'es'</code>)</td>
+						</tr>
+						<tr>
+							<td><strong>lang_name</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The name of the language. (<code>'English' or 'Spanish'</code>)</td>
+						</tr>
+						<tr>
+							<td><strong>ext</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The file extension of the subtitle. (<code>'vtt'</code>)</td>
+						</tr>
+						<tr>
+							<td><strong>url</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The URL of the subtitle file.</td>
+						</tr>
+					</table></ul>
+				</section>
+
+				<section>
+					<h2 id="properties">Properties<a href="#properties" class="linker"></a></h2>
+
+					<h4 id="Subtitles.code">
+						<pre>
+							<code>code</code>
+							<a class="type">str</a>
+							<a href="#Subtitles.code" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The <a href="https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes#Table" target="_blank">ISO language code</a>.</ul>
+
+					<h4 id="Subtitles.name">
+						<pre>
+							<code>name</code>
+							<a class="type">str</a>
+							<a href="#Subtitles.name" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The humanized name of the language.</ul>
+
+					<h4 id="Subtitles.extension">
+						<pre>
+							<code>extension</code>
+							<a class="type">str</a>
+							<a href="#Subtitles.extension" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The file extension of the subtitle file.</ul>
+
+					<h4 id="Subtitles.url">
+						<pre>
+							<code>url</code>
+							<a class="type">str</a>
+							<a href="#Subtitles.url" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The URL for the subtitle file.</ul>
+				</section>
+
+				<section>
+					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
+<pre class="code"><code>pip install prettytable</code></pre>
+<pre class="code"><code>import MyTube
+from prettytable import PrettyTable
+
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+t = PrettyTable(['Code', 'Name', 'Extension', 'URL'])
+
+for sub in yt.subtitles:
+	t.add_row([sub.code, sub.name, sub.extension, sub.url])
+print(t)
+</code></pre>
+
+<details class="execute"><summary></summary>
+<pre><code>+---------+----------------------+-----------+-------------------------+
+|   Code  |         Name         | Extension |           URL           |
++---------+----------------------+-----------+-------------------------+
+|    ar   |        Arabic        |    vtt    | www.youtube.com/api/... |
+| zh-hans | Chinese (Simplified) |    vtt    | www.youtube.com/api/... |
+|    en   |       English        |    vtt    | www.youtube.com/api/... |
+|    fr   |        French        |    vtt    | www.youtube.com/api/... |
+|    de   |        German        |    vtt    | www.youtube.com/api/... |
+|    hi   |        Hindi         |    vtt    | www.youtube.com/api/... |
+|    id   |      Indonesian      |    vtt    | www.youtube.com/api/... |
+|    it   |       Italian        |    vtt    | www.youtube.com/api/... |
+|    ja   |       Japanese       |    vtt    | www.youtube.com/api/... |
+|    ko   |        Korean        |    vtt    | www.youtube.com/api/... |
+|    pl   |        Polish        |    vtt    | www.youtube.com/api/... |
+|    pt   |      Portuguese      |    vtt    | www.youtube.com/api/... |
+|    ru   |       Russian        |    vtt    | www.youtube.com/api/... |
+|    es   |       Spanish        |    vtt    | www.youtube.com/api/... |
+|    th   |         Thai         |    vtt    | www.youtube.com/api/... |
+|    tr   |       Turkish        |    vtt    | www.youtube.com/api/... |
+|    vi   |      Vietnamese      |    vtt    | www.youtube.com/api/... |
++---------+----------------------+-----------+-------------------------+
+</code></pre>
+</details>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

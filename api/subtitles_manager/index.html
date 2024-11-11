@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>MyTube • Subtitles Manager</title>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width'>
+	<link rel="icon" href="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<meta property="og:title" content="MyTube Documentation">
+	<meta property="og:description" content="Python YouTube Downloader">
+	<meta property="og:image" content="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
+	<link rel="stylesheet" href="https://superzombi.github.io/MyTube/data/styles/main.css">
+	<script src="https://superzombi.github.io/MyTube/data/scripts/main.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar"></div>
+		
+		<div class="content">
+			<div class="header">
+				<ul class="breadcrumbs"></ul>
+				<hr>
+				<h2>Subtitles Manager Object</h2>
+				<ul class="chapters">
+					<li><a href="#constructor">Constructor</a></li>
+					<li><a href="#properties">Properties</a></li>
+					<li><a href="#methods">Methods</a></li>
+					<li><a href="#example">Example</a></li>
+				</ul>
+			</div>
+			<div class="main-content">
+				<section>
+					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
+					<h4><pre><code>class SubtitlesManager(subtitles_dict)</code></pre></h4>
+					<ul>Processes raw subtitles data, providing easy access to subtitles by language code.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>subtitles_dict</strong></td>
+							<td><a class="type">dict</a></td>
+							<td></td>
+						</tr>
+					</table></ul>
+				</section>
+
+				<section>
+					<h2 id="properties">Properties<a href="#properties" class="linker"></a></h2>
+
+					<h4 id="SubtitlesManager.subtitles">
+						<pre>
+							<code>subtitles</code>
+							<a class="type">list</a>
+							<a href="#SubtitlesManager.subtitles" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>A list of <a href="../subtitles">Subtitles</a> objects.</ul>
+				</section>
+
+				<section>
+					<h2 id="methods">Methods<a href="#methods" class="linker"></a></h2>
+
+					<h4 id="SubtitlesManager.get">
+						<pre>
+							<code>get(lang_code) -></code>
+							<a class="type" href="../subtitles/">Subtitles</a>
+							<a href="#SubtitlesManager.get" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Get Subtitles object by <a href="../subtitles/#Subtitles.code">iso-code</a>. If not found, returns<a class="type">None</a>.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>lang_code</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The ISO language code for the subtitle.</td>
+						</tr>
+					</table></ul>
+					<hr>
+
+					<h4 id="SubtitlesManager.len">
+						<pre>
+							<code>len()</code>
+							<a class="type">int</a>
+							<a href="#SubtitlesManager.len" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the number of subtitles managed by the instance.
+						<pre class="code"><code>len(yt.subtitles)</code></pre>
+					</ul>
+
+					<h4 id="SubtitlesManager.iter">
+						<pre>
+							<code>iter()</code>
+							<a href="#SubtitlesManager.iter" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Allows iteration over the list of subtitles.
+						<pre class="code"><code>for sub in yt.subtitles:<br>	print(sub)</code></pre>
+					</ul>
+				</section>
+
+				<section>
+					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
+
+					<h3 id="example.get_all_subtitles">
+						Get all subtitles<a href="#example.get_all_subtitles" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+
+for sub in yt.subtitles:
+	print(sub)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>Subtitles(ar)
+Subtitles(zh-hans)
+Subtitles(en)
+Subtitles(fr)
+Subtitles(de)
+Subtitles(hi)
+Subtitles(id)
+Subtitles(it)
+Subtitles(ja)
+Subtitles(ko)
+Subtitles(pl)
+Subtitles(pt)
+Subtitles(ru)
+Subtitles(es)
+Subtitles(th)
+Subtitles(tr)
+Subtitles(vi)
+</code></pre>
+</details>
+
+					<h3 id="example.get_subtitles_with_specific_language">
+						Get subtitles with specific language<a href="#example.get_subtitles_with_specific_language" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+
+lang_code = 'de'
+sub = yt.subtitles.get(lang_code)
+
+if sub:
+	print(f"iso_code={sub.code}")
+	print(f"language={sub.name}")
+else:
+	print(f"{lang_code} subtitles not found")
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>iso_code=de
+language=German
+</code></pre>
+</details>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
