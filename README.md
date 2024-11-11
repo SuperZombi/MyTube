@@ -1,7 +1,7 @@
 <h1 align="center">MyTube</h1>
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/SuperZombi/MyTube/main/github/images/icon.png" height="128px" align="center">
+    <img src="https://raw.githubusercontent.com/SuperZombi/MyTube/main/github/images/icon.png" height="128px">
 </p>
 <p align="center">
     <img src="https://shields.io/badge/version-1.3.0-blue">
