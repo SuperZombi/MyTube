@@ -383,6 +383,11 @@ pre.art code{
 .main-content table tr td{
 	padding: 10px;
 }
+.main-content table tr td:first-child,
+.main-content table tr td:nth-child(2)
+{
+	text-align: center;
+}
 .main-content table tr td:empty{
 	padding: 0 !important;
 }
