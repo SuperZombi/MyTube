@@ -5,7 +5,7 @@ class StreamsManager:
 		self.streams = streams if streams else []
 
 	def __str__(self): return f"StreamsManager({len(self.streams)} streams)"
-	def __repr__(self): return self.__str__()
+	def __repr__(self): return str(self)
 	def __len__(self): return len(self.streams)
 	def __iter__(self): return iter(self.streams)
 

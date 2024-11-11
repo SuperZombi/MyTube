@@ -2,6 +2,7 @@ import yt_dlp
 from datetime import datetime
 from .utils import Channel, Thumbnail
 from .streams_manager import StreamsManager
+from .subtitles import SubtitlesManager
 from .downloader import Downloader
 
 
@@ -39,6 +40,15 @@ class YouTube:
 		return str(channel_name)
 
 	@property
+	def type(self) -> str:
+		'''"video" or "music"'''
+		if any(e.lower() == "music" for e in self._vid_info.get("categories")):
+			return "music"
+		if "music.youtube" in self.link:
+			return "music"
+		return "video"
+
+	@property
 	def description(self) -> str:
 		return str(self._vid_info.get("description"))
 
@@ -70,6 +80,10 @@ class YouTube:
 	def upload_date(self) -> datetime:
 		ts = int(self._vid_info.get("timestamp"))
 		return datetime.utcfromtimestamp(ts)
+
+	@property
+	def subtitles(self) -> SubtitlesManager:
+		return SubtitlesManager(self._vid_info.get("subtitles"))
 
 	@property
 	def streams(self) -> StreamsManager:
