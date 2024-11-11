@@ -5,6 +5,7 @@
 </p>
 <p align="center">
     <img src="https://shields.io/badge/version-1.3.0-blue">
+    <a href="#donate"><img src="https://shields.io/badge/💲-Support_the_Project-2ea043"></a>
 </p>
 <p align="center">
     <a href="https://superzombi.github.io/MyTube/">Documentation</a>
@@ -34,3 +35,24 @@ async def main():
 
 asyncio.run(main())
 ```
+
+#### 💲Donate
+
+<table>
+  <tr>
+    <td>
+       <img width="18px" src="https://www.google.com/s2/favicons?domain=https://donatello.to&sz=256">
+    </td>
+    <td>
+      <a href="https://donatello.to/super_zombi">Donatello</a>
+    </td>
+  </tr>
+  <tr>
+    <td>
+       <img width="18px" src="https://www.google.com/s2/favicons?domain=https://www.donationalerts.com&sz=256">
+    </td>
+    <td>
+      <a href="https://www.donationalerts.com/r/super_zombi">Donation Alerts</a>
+    </td>
+  </tr>
+</table>
