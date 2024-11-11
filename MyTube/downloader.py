@@ -24,6 +24,10 @@ class Downloader:
 		self._TIME_REG = re.compile(
 			r"time=(?P<hour>\d{2}):(?P<min>\d{2}):(?P<sec>\d{2})"
 		)
+		self.startupinfo = None
+		if os.name == 'nt':
+			self.startupinfo = subprocess.STARTUPINFO()
+			self.startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
 
 	async def _default_progress(self, current, total): return
 
@@ -172,7 +176,7 @@ class Downloader:
 		on_progress = on_progress or self._default_progress
 		total_duration = 0
 		if not self.can_download: return 1
-		process = subprocess.Popen([self.FFMPEG, "-hide_banner"] + command, encoding=os.device_encoding(0), universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+		process = subprocess.Popen([self.FFMPEG, "-hide_banner"] + command, encoding=os.device_encoding(0), universal_newlines=True, startupinfo=self.startupinfo, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 		with process.stdout as pipe:
 			history = []
 			for raw_line in pipe:
