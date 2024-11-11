@@ -34,6 +34,13 @@ class Downloader:
 	def abort(self):
 		self.can_download = False
 
+	def reserve_file(self, file):
+		with open(file, 'w') as f:
+			f.write("0")
+
+	def remove_file(self, file):
+		if os.path.exists(file): os.remove(file)
+
 	async def __call__(self,
 		output_folder:str=None,
 		filename:str=None,
@@ -41,96 +48,80 @@ class Downloader:
 		audio_ext:str="mp3",
 		add_audio_metadata:bool=True,
 		on_progress=None,
-		ffmpeg_progress=None
+		ffmpeg_progress=None,
+		on_abort=None,
+		on_success=None
 	) -> str:
-		if self.videoStream:
-			extension = self.videoStream.videoExt
-			prefer_ext = video_ext or extension
-		elif self.audioStream:
-			extension = self.audioStream.audioExt
-			prefer_ext = audio_ext or extension
-
+		extension = (self.videoStream and self.videoStream.videoExt) or (self.audioStream and self.audioStream.audioExt)
+		target_ext = video_ext or extension if self.videoStream else audio_ext or extension
 		target_filename = filename or self.metadata.get("title", "")
 		target_filepath = get_file_path(
-			filename=target_filename, prefix=extension, folder=output_folder
+			filename=target_filename, prefix=target_ext, folder=output_folder
 		)
-		filepath_prefer = get_file_path(
-			filename=target_filename, prefix=prefer_ext, folder=output_folder
-		)
-		return_file = target_filepath
-
+		self.reserve_file(target_filepath)
 		on_progress = on_progress or self._default_progress
 		ffmpeg_progress = ffmpeg_progress or self._default_progress
 
+		def on_finish(f):
+			if on_success: on_success(f)
+			return f
+
+
 		if self.videoStream and self.audioStream:
 			filesize = self.videoStream.filesize + self.audioStream.filesize
-			async def progressOne(current, total):
-				await on_progress(current, filesize)
-			async def progressTwo(current, total):
-				await on_progress(self.videoStream.filesize+current, filesize)
 
-			videofile = tempfile.TemporaryFile(delete=False).name
-			audiofile = tempfile.TemporaryFile(delete=False).name
+			async def handle_progress(current, total, base_size=0):
+				await on_progress(base_size+current, filesize)
 
-			if self.can_download:
-				await self._download_stream(self.videoStream.url, videofile, progressOne)
+			video_temp = tempfile.TemporaryFile(delete=False).name
+			audio_temp = tempfile.TemporaryFile(delete=False).name
 
-			if self.can_download:
-				await self._download_stream(self.audioStream.url, audiofile, progressTwo)
+			await self._download_stream(self.videoStream.url, video_temp, lambda c,t: handle_progress(c,t))
+			await self._download_stream(self.audioStream.url, audio_temp, lambda c,t: handle_progress(c,t,self.videoStream.filesize))
+			await self._mix(video_temp, audio_temp, target_filepath, ffmpeg_progress)
 
-			if self.can_download:
-				if extension != prefer_ext:
-					await self._mix(videofile, audiofile, filepath_prefer, ffmpeg_progress, v_copy=False)
-					return_file = filepath_prefer
-				else:
-					await self._mix(videofile, audiofile, target_filepath, ffmpeg_progress)
-			
-			os.remove(videofile)
-			os.remove(audiofile)
-			return return_file
+			self.remove_file(video_temp)
+			self.remove_file(audio_temp)
 
 
 		elif self.videoStream:
-			if extension != prefer_ext:
-				videofile = tempfile.TemporaryFile(delete=False).name
-				await self._download_stream(self.videoStream.url, videofile, on_progress)
-				await self._convert(videofile, filepath_prefer, ffmpeg_progress)
-				os.remove(videofile)
-				return_file = filepath_prefer
+			video_temp = tempfile.TemporaryFile(delete=False).name
+			await self._download_stream(self.videoStream.url, video_temp, on_progress)
+			if extension == target_ext:
+				os.replace(video_temp, target_filepath)
 			else:
-				await self._download_stream(self.videoStream.url, target_filepath, on_progress)
-			return return_file
+				await self._convert(video_temp, target_filepath, ffmpeg_progress)
+
+			self.remove_file(video_temp)
+
 
 		elif self.audioStream:
-			if extension != prefer_ext:
-				audiofile = tempfile.TemporaryFile(delete=False).name
-				await self._download_stream(self.audioStream.url, audiofile, on_progress)
-				if add_audio_metadata:
-					await self._convert(audiofile, filepath_prefer, ffmpeg_progress, self.metadata)
-				else:
-					await self._convert(audiofile, filepath_prefer, ffmpeg_progress)
-				os.remove(audiofile)
-				return_file = filepath_prefer
+			audio_temp = tempfile.TemporaryFile(delete=False).name
+			await self._download_stream(self.audioStream.url, audio_temp, on_progress)
+			if extension == target_ext and not add_audio_metadata:
+				os.replace(audio_temp, target_filepath)
 			else:
-				await self._download_stream(self.audioStream.url, target_filepath, on_progress)
-			return return_file
+				await self._convert(audio_temp, target_filepath, ffmpeg_progress, (self.metadata if add_audio_metadata else None))
+
+			self.remove_file(audio_temp)
+
+		if self.can_download: return on_finish(target_filepath)
+		self.remove_file(target_filepath)
+		if on_abort: on_abort()
 
 
-
-	async def _mix(self, video, audio, target, progress=None, v_copy=True):
-		if os.path.exists(target): os.remove(target)
-		codecs = []
+	async def _mix(self, video, audio, target, progress=None):
+		self.remove_file(target)
+		if not self.can_download: return
+		codecs = ["-c:v", "copy"]
 		if target.endswith(".mp4") or target.endswith(".m4a"):
-			if v_copy:
-				codecs.extend(["-c:v", "copy"])
 			codecs.extend(["-c:a", "libmp3lame"])
-		else:
-			codecs.extend(["-c:v", "copy"])
 		await self._ffmpeg(["-i", video, "-i", audio, *codecs, target], progress)
 
 
 	async def _convert(self, inputFile, output, progress=None, metadata=None):
-		if os.path.exists(output): os.remove(output)
+		self.remove_file(target)
+		if not self.can_download: return
 		codecs = []
 		need_detele_thrumb = False
 		if output.endswith(".mp3"):
@@ -153,6 +144,7 @@ class Downloader:
 
 
 	async def _download_stream(self, url, filename, on_progress=None):
+		if not self.can_download: return
 		on_progress = on_progress or self._default_progress
 		async with aiohttp.ClientSession(headers=self.HEADERS) as session:
 			resp_head = await session.get(url)
