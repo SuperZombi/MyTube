@@ -120,7 +120,7 @@ class Downloader:
 
 
 	async def _convert(self, inputFile, output, progress=None, metadata=None):
-		self.remove_file(target)
+		self.remove_file(output)
 		if not self.can_download: return
 		codecs = []
 		need_detele_thrumb = False
