@@ -4,7 +4,7 @@
     <img src="https://raw.githubusercontent.com/SuperZombi/MyTube/main/github/images/icon.png" height="128px">
 </p>
 <p align="center">
-    <img src="https://shields.io/badge/version-1.3.0-blue">
+    <img src="https://shields.io/badge/version-1.3.0-blue"><br>
     <a href="#donate"><img src="https://shields.io/badge/💲-Support_the_Project-2ea043"></a>
 </p>
 <p align="center">
@@ -36,7 +36,8 @@ async def main():
 asyncio.run(main())
 ```
 
-#### 💲Donate
+
+## 💲Donate
 
 <table>
   <tr>
