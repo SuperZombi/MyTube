@@ -4,7 +4,8 @@
     <img src="https://raw.githubusercontent.com/SuperZombi/MyTube/main/github/images/icon.png" height="128px">
 </p>
 <p align="center">
-    <img src="https://shields.io/badge/version-1.3.1-blue"><br>
+    <img src="https://shields.io/badge/version-1.3.1-blue">
+    <a href="https://pypi.org/project/MyTube-dlp/"><img src="https://img.shields.io/pypi/v/MyTube-dlp"></a><br>
     <a href="#donate"><img src="https://shields.io/badge/💲-Support_the_Project-2ea043"></a>
 </p>
 <p align="center">
@@ -35,6 +36,9 @@ async def main():
 
 asyncio.run(main())
 ```
+
+### See also:
+* [GUI for MyTube](https://github.com/SuperZombi/MyTube-GUI)
 
 
 ## 💲Donate
