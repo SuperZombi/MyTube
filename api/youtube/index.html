@@ -32,7 +32,7 @@
 			<div class="main-content">
 				<section>
 					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
-					<h4><pre><code>class YouTube(link)</code></pre></h4>
+					<h4><pre><code>class YouTube(link, cookies)</code></pre></h4>
 					<ul>Initializes the YouTube object with the provided video link.</ul>
 					<h4>Parameters:</h4>
 					<ul><table>
@@ -40,6 +40,11 @@
 							<td><strong>link</strong></td>
 							<td><a class="type">str</a></td>
 							<td>The URL to the YouTube video.</td>
+						</tr>
+						<tr>
+							<td><strong>cookies</strong></td>
+							<td><a class="type">list</a></td>
+							<td>List of dicts.</td>
 						</tr>
 					</table></ul>
 				</section>
@@ -218,6 +223,27 @@ print(yt.duration)     # Video duration in seconds
 >>> 212
 </code></pre>
 </details>
+					<h3 id="example.cookies">Cookies example<a href="#example.cookies" class="linker"></a></h3>
+					<pre><code style="white-space:wrap;">[{"domain": ".youtube.com", "expiry": 1700000000, "httpOnly": true, "name": "__Secure-1234", "path": "/", "sameSite": "Lax", "secure": true, "value": "ABCdef123456789"}, ...]</code></pre>
+					<p>
+						To get the cookies, you can use the browser extension to export cookies
+						(<a href="https://chromewebstore.google.com/detail/get-cookiestxt-locally/cclelndahbckbenkjhflpdbgdldlbecc" target="_blank">Chrome</a> or <a href="https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/" target="_blank">Firefox</a>).
+					</p>
+					<p>
+						<i class="fa-solid fa-triangle-exclamation" style="color:orange"></i>
+						We are not developing this extensions, so install them at your own risk! Be careful what you install.
+					</p>
+<pre><code class="code">import json
+import MyTube
+
+with open("my_cookies.json", 'r') as f:
+	cookies = json.loads(f.read())
+
+link = "https://youtube.com/watch?v=HtVdAasjOgU"
+
+yt = MyTube.YouTube(link, cookies=cookies)
+print(yt.title)
+</code></pre>
 				</section>
 			</div>
 		</div>
