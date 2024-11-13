@@ -1,6 +1,9 @@
+import os
 import yt_dlp
+import tempfile
 from datetime import datetime
 from .utils import Channel, Thumbnail
+from .utils import convert_to_netscape
 from .streams_manager import StreamsManager
 from .subtitles import SubtitlesManager
 from .downloader import Downloader
@@ -8,15 +11,32 @@ from .downloader import Downloader
 
 
 class YouTube:
-	def __init__(self, link):
+	def __init__(self, link, cookies:list=None):
 		self.link = link
 		self._url = ""
 		self._vid_info = None
 		self._formats = None
 
-		with yt_dlp.YoutubeDL({'quiet': True, 'noplaylist': True, "no_warnings":True}) as ydl:
+		self.cookies = cookies
+		self.cookie_file = None
+
+		if self.cookies:
+			self._cookies_netscape = convert_to_netscape(self.cookies)
+			self.cookie_file = tempfile.TemporaryFile(suffix=".txt", delete=False).name
+			with open(self.cookie_file, 'w') as f:
+				f.write(self._cookies_netscape)
+
+		options = {
+			'quiet': True,
+			'noplaylist': True,
+			"no_warnings": True,
+			"cookiefile": self.cookie_file
+		}
+		with yt_dlp.YoutubeDL(options) as ydl:
 			self._vid_info = ydl.extract_info(self.link, download=False)
 			self._url = self._vid_info.get("webpage_url")
+
+		if self.cookie_file and os.path.exists(self.cookie_file): os.remove(self.cookie_file)
 
 	def __str__(self):
 		return f'MyTube({self.videoId})'

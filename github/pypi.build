@@ -1,7 +1,7 @@
 {
     "folder": "C:/Users/rost/Downloads/MyTube",
     "package_name": "MyTube-dlp",
-    "version": "1.3.1",
+    "version": "1.4.0",
     "description": "Python YouTube Downloader",
     "readme": "C:/Users/rost/Downloads/README.md",
     "username": "Super_Zombi",
@@ -10,6 +10,6 @@
     "docs": "https://superzombi.github.io/MyTube/",
     "python_ver": "3.9",
     "dependencies": [
-        "yt-dlp"
+        "yt-dlp", "Pillow", "aiohttp", "requests"
     ]
 }

@@ -98,3 +98,14 @@ def to_seconds(kwargs: dict) -> int:
 	minute = int(kwargs.get("min", 0))
 	sec = int(kwargs.get("sec", 0))
 	return (hour*3600) + (minute*60) + sec
+
+def convert_to_netscape(cookie_data):
+	netscape_cookie = "# Netscape HTTP Cookie File\n\n"
+	for cookie in cookie_data:
+		domain = cookie.get("domain", "")
+		name = cookie.get("name", "")
+		value = cookie.get("value", "")
+		expires = cookie.get("expirationDate", 0)
+
+		netscape_cookie += f"{domain}\tTRUE\t/\tFALSE\t{expires}\t{name}\t{value}\n"
+	return netscape_cookie
