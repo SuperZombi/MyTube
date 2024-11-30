@@ -155,13 +155,22 @@ class Downloader:
 				while downloaded < file_size:
 					if self.can_download:
 						stop_pos = min(downloaded + self.CHUNK_SIZE, file_size) - 1
-						resp = await session.get(url + f"&range={downloaded}-{stop_pos}")
-						chunk = await resp.content.read()
+						chunk = await self._make_request(session, url+f"&range={downloaded}-{stop_pos}")
 						if not chunk: break
 						file.write(chunk)
 						downloaded += len(chunk)
 						await on_progress(downloaded, file_size)
 					else: break
+
+	async def _make_request(self, session, url, retries=3):
+		for attempt in range(retries):
+			try:
+				resp = await session.get(url)
+				chunk = await resp.content.read()
+				return chunk
+			except aiohttp.ClientPayloadError as e:
+				if attempt == retries - 1:
+					raise e
 
 
 	async def _ffmpeg(self, command, on_progress=None):
