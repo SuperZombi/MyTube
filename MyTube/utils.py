@@ -8,11 +8,12 @@ import tempfile
 
 
 class Channel:
-	def __init__(self, id:str, url:str, name:str, followers:int):
+	def __init__(self, id:str, url:str, name:str, followers:int=0):
 		self.id = id
 		self.url = url
-		self.name = name
 		self.followers = followers
+		trash = " - Topic"
+		self.name = name[:-len(trash)] if name.endswith(trash) else name
 	
 	def __str__(self): return f'Channel({self.name})'
 	def __repr__(self): return str(self)
@@ -109,3 +110,10 @@ def convert_to_netscape(cookie_data):
 
 		netscape_cookie += f"{domain}\tTRUE\t/\tFALSE\t{expires}\t{name}\t{value}\n"
 	return netscape_cookie
+
+def get_cookie_file(json_cookies):
+	cookies_netscape = convert_to_netscape(json_cookies)
+	cookie_file = tempfile.TemporaryFile(suffix=".txt", delete=False).name
+	with open(cookie_file, 'w') as f:
+		f.write(cookies_netscape)
+	return cookie_file

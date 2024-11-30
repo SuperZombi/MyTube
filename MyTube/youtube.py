@@ -3,11 +3,10 @@ import yt_dlp
 import tempfile
 from datetime import datetime
 from .utils import Channel, Thumbnail
-from .utils import convert_to_netscape
+from .utils import get_cookie_file
 from .streams_manager import StreamsManager
 from .subtitles import SubtitlesManager
 from .downloader import Downloader
-
 
 
 class YouTube:
@@ -16,32 +15,23 @@ class YouTube:
 		self._url = ""
 		self._vid_info = None
 		self._formats = None
-
 		self.cookies = cookies
-		self.cookie_file = None
-
-		if self.cookies:
-			self._cookies_netscape = convert_to_netscape(self.cookies)
-			self.cookie_file = tempfile.TemporaryFile(suffix=".txt", delete=False).name
-			with open(self.cookie_file, 'w') as f:
-				f.write(self._cookies_netscape)
+		cookie_file = get_cookie_file(cookies) if cookies else None
 
 		options = {
 			'quiet': True,
 			'noplaylist': True,
 			"no_warnings": True,
-			"cookiefile": self.cookie_file
+			"cookiefile": cookie_file
 		}
 		with yt_dlp.YoutubeDL(options) as ydl:
 			self._vid_info = ydl.extract_info(self.link, download=False)
 			self._url = self._vid_info.get("webpage_url")
 
-		if self.cookie_file and os.path.exists(self.cookie_file): os.remove(self.cookie_file)
+		if cookie_file and os.path.exists(cookie_file): os.remove(cookie_file)
 
-	def __str__(self):
-		return f'MyTube({self.videoId})'
-	def __repr__(self):
-		return f'MyTube({self.videoId})'
+	def __str__(self): return f'MyTube({self.videoId})'
+	def __repr__(self): return str(self)
 
 	@property
 	def videoId(self) -> str:
@@ -53,11 +43,7 @@ class YouTube:
 
 	@property
 	def author(self) -> str:
-		trash = " - Topic"
-		channel_name = self._vid_info.get("channel")
-		if channel_name.endswith(trash):
-			channel_name = channel_name[:-len(trash)]
-		return str(channel_name)
+		return str(self.channel.name)
 
 	@property
 	def type(self) -> str:
@@ -124,7 +110,7 @@ class YouTube:
 	def channel(self) -> Channel:
 		id = self._vid_info.get("channel_id")
 		url = self._vid_info.get("channel_url")
-		name = self.author
+		name = self._vid_info.get("channel")
 		followers = int(self._vid_info.get("channel_follower_count"))
 		return Channel(id=id, url=url, name=name, followers=followers)
 
