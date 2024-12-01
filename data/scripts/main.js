@@ -1,4 +1,5 @@
 var origin = "https://superzombi.github.io/MyTube"
+init_theme()
 
 window.onload=_=>{
 	load_sidebar()
@@ -28,6 +29,12 @@ function scrollToHash(){
 function relativePath(){
 	let href = window.location.origin+window.location.pathname.toLocaleLowerCase()
 	return href.replace(origin.toLocaleLowerCase(), '')
+}
+
+function init_theme(){
+	if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+		document.documentElement.setAttribute('theme', 'dark')
+	}
 }
 
 

@@ -1,7 +1,6 @@
 body {
 	margin: 0; padding: 0;
 	font-family: sans-serif;
-	background: #f4f4f4;
 }
 * {
 	box-sizing: border-box;
@@ -10,6 +9,7 @@ body {
 	--main-color: #4CAF50;
 	--side-bar: #333;
 	--body-color: #eee;
+	--text-color: #000;
 }
 
 a[target="_blank"]{
@@ -41,6 +41,7 @@ a[target="_blank"]{
 	height: 100%;
 	overflow-y: auto;
 	background: var(--body-color);
+	color: var(--text-color);
 	padding: 0 2rem;
 }
 .content .header{
@@ -374,9 +375,10 @@ pre.art code{
 	border-radius: 5px;
 	overflow: hidden;
 	filter: drop-shadow(0 2px 3px lightgrey);
+	--alt-color: color-mix(in srgb, var(--body-color) 95%, black);
 }
 .main-content table tr:nth-child(odd){
-	background-color: #e2e2e2;
+	background: var(--alt-color);
 }
 .main-content table tr:nth-child(even){
 	background: var(--body-color);
@@ -393,6 +395,33 @@ pre.art code{
 	padding: 0 !important;
 }
 
+
+[theme="dark"]:root{
+	color-scheme: dark;
+	--main-color: #358a39;
+	--side-bar: #202025;
+	--body-color: #282930;
+	--text-color: #e3e3e3;
+}
+[theme="dark"]{
+	.breadcrumbs a{
+		background: #445;
+	}
+	.breadcrumbs a[href]:hover{
+		background: #556;
+	}
+	.main-content .linker {
+		color: lightgrey;
+	}
+	.main-content .execute pre{
+		background: #080716;
+		border-color: #005dff;
+	}
+	.main-content table{
+		filter: drop-shadow(0 2px 3px #111);
+		--alt-color: color-mix(in srgb, var(--body-color) 95%, white);
+	}
+}
 
 
 @media only screen and (max-width: 600px) {
@@ -443,10 +472,17 @@ pre.art code{
 }
 
 @media print {
+	:root{
+		color-scheme: light !important;
+		--body-color: #fff !important;
+		--text-color: #000 !important;
+	}
 	* {
 		filter: none !important;
 	}
-	.sidebar {
+	.sidebar, .breadcrumbs, .chapters,
+	.main-content .execute,
+	.main-content .execute summary {
 		display: none;
 	}
 	.content {
@@ -456,6 +492,12 @@ pre.art code{
 		white-space: break-spaces;
 		page-break-inside: avoid;
 		page-break-after: auto;
+	}
+	.main-content .execute pre {
+		background: #ccc !important;
+	}
+	.main-content .execute[open] {
+		display: block;
 	}
 	h1, h2, h3, h4, h5{
 		position: unset !important;
