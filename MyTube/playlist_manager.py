@@ -22,15 +22,18 @@ class PlaylistVideo:
 	def __str__(self): return f"PlaylistVideo({self.link})"
 	def __repr__(self): return str(self)
 
+class DeletedVideo:
+	def __init__(self, link):
+		self.link = link
+	def __bool__(self): return False
+	def load(self): return self
+
 
 class PlaylistManager:
 	def __init__(self, array=None):
 		self.arr = array or []
 		self.index = 0
-
-	def append(self, video:PlaylistVideo): self.arr.append(video)
 	def __len__(self): return len(self.arr)
-
 	def __getitem__(self, key):
 		if isinstance(key, slice):
 			return (self.arr[i].load() for i in range(*key.indices(len(self.arr))))
