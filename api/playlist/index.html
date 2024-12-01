@@ -103,7 +103,10 @@
 							<a href="#Playlist.videos" class="linker"></a>
 						</pre>
 					</h4>
-					<ul>Returns the <a href="../playlist_manager">Playlist Manager</a> for accessing the videos.</ul>
+					<ul>
+						Returns the <a href="../playlist_manager">Playlist Manager</a> for accessing the videos.
+						Does not contain<a class="type">DeletedVideo</a> objects.
+					</ul>
 
 					<h4 id="Playlist.raw_videos">
 						<pre>
@@ -112,7 +115,10 @@
 							<a href="#Playlist.raw_videos" class="linker"></a>
 						</pre>
 					</h4>
-					<ul>Returns the raw list of <a href="../playlist_video">Playlist Video</a> objects.</ul>
+					<ul>
+						Returns the raw list of <a href="../playlist_video">Playlist Video</a> objects.
+						May contain<a class="type">DeletedVideo</a> objects.
+					</ul>
 				</section>
 
 				<section>
@@ -138,6 +144,18 @@ All the YouTube Rewinds so far.
 11 videos
 </code></pre>
 </details>
+					<h3 id="example.cookies">Cookies example<a href="#example.cookies" class="linker"></a></h3>
+<pre class="code"><code>import json
+import MyTube
+
+with open("my_cookies.json", 'r') as f:
+	cookies = json.loads(f.read())
+
+p = MyTube.Playlist(link, cookies=cookies)
+
+print(p.type)
+print(p.title)
+</code></pre>
 					<hr>
 					<h3 id="example.get_videos_basic_info">
 						Get video's basic info<a href="#example.get_videos_basic_info" class="linker"></a>
@@ -149,8 +167,9 @@ link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD
 p = MyTube.Playlist(link)
 
 for video in p.raw_videos:
-	print(video.title)
-	print(video.link)
+	if video:
+		print(video.title)
+		print(video.link)
 </code></pre>
 
 <details class="execute"><summary></summary>
@@ -188,12 +207,11 @@ Youtube Rewind 2020, Thank God It's Over
 https://www.youtube.com/watch?v=PKtnafFtfEo
 </code></pre>
 </details>
-<p>To manually load lazy video, execute <a href="../playlist_video/#PlaylistVideo.load">load()</a>.</p>
-<pre class="code"><code>for video in p.raw_videos:
-	yt = video.load()
-	print(yt.streams)
-</code>
-</pre>
+					<p>To manually load lazy video, execute <a href="../playlist_video/#PlaylistVideo.load">load()</a>.</p>
+					<p>
+						<i class="fa-solid fa-triangle-exclamation" style="color:orange"></i>
+						<a class="type" href="#Playlist.raw_videos">raw_videos</a> may also contain<a class="type">DeletedVideo</a>, so it is recommended to check for this to avoid an error.
+					</p>
 					<hr>
 					<h3 id="example.get_videos_streams">
 						Get playlist's videos streams<a href="#example.get_videos_streams" class="linker"></a>
@@ -253,19 +271,6 @@ Youtube Rewind 2020, Thank God It's Over
 StreamsManager(93 streams)
 </code></pre>
 </details>
-					<hr>
-					<h3 id="example.cookies">Cookies example<a href="#example.cookies" class="linker"></a></h3>
-<pre class="code"><code>import json
-import MyTube
-
-with open("my_cookies.json", 'r') as f:
-	cookies = json.loads(f.read())
-
-p = MyTube.Playlist(link, cookies=cookies)
-
-print(p.type)
-print(p.title)
-</code></pre>
 				</section>
 			</div>
 		</div>

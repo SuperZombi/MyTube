@@ -151,14 +151,17 @@ link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD
 p = MyTube.Playlist(link)
 
 for video in p.raw_videos:
-	print(video.title)
+	if video:
+		print(video.title)
 
-	print("loading...")
-	yt = video.load()
+		print("loading...")
+		yt = video.load()
 
-	print(yt.title)
-	print(yt.streams)
-	break
+		print(yt.title)
+		print(yt.streams)
+		break
+	else:
+		print("DeletedVideo")
 </code></pre>
 <details class="execute"><summary></summary>
 <pre><code>YouTube Rewind 2010: Year in Review
@@ -170,6 +173,7 @@ YouTube Rewind 2010: Year in Review
 StreamsManager(29 streams)
 </code></pre>
 </details>
+
 				</section>
 			</div>
 		</div>
