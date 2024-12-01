@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>MyTube • Playlist Manager</title>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width'>
+	<link rel="icon" href="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<meta property="og:title" content="MyTube Documentation">
+	<meta property="og:description" content="Python YouTube Downloader">
+	<meta property="og:image" content="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
+	<link rel="stylesheet" href="https://superzombi.github.io/MyTube/data/styles/main.css">
+	<script src="https://superzombi.github.io/MyTube/data/scripts/main.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar"></div>
+		
+		<div class="content">
+			<div class="header">
+				<ul class="breadcrumbs"></ul>
+				<hr>
+				<h2>Playlist Manager Object</h2>
+			</div>
+			<div class="main-content">
+				<section>
+					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
+					<h4><pre><code>class PlaylistManager()</code></pre></h4>
+					<ul>Manages a list of <a href="../playlist_video">Playlist Video</a> objects with functionality to append, access, and iterate over the list.</ul>
+				</section>
+				<section>
+					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
+					<h3 id="example.videos_count">
+						Get videos count<a href="#example.videos_count" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+
+link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
+p = MyTube.Playlist(link)
+print(len(p.videos))
+</code></pre>
+					<hr>
+					<h3 id="example.slice">
+						Slice<a href="#example.slice" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+
+link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
+p = MyTube.Playlist(link)
+
+for video in p.videos[:3]:
+	print(video.title)
+	print(video.streams)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>YouTube Rewind 2010: Year in Review
+StreamsManager(29 streams)
+[pause]
+[pause]
+
+YouTube Rewind 2011
+StreamsManager(24 streams)
+[pause]
+[pause]
+
+Rewind YouTube Style 2012
+StreamsManager(24 streams)
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.index">
+						Index<a href="#example.index" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+
+link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
+p = MyTube.Playlist(link)
+
+yt = p.videos[0]
+print(yt.title)
+print(yt.streams)
+
+yt = p.videos[-1]
+print(yt.title)
+print(yt.streams)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>YouTube Rewind 2010: Year in Review
+StreamsManager(29 streams)
+[pause]
+[pause]
+
+Youtube Rewind 2020, Thank God It's Over
+StreamsManager(93 streams)
+</code></pre>
+</details>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

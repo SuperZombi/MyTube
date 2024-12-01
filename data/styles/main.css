@@ -26,10 +26,12 @@ a[target="_blank"]{
 	min-width: fit-content;
 	width: 250px;
 	height: 100%;
-	overflow-y: auto;
 	user-select: none;
 	display: flex;
 	flex-direction: column;
+}
+.sidebar nav {
+	overflow-y: auto;
 }
 .sidebar nav hr{
 	margin: 0;
@@ -118,7 +120,6 @@ a[target="_blank"]{
 .sidebar .header {
 	text-align: center;
 	background: var(--main-color);
-	overflow: hidden;
 }
 .sidebar .header .icon {
 	height: 1.5rem;

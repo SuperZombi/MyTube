@@ -54,6 +54,7 @@ print(yt.duration)
 					<p>Find out more about other properties <a href="../api/youtube/#properties">here</a>.</p>
 
 
+					<hr>
 					<h3 id="usage.get_streams">Get streams<a href="#usage.get_streams" class="linker"></a></h3>
 <pre class="code"><code>muxed_stream = yt.streams.filter(only_muxed=True).first()
 </code></pre>
@@ -66,6 +67,7 @@ audio = yt.streams.best_audio()
 					<p>Learn more about ways to filter streams <a href="../api/streams_manager/#example">here</a>.</p>
 
 
+					<hr>
 					<h3 id="usage.downloading">Downloading<a href="#usage.downloading" class="linker"></a></h3>
 					<p>The downloader works asynchronously.</p>
 <pre class="code"><code>async def main():
@@ -85,6 +87,20 @@ async def main():
 asyncio.run(main())
 </code></pre>
 					<p>More information about downloading <a href="../api/downloader/#Downloader.call">here</a>.</p>
+
+
+					<hr>
+					<h3 id="usage.playlist">Playlist<a href="#usage.playlist" class="linker"></a></h3>
+<pre class="code"><code>link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
+playlist = MyTube.Playlist(link)
+
+print(playlist.title)
+print(len(playlist.videos))
+
+for video in playlist.videos:
+	print(video.streams)
+</code></pre>
+					<p>Discover more playlists usage examples <a href="../api/playlist/#example">here</a>.</p>
 				</section>
 			</div>
 		</div>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>MyTube • Playlist</title>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width'>
+	<link rel="icon" href="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<meta property="og:title" content="MyTube Documentation">
+	<meta property="og:description" content="Python YouTube Downloader">
+	<meta property="og:image" content="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
+	<link rel="stylesheet" href="https://superzombi.github.io/MyTube/data/styles/main.css">
+	<script src="https://superzombi.github.io/MyTube/data/scripts/main.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar"></div>
+		
+		<div class="content">
+			<div class="header">
+				<ul class="breadcrumbs"></ul>
+				<hr>
+				<h2>Playlist Object</h2>
+				<ul class="chapters">
+					<li><a href="#constructor">Constructor</a></li>
+					<li><a href="#properties">Properties</a></li>
+					<li><a href="#example">Example</a></li>
+				</ul>
+			</div>
+			<div class="main-content">
+				<section>
+					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
+					<h4><pre><code>class Playlist(link, cookies)</code></pre></h4>
+					<ul>Represents a YouTube playlist and manages its videos using a <a href="../playlist_manager">Playlist Manager</a>.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>link</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The URL to the YouTube playlist.</td>
+						</tr>
+						<tr>
+							<td><strong>cookies</strong></td>
+							<td><a class="type">list</a></td>
+							<td>List of dicts.</td>
+						</tr>
+					</table></ul>
+				</section>
+
+				<section>
+					<h2 id="properties">Properties<a href="#properties" class="linker"></a></h2>
+
+					<h4 id="Playlist.link">
+						<pre>
+							<code>link</code>
+							<a class="type">str</a>
+							<a href="#Playlist.link" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The URL to the playlist.</ul>
+
+					<h4 id="Playlist.playlistId">
+						<pre>
+							<code>playlistId</code>
+							<a class="type">str</a>
+							<a href="#Playlist.playlistId" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the unique identifier of the playlist.</ul>
+					
+					<h4 id="Playlist.title">
+						<pre>
+							<code>title</code>
+							<a class="type">str</a>
+							<a href="#Playlist.title" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the playlist title.</ul>
+					
+					<h4 id="Playlist.description">
+						<pre>
+							<code>description</code>
+							<a class="type">str</a>
+							<a href="#Playlist.description" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the playlist description.</ul>
+					
+					<h4 id="Playlist.type">
+						<pre>
+							<code>type</code>
+							<a class="type">str</a>
+							<a href="#Playlist.type" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the availability type of the playlist. (<code>"private" or "public"</code>)</ul>
+					
+					<h4 id="Playlist.videos">
+						<pre>
+							<code>videos</code>
+							<a href="../playlist_manager" class="type">MyTube.PlaylistManager</a>
+							<a href="#Playlist.videos" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the <a href="../playlist_manager">Playlist Manager</a> for accessing the videos.</ul>
+
+					<h4 id="Playlist.raw_videos">
+						<pre>
+							<code>raw_videos</code>
+							<a class="type">list</a>
+							<a href="#Playlist.raw_videos" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the raw list of <a href="../playlist_video">Playlist Video</a> objects.</ul>
+				</section>
+
+				<section>
+					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
+					<h3 id="example.get_info">
+						Get playlist info<a href="#example.get_info" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+
+link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
+p = MyTube.Playlist(link)
+
+print(p.type)
+print(p.title)
+print(p.description)
+print(len(p.videos), "videos")
+</code></pre>
+
+<details class="execute"><summary></summary>
+<pre><code>public
+Youtube Rewind (2010-2020)
+All the YouTube Rewinds so far.
+11 videos
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.get_videos_basic_info">
+						Get video's basic info<a href="#example.get_videos_basic_info" class="linker"></a>
+					</h3>
+					<p>This method does not make additional requests to YouTube.</p>
+<pre class="code"><code>import MyTube
+
+link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
+p = MyTube.Playlist(link)
+
+for video in p.raw_videos:
+	print(video.title)
+	print(video.link)
+</code></pre>
+
+<details class="execute"><summary></summary>
+<pre><code>YouTube Rewind 2010: Year in Review
+https://www.youtube.com/watch?v=UFnXm6cjGwU
+
+YouTube Rewind 2011
+https://www.youtube.com/watch?v=SmnkYyHQqNs
+
+Rewind YouTube Style 2012
+https://www.youtube.com/watch?v=iCkYw3cRwLo
+
+YouTube Rewind: What Does 2013 Say?
+https://www.youtube.com/watch?v=H7jtC8vjXw8
+
+YouTube Rewind: Turn Down for 2014
+https://www.youtube.com/watch?v=zKx2B8WCQuw
+
+YouTube Rewind: Now Watch Me 2015 | #YouTubeRewind
+https://www.youtube.com/watch?v=KK9bwTlAvgo
+
+YouTube Rewind: The Ultimate 2016 Challenge | #YouTubeRewind
+https://www.youtube.com/watch?v=_GuOjXYl5ew
+
+YouTube Rewind: The Shape of 2017 | #YouTubeRewind
+https://www.youtube.com/watch?v=FlsCjmMhFmw
+
+YouTube Rewind 2018: Everyone Controls Rewind | #YouTubeRewind
+https://www.youtube.com/watch?v=YbJOTdZBX1g
+
+YouTube Rewind 2019: For the Record | #YouTubeRewind
+https://www.youtube.com/watch?v=2lAe1cqCOXo
+
+Youtube Rewind 2020, Thank God It's Over
+https://www.youtube.com/watch?v=PKtnafFtfEo
+</code></pre>
+</details>
+<p>To manually load lazy video, execute <a href="../playlist_video/#PlaylistVideo.load">load()</a>.</p>
+<pre class="code"><code>for video in p.raw_videos:
+	yt = video.load()
+	print(yt.streams)
+</code>
+</pre>
+					<hr>
+					<h3 id="example.get_videos_streams">
+						Get playlist's videos streams<a href="#example.get_videos_streams" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+
+link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
+p = MyTube.Playlist(link)
+
+for video in p.videos:
+	print(video.title)
+	print(video.streams)
+</code></pre>
+
+<details class="execute"><summary></summary>
+<pre><code>YouTube Rewind 2010: Year in Review
+StreamsManager(29 streams)
+[pause]
+
+YouTube Rewind 2011
+StreamsManager(24 streams)
+[pause]
+
+Rewind YouTube Style 2012
+StreamsManager(24 streams)
+[pause]
+
+YouTube Rewind: What Does 2013 Say?
+StreamsManager(24 streams)
+[pause]
+
+YouTube Rewind: Turn Down for 2014
+StreamsManager(24 streams)
+[pause]
+
+YouTube Rewind: Now Watch Me 2015 | #YouTubeRewind
+StreamsManager(24 streams)
+[pause]
+
+YouTube Rewind: The Ultimate 2016 Challenge | #YouTubeRewind
+StreamsManager(28 streams)
+[pause]
+
+YouTube Rewind: The Shape of 2017 | #YouTubeRewind
+StreamsManager(35 streams)
+[pause]
+
+YouTube Rewind 2018: Everyone Controls Rewind | #YouTubeRewind
+StreamsManager(35 streams)
+[pause]
+
+YouTube Rewind 2019: For the Record | #YouTubeRewind
+StreamsManager(35 streams)
+[pause]
+
+Youtube Rewind 2020, Thank God It's Over
+StreamsManager(93 streams)
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.cookies">Cookies example<a href="#example.cookies" class="linker"></a></h3>
+<pre class="code"><code>import json
+import MyTube
+
+with open("my_cookies.json", 'r') as f:
+	cookies = json.loads(f.read())
+
+p = MyTube.Playlist(link, cookies=cookies)
+
+print(p.type)
+print(p.title)
+</code></pre>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
