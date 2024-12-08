@@ -177,7 +177,7 @@ class Downloader:
 		on_progress = on_progress or self._default_progress
 		total_duration = 0
 		if not self.can_download: return 1
-		process = subprocess.Popen([self.FFMPEG, "-hide_banner"] + command, encoding=os.device_encoding(0), universal_newlines=True, startupinfo=self.startupinfo, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+		process = subprocess.Popen([self.FFMPEG, "-hide_banner"] + command, encoding='utf-8', universal_newlines=True, startupinfo=self.startupinfo, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 		with process.stdout as pipe:
 			history = []
 			for raw_line in pipe:

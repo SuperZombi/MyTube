@@ -4,7 +4,7 @@
     <img src="https://raw.githubusercontent.com/SuperZombi/MyTube/main/github/images/icon.png" height="128px">
 </p>
 <p align="center">
-    <img src="https://shields.io/badge/version-1.5.2-blue">
+    <img src="https://shields.io/badge/version-1.5.3-blue">
     <a href="https://pypi.org/project/MyTube-dlp/"><img src="https://img.shields.io/pypi/v/MyTube-dlp"></a><br>
     <a href="#donate"><img src="https://shields.io/badge/💲-Support_the_Project-2ea043"></a>
 </p>
