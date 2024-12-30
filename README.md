@@ -6,10 +6,8 @@
 <p align="center">
     <img src="https://shields.io/badge/version-1.5.3-blue">
     <a href="https://pypi.org/project/MyTube-dlp/"><img src="https://img.shields.io/pypi/v/MyTube-dlp"></a><br>
-    <a href="#donate"><img src="https://shields.io/badge/💲-Support_the_Project-2ea043"></a>
-</p>
-<p align="center">
-    <a href="https://superzombi.github.io/MyTube/">Documentation</a>
+    <a href="https://superzombi.github.io/MyTube/"><img src="https://shields.io/badge/📖-Documentation-ffbc5c"></a><br>
+    <a href="#donate"><img src="https://shields.io/badge/💲-Support_Project-2ea043"></a>
 </p>
 <p align="center">
     MyTube is a wrapper around <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> that is similar in functionality to <a href="https://github.com/pytube/pytube">pytube</a>.<br>
