@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+	<title>MyTube • Comment</title>
+	<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width'>
+	<link rel="icon" href="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<meta property="og:title" content="MyTube Documentation">
+	<meta property="og:description" content="Python YouTube Downloader">
+	<meta property="og:image" content="https://superzombi.github.io/MyTube/data/images/icon.png">
+	<link rel='stylesheet' href='https://use.fontawesome.com/releases/v6.2.1/css/all.css'>
+	<link rel="stylesheet" href="https://superzombi.github.io/MyTube/data/styles/main.css">
+	<script src="https://superzombi.github.io/MyTube/data/scripts/main.js"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar"></div>
+		
+		<div class="content">
+			<div class="header">
+				<ul class="breadcrumbs"></ul>
+				<hr>
+				<h2>Comment Object</h2>
+				<ul class="chapters">
+					<li><a href="#constructor">Constructor</a></li>
+					<li><a href="#properties">Properties</a></li>
+					<li><a href="#methods">Methods</a></li>
+				</ul>
+			</div>
+			<div class="main-content">
+				<section>
+					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
+					<h4><pre><code>class Comment(args, video_url)</code></pre></h4>
+					<ul>Represents a YouTube video comment.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>args</strong></td>
+							<td><a class="type">dict</a></td>
+							<td><code>{"id", "text", "like_count", "is_pinned", "parent", "author", "author_id", "author_url"}</code></td>
+						</tr>
+						<tr>
+							<td><strong>video_url</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The URL of the YouTube video the comment belongs to.</td>
+						</tr>
+					</table></ul>
+				</section>
+
+				<section>
+					<h2 id="properties">Properties<a href="#properties" class="linker"></a></h2>
+
+					<h4 id="Comment.id">
+						<pre>
+							<code>id</code>
+							<a class="type">str</a>
+							<a href="#Comment.id" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The unique identifier of the comment.</ul>
+
+					<h4 id="Comment.url">
+						<pre>
+							<code>url</code>
+							<a class="type">str</a>
+							<a href="#Comment.url" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The URL which is a link to the video and a parameter for displaying the comment at the top of the comments.</ul>
+
+					<h4 id="Comment.text">
+						<pre>
+							<code>text</code>
+							<a class="type">str</a>
+							<a href="#Comment.text" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The text content of the comment.</ul>
+
+					<h4 id="Comment.author">
+						<pre>
+							<code>author</code>
+							<a href="../channel/" class="type">MyTube.Channel</a>
+							<a href="#Comment.author" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The Author of the comment.</ul>
+
+					<h4 id="Comment.likes">
+						<pre>
+							<code>likes</code>
+							<a class="type">int</a>
+							<a href="#Comment.likes" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The number of likes the comment has received.</ul>
+
+					<h4 id="Comment.is_pinned">
+						<pre>
+							<code>is_pinned</code>
+							<a class="type">bool</a>
+							<a href="#Comment.is_pinned" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Indicates whether the comment is pinned.</ul>
+
+					<h4 id="Comment._parent">
+						<pre>
+							<code>_parent</code>
+							<a class="type">str</a>
+							<a href="#Comment._parent" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>The <a href="#Comment.url">full URL</a> to the parent comment (for replies), or <code>"root"</code> if it's a top-level comment.</ul>
+				</section>
+
+				<section>
+					<h2 id="methods">Methods<a href="#methods" class="linker"></a></h2>
+
+					<h4 id="Comment.str">
+						<pre>
+							<code>str()</code>
+							<a class="type">str</a>
+							<a href="#Comment.str" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Alias for <a href="#Comment.text">text</a>. Returns the text content of the comment.
+						<pre class="code"><code>str(comment)</code></pre>
+					</ul>
+				</section>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
