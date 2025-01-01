@@ -14,7 +14,7 @@ class Channel:
 		self.followers = followers
 		trash = " - Topic"
 		self.name = name[:-len(trash)] if name.endswith(trash) else name
-	
+		self.name = self.name[1:] if self.name.startswith("@") else self.name
 	def __str__(self): return f'Channel({self.name})'
 	def __repr__(self): return str(self)
 

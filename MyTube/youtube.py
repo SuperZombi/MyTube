@@ -6,6 +6,7 @@ from .utils import Channel, Thumbnail
 from .utils import get_cookie_file
 from .streams_manager import StreamsManager
 from .subtitles import SubtitlesManager
+from .comments import CommentsManager
 from .downloader import Downloader
 
 
@@ -74,9 +75,9 @@ class YouTube:
 		return int(self._vid_info.get("like_count"))
 	
 	@property
-	def comments(self) -> int:
-		"""Comments count"""
-		return int(self._vid_info.get("comment_count"))
+	def comments(self) -> CommentsManager:
+		count = int(self._vid_info.get("comment_count"))
+		return CommentsManager(self._url, count, cookies=self.cookies)
 	
 	@property
 	def thumbnail(self) -> Thumbnail:
