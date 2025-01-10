@@ -148,7 +148,13 @@ class Downloader:
 		on_progress = on_progress or self._default_progress
 		async with aiohttp.ClientSession(headers=self.HEADERS) as session:
 			resp_head = await session.get(url)
+			if not resp_head.ok:
+				raise Exception(f"HTTP: {resp_head.status} {resp_head.reason}")
+			
 			file_size = int(resp_head.headers.get('Content-Length'))
+			if not (file_size > 0):
+				raise Exception("Stream filesize is 0")
+
 			downloaded = 0
 			await on_progress(downloaded, file_size)
 			with open(filename, "wb") as file:
