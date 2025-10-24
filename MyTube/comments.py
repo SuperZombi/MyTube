@@ -1,30 +1,36 @@
 import os
-import yt_dlp
+import json
+import subprocess
 from .utils import Channel
 from .utils import get_cookie_file
 
 class CommentsManager:
-	def __init__(self, link, count, cookies=None):
+	def __init__(self, link, count, cookies=None, yt_dlp="yt-dlp"):
 		self.link = link
 		self.count = count
 		self.cookies = cookies
+		self.yt_dlp = yt_dlp
 		self.data = []
 	def __str__(self): return f"Comments({self.count})"
 	def __len__(self): return self.count
-	async def get(self) -> list:
+	def get(self) -> list:
 		if not self.data:
 			cookie_file = get_cookie_file(self.cookies) if self.cookies else None
-			options = {
-				'quiet': True,
-				'noplaylist': True,
-				"no_warnings": True,
-				"getcomments": True,
-				'skip_download': True,
-				"cookiefile": cookie_file
-			}
-			with yt_dlp.YoutubeDL(options) as ydl:
-				_vid_info = ydl.extract_info(self.link, download=False)
-				self.data = _vid_info.get("comments")
+			cmd = [
+				self.yt_dlp,
+				"--quiet",
+				"--no-playlist",
+				"--no-warnings",
+				"--get-comments",
+				"--skip-download",
+				*(["--cookies", cookie_file] if cookie_file else []),
+				"--dump-single-json",
+				self.link
+			]
+			result = subprocess.run(cmd, capture_output=True, text=True)
+			_vid_info = json.loads(result.stdout)
+			self.data = _vid_info.get("comments")
+
 			if cookie_file and os.path.exists(cookie_file): os.remove(cookie_file)
 		return list(map(lambda x: Comment(x, video_url=self.link), self.data))
 

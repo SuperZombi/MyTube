@@ -1,6 +1,6 @@
 import os
-import yt_dlp
-import tempfile
+import json
+import subprocess
 from datetime import datetime
 from .utils import Channel, Thumbnail
 from .utils import get_cookie_file
@@ -11,23 +11,26 @@ from .downloader import Downloader
 
 
 class YouTube:
-	def __init__(self, link, cookies:list=None):
+	def __init__(self, link, cookies:list=None, yt_dlp="yt-dlp"):
 		self.link = link
 		self._url = ""
 		self._vid_info = None
 		self._formats = None
 		self.cookies = cookies
+		self.yt_dlp = yt_dlp
 		cookie_file = get_cookie_file(cookies) if cookies else None
-
-		options = {
-			'quiet': True,
-			'noplaylist': True,
-			"no_warnings": True,
-			"cookiefile": cookie_file
-		}
-		with yt_dlp.YoutubeDL(options) as ydl:
-			self._vid_info = ydl.extract_info(self.link, download=False)
-			self._url = self._vid_info.get("webpage_url")
+		cmd = [
+			self.yt_dlp,
+			"--quiet",
+			"--no-playlist",
+			"--no-warnings",
+			*(["--cookies", cookie_file] if cookie_file else []),
+			"--dump-single-json",
+			self.link
+		]
+		result = subprocess.run(cmd, capture_output=True, text=True)
+		self._vid_info = json.loads(result.stdout)
+		self._url = self._vid_info.get("webpage_url")
 
 		if cookie_file and os.path.exists(cookie_file): os.remove(cookie_file)
 
@@ -77,7 +80,7 @@ class YouTube:
 	@property
 	def comments(self) -> CommentsManager:
 		count = int(self._vid_info.get("comment_count"))
-		return CommentsManager(self._url, count, cookies=self.cookies)
+		return CommentsManager(self._url, count, cookies=self.cookies, yt_dlp=self.yt_dlp)
 	
 	@property
 	def thumbnail(self) -> Thumbnail:

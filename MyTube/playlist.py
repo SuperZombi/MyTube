@@ -1,27 +1,31 @@
 import os
-import yt_dlp
-import tempfile
+import json
+import subprocess
 from .playlist_manager import PlaylistManager, PlaylistVideo, DeletedVideo
 from .utils import Thumbnail, Channel
 from .utils import get_cookie_file
 
 
 class Playlist:
-	def __init__(self, link, cookies:list=None):
+	def __init__(self, link, cookies:list=None, yt_dlp="yt-dlp"):
 		self.link = link
 		self._info = None
 		self._videos = []
 		self.cookies = cookies
+		self.yt_dlp = yt_dlp
 		cookie_file = get_cookie_file(cookies) if cookies else None
-
-		ydl_opts = {
-			'quiet': True,
-			'extract_flat': True,
-			'skip_download': True,
-			"cookiefile": cookie_file
-		}
-		with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-			self._info = ydl.extract_info(link, download=False)
+		cmd = [
+			self.yt_dlp,
+			"--quiet",
+			"--flat-playlist",
+			"--skip-download",
+			"--no-warnings",
+			*(["--cookies", cookie_file] if cookie_file else []),
+			"--dump-single-json",
+			link
+		]
+		result = subprocess.run(cmd, capture_output=True, text=True)
+		self._info = json.loads(result.stdout)
 
 		if cookie_file and os.path.exists(cookie_file): os.remove(cookie_file)
 		if self._info.get('_type') != 'playlist': raise TypeError(f"[Not playlist]: {link}")
@@ -43,7 +47,8 @@ class Playlist:
 						duration=int(item.get('duration')),
 						channel=channel,
 						thumbnail=Thumbnail(best_image.get('url')),
-						cookies=self.cookies
+						cookies=self.cookies,
+						yt_dlp=self.yt_dlp
 					)
 				)
 

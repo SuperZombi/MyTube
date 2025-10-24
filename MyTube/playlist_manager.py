@@ -4,7 +4,7 @@ from .utils import Thumbnail, Channel
 
 class PlaylistVideo:
 	'''Lazy load video'''
-	def __init__(self, title:str, link:str, duration:int, channel:Channel, thumbnail:Thumbnail, cookies:list=None):
+	def __init__(self, title:str, link:str, duration:int, channel:Channel, thumbnail:Thumbnail, cookies:list=None, yt_dlp="yt-dlp"):
 		self.yt_obj = None
 		self.cookies = cookies
 		self.link = link
@@ -13,10 +13,11 @@ class PlaylistVideo:
 		self.thumbnail = thumbnail
 		self.channel = channel
 		self.author = channel.name
+		self.yt_dlp = yt_dlp
 
 	def load(self) -> YouTube:
 		if not self.yt_obj:
-			self.yt_obj = YouTube(self.link, cookies=self.cookies)
+			self.yt_obj = YouTube(self.link, cookies=self.cookies, yt_dlp=self.yt_dlp)
 		return self.yt_obj
 
 	def __str__(self): return f"PlaylistVideo({self.link})"
