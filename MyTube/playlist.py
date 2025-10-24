@@ -24,8 +24,9 @@ class Playlist:
 			"--dump-single-json",
 			link
 		]
-		result = subprocess.run(cmd, capture_output=True, text=True)
-		self._info = json.loads(result.stdout)
+		process = subprocess.Popen(cmd, encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+		result = process.communicate()[0]
+		self._info = json.loads(result)
 
 		if cookie_file and os.path.exists(cookie_file): os.remove(cookie_file)
 		if self._info.get('_type') != 'playlist': raise TypeError(f"[Not playlist]: {link}")

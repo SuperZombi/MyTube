@@ -27,8 +27,9 @@ class CommentsManager:
 				"--dump-single-json",
 				self.link
 			]
-			result = subprocess.run(cmd, capture_output=True, text=True)
-			_vid_info = json.loads(result.stdout)
+			process = subprocess.Popen(cmd, encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+			result = process.communicate()[0]
+			_vid_info = json.loads(result)
 			self.data = _vid_info.get("comments")
 
 			if cookie_file and os.path.exists(cookie_file): os.remove(cookie_file)

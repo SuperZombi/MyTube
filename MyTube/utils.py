@@ -2,6 +2,7 @@ import re
 import os
 import random
 import string
+import subprocess
 from PIL import Image
 import requests
 import tempfile
@@ -117,3 +118,7 @@ def get_cookie_file(json_cookies):
 	with open(cookie_file, 'w') as f:
 		f.write(cookies_netscape)
 	return cookie_file
+
+def ytdlp_version(yt_dlp="yt-dlp"):
+	process = subprocess.Popen([yt_dlp, "--version"], encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+	return process.communicate()[0]
