@@ -101,6 +101,16 @@ for video in playlist.videos:
 	print(video.streams)
 </code></pre>
 					<p>Discover more playlists usage examples <a href="../api/playlist/#example">here</a>.</p>
+
+
+					<hr>
+					<h3 id="custom_yt_dlp">Custom yt-dlp<a href="#custom_yt_dlp" class="linker"></a></h3>
+<pre class="code"><code>import os
+import MyTube
+
+yt_dlp_path = os.path.join(os.getcwd(), "yt-dlp.exe")
+yt = MyTube.YouTube(link, yt_dlp=yt_dlp_path)
+</code></pre>
 				</section>
 			</div>
 		</div>

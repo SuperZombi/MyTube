@@ -32,7 +32,7 @@
 			<div class="main-content">
 				<section>
 					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
-					<h4><pre><code>class CommentsManager(link, count, cookies)</code></pre></h4>
+					<h4><pre><code>class CommentsManager(link, count, cookies, yt_dlp)</code></pre></h4>
 					<ul>Manages the retrieval of comments for a YouTube video.</ul>
 					<h4>Parameters:</h4>
 					<ul><table>
@@ -50,6 +50,11 @@
 							<td><strong>cookies</strong></td>
 							<td><a class="type">list</a></td>
 							<td>List of dicts.</td>
+						</tr>
+						<tr>
+							<td><strong>yt_dlp</strong></td>
+							<td><a class="type">str</a></td>
+							<td>Custom executable file.</td>
 						</tr>
 					</table></ul>
 				</section>
@@ -99,18 +104,13 @@
 					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
 
 <pre class="code"><code>import MyTube
-import asyncio
-
 link = "https://www.youtube.com/watch?v=l1OtC0q70g4"
 yt = MyTube.YouTube(link)
 
-async def main():
-	comments = await yt.comments.get()
-	for comment in comments:
-		print(comment.author.name)
-		print(comment.text)
-
-asyncio.run(main())
+comments = yt.comments.get()
+for comment in comments:
+	print(comment.author.name)
+	print(comment.text)
 </code></pre>
 <details class="execute"><summary></summary>
 <pre><code>revontheus4741
