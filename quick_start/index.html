@@ -111,6 +111,12 @@ import MyTube
 yt_dlp_path = os.path.join(os.getcwd(), "yt-dlp.exe")
 yt = MyTube.YouTube(link, yt_dlp=yt_dlp_path)
 </code></pre>
+					<h3 id="yt_dlp_ver">yt-dlp version<a href="#yt_dlp_ver" class="linker"></a></h3>
+<pre class="code"><code>import MyTube
+
+print(MyTube.ytdlp_version())
+print(MyTube.ytdlp_version(yt_dlp_path))
+</code></pre>
 				</section>
 			</div>
 		</div>
