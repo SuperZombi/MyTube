@@ -4,7 +4,6 @@
     <img src="https://raw.githubusercontent.com/SuperZombi/MyTube/main/github/images/icon.png" width="128px">
 </p>
 <p align="center">
-    <img src="https://shields.io/badge/version-1.6.1-blue">
     <a href="https://pypi.org/project/MyTube-dlp/"><img src="https://img.shields.io/pypi/v/MyTube-dlp"></a><br>
     <a href="https://superzombi.github.io/MyTube/"><img src="https://shields.io/badge/📖-Documentation-ffbc5c"></a><br>
     <a href="#donate"><img src="https://shields.io/badge/💲-Support_Project-2ea043"></a>
