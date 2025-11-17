@@ -8,6 +8,7 @@ from .streams_manager import StreamsManager
 from .subtitles import SubtitlesManager
 from .comments import CommentsManager
 from .downloader import Downloader
+from .errors import YoutubeDLError
 
 
 class YouTube:
@@ -28,9 +29,10 @@ class YouTube:
 			"--dump-single-json",
 			self.link
 		]
-		process = subprocess.Popen(cmd, encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
-		result = process.communicate()[0]
-		self._vid_info = json.loads(result)
+		process = subprocess.Popen(cmd, encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+		stdout, stderr = process.communicate()
+		if stderr: raise YoutubeDLError(stderr)
+		self._vid_info = json.loads(stdout)
 		self._url = self._vid_info.get("webpage_url")
 
 		if cookie_file and os.path.exists(cookie_file): os.remove(cookie_file)

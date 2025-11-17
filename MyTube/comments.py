@@ -3,6 +3,7 @@ import json
 import subprocess
 from .utils import Channel
 from .utils import get_cookie_file
+from .errors import YoutubeDLError
 
 class CommentsManager:
 	def __init__(self, link, count, cookies=None, yt_dlp="yt-dlp"):
@@ -27,9 +28,10 @@ class CommentsManager:
 				"--dump-single-json",
 				self.link
 			]
-			process = subprocess.Popen(cmd, encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
-			result = process.communicate()[0]
-			_vid_info = json.loads(result)
+			process = subprocess.Popen(cmd, encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+			stdout, stderr = process.communicate()
+			if stderr: raise YoutubeDLError(stderr)
+			_vid_info = json.loads(stdout)
 			self.data = _vid_info.get("comments")
 
 			if cookie_file and os.path.exists(cookie_file): os.remove(cookie_file)

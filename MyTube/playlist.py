@@ -4,6 +4,7 @@ import subprocess
 from .playlist_manager import PlaylistManager, PlaylistVideo, DeletedVideo
 from .utils import Thumbnail, Channel
 from .utils import get_cookie_file
+from .errors import YoutubeDLError
 
 
 class Playlist:
@@ -24,9 +25,10 @@ class Playlist:
 			"--dump-single-json",
 			link
 		]
-		process = subprocess.Popen(cmd, encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
-		result = process.communicate()[0]
-		self._info = json.loads(result)
+		process = subprocess.Popen(cmd, encoding='utf-8', universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW)
+		stdout, stderr = process.communicate()
+		if stderr: raise YoutubeDLError(stderr)
+		self._info = json.loads(stdout)
 
 		if cookie_file and os.path.exists(cookie_file): os.remove(cookie_file)
 		if self._info.get('_type') != 'playlist': raise TypeError(f"[Not playlist]: {link}")
