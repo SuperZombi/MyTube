@@ -13,7 +13,6 @@ class Downloader:
 		m3u8:"Stream"=None,
 		metadata:dict=None
 	):
-		# TODO TODO TODO
 		self.videoStream = video if (video and (video.isVideo or video.isMuxed)) else None
 		self.audioStream = audio if (audio and audio.isAudio) else None
 		self.m3u8Stream = m3u8 if (m3u8 and m3u8.isM3U8) else None

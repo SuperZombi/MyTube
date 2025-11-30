@@ -130,8 +130,7 @@ class Stream:
 		elif self.isAudio:
 			dwnl = Downloader(audio=self, metadata=self.metadata)
 		elif self.isM3U8:
-			pass
-			# TODO
+			dwnl = Downloader(m3u8=self, metadata=self.metadata)
 		else:
 			raise ValueError("Failed to download undefined stream type")
 		return await dwnl(*args, **kwargs)
