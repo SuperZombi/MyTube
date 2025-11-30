@@ -7,8 +7,13 @@ from .utils import get_file_path, to_seconds
 
 
 class Downloader:
-	# TODO TODO TODO
-	def __init__(self, video:"Stream"=None, audio:"Stream"=None, metadata:dict=None):
+	def __init__(self,
+		video:"Stream"=None,
+		audio:"Stream"=None,
+		m3u8:"Stream"=None,
+		metadata:dict=None
+	):
+		# TODO TODO TODO
 		self.videoStream = video if (video and (video.isVideo or video.isMuxed)) else None
 		self.audioStream = audio if (audio and audio.isAudio) else None
 		self.metadata = metadata or {}

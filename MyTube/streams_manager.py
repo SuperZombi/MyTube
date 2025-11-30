@@ -12,9 +12,6 @@ class StreamsManager:
 	def parse(self, formats:list, metadata:dict=None) -> None:
 		for format in formats:
 			if format.get('format_note') == 'storyboard': continue
-			# if format.get('protocol') == "m3u8_native":
-			# 	print(format)
-			# 	continue
 
 			allow_append = True
 			stream = Stream(
@@ -131,6 +128,8 @@ class StreamsManager:
 		return self.filter(only_video=True, no_muxed=True).order_by("res", "fps").first()
 	def best_audio(self) -> Stream:
 		return self.filter(only_audio=True).order_by("audioBitrate").first()
+	def best_m3u8(self) -> Stream:
+		return self.filter(only_m3u8=True).order_by("res", "fps").first()
 
 	def get(self, itag:str) -> Stream:
 		"""Get stream by itag"""

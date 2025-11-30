@@ -11,7 +11,6 @@ class Stream:
 		self.isVideo = False
 		self.isAudio = False
 		self.isMuxed = False
-
 		self.isM3U8 = False
 
 	def get(self, attribute_name, default=0):
@@ -131,6 +130,7 @@ class Stream:
 		elif self.isAudio:
 			dwnl = Downloader(audio=self, metadata=self.metadata)
 		elif self.isM3U8:
+			pass
 			# TODO
 		else:
 			raise ValueError("Failed to download undefined stream type")
