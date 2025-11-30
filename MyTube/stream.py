@@ -12,6 +12,8 @@ class Stream:
 		self.isAudio = False
 		self.isMuxed = False
 
+		self.isM3U8 = False
+
 	def get(self, attribute_name, default=0):
 		return getattr(self, attribute_name, default)
 
@@ -76,6 +78,28 @@ class Stream:
 		self.audioSamplerate = audioSamplerate
 		self.isMuxed = True
 
+	def add_m3u8_info(self,
+		videoCodec:str,
+		videoExt:str,
+		width:int,
+		height:int,
+		fps:int,
+		audioCodec:str,
+		language:str,
+
+		manifest_url: str # ???
+	):
+		self.videoCodec = videoCodec
+		self.videoExt = videoExt
+		self.width = width
+		self.height = height
+		self.fps = fps
+		self.audioCodec = audioCodec
+		self.language = language
+
+		self.manifest_url = manifest_url # ???
+		self.isM3U8 = True
+
 	def __str__(self):
 		if self.isVideo:
 			return f"Video({self.width}x{self.height}.{self.videoExt} [{self.fps}fps] {self.videoCodec})"
@@ -83,6 +107,8 @@ class Stream:
 			return f"Audio({self.audioBitrate}.{self.audioExt}{' ['+self.language+']' if self.language else ''} {self.audioCodec})"
 		elif self.isMuxed:
 			return f"Muxed({self.width}x{self.height}.{self.videoExt} [{self.fps}fps]{' ['+self.language+']' if self.language else ''} {self.videoCodec}+{self.audioCodec})"
+		elif self.isM3U8:
+			return f"M3U8({self.width}x{self.height}.{self.videoExt} [{self.fps}fps]{' ['+self.language+']' if self.language else ''} {self.videoCodec}+{self.audioCodec})"
 		else:
 			return f"Stream(id={self.itag})"
 
@@ -93,6 +119,8 @@ class Stream:
 			return f"Audio({self.audioBitrate}kbps)"
 		elif self.isMuxed:
 			return f"Muxed({self.res}p)"
+		elif self.isM3U8:
+			return f"M3U8({self.res}p)"
 		else:
 			return f"Stream({self.itag})"
 
@@ -100,7 +128,11 @@ class Stream:
 	async def download(self, *args, **kwargs) -> str:
 		if self.isVideo or self.isMuxed:
 			dwnl = Downloader(video=self, metadata=self.metadata)
-		else:
+		elif self.isAudio:
 			dwnl = Downloader(audio=self, metadata=self.metadata)
+		elif self.isM3U8:
+			# TODO
+		else:
+			raise ValueError("Failed to download undefined stream type")
 		return await dwnl(*args, **kwargs)
 	

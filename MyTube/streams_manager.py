@@ -12,16 +12,29 @@ class StreamsManager:
 	def parse(self, formats:list, metadata:dict=None) -> None:
 		for format in formats:
 			if format.get('format_note') == 'storyboard': continue
-			if format.get('protocol') == "m3u8_native": continue
+			# if format.get('protocol') == "m3u8_native":
+			# 	print(format)
+			# 	continue
 
 			allow_append = True
 			stream = Stream(
 				itag=str(format.get('format_id')),
 				url=format.get('url'),
-				filesize = int(format.get('filesize') or format.get('filesize_approx')),
+				filesize = int(format.get('filesize') or format.get('filesize_approx') or 0),
 				metadata=metadata
 			)
-			if format.get('acodec') != 'none' and format.get('vcodec') != 'none':
+			if format.get('protocol') == "m3u8_native":
+				stream.add_m3u8_info(
+					videoCodec=format.get('vcodec'),
+					videoExt=format.get('video_ext'),
+					width=int(format.get('width')),
+					height=int(format.get('height')),
+					fps=int(format.get('fps')),
+					audioCodec=format.get('acodec'),
+					language=format.get('language'),
+					manifest_url=format.get('manifest_url')
+				)
+			elif format.get('acodec') != 'none' and format.get('vcodec') != 'none':
 				stream.add_muxed_info(
 					videoCodec=format.get('vcodec'),
 					videoExt=format.get('video_ext'),
@@ -59,6 +72,8 @@ class StreamsManager:
 		only_audio:bool=None,
 		only_muxed:bool=None,
 		no_muxed:bool=None,
+		only_m3u8:bool=None,
+		no_m3u8:bool=None,
 		max_res:int=None, # max video res
 		min_res:int=None, # min video res
 		max_fps:int=None, # max video fps
@@ -72,9 +87,13 @@ class StreamsManager:
 			filtered = filter(lambda x: x.isAudio, filtered)
 		elif only_muxed:
 			filtered = filter(lambda x: x.isMuxed, filtered)
+		elif only_m3u8:
+			filtered = filter(lambda x: x.isM3U8, filtered)
 
 		if no_muxed:
 			filtered = filter(lambda x: not x.isMuxed, filtered)
+		if no_m3u8:
+			filtered = filter(lambda x: not x.isM3U8, filtered)
 
 		if max_res:
 			filtered = filter(lambda x: x.get("res") <= max_res, filtered)
