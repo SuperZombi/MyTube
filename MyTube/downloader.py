@@ -16,6 +16,7 @@ class Downloader:
 		# TODO TODO TODO
 		self.videoStream = video if (video and (video.isVideo or video.isMuxed)) else None
 		self.audioStream = audio if (audio and audio.isAudio) else None
+		self.m3u8Stream = m3u8 if (m3u8 and m3u8.isM3U8) else None
 		self.metadata = metadata or {}
 		self.can_download = True
 		self.CHUNK_SIZE = 10*1024*1024
@@ -54,8 +55,8 @@ class Downloader:
 		on_abort=None,
 		on_success=None
 	) -> str:
-		extension = (self.videoStream and self.videoStream.videoExt) or (self.audioStream and self.audioStream.audioExt)
-		target_ext = video_ext or extension if self.videoStream else audio_ext or extension
+		extension = (self.videoStream and self.videoStream.videoExt) or (self.audioStream and self.audioStream.audioExt) or (self.m3u8Stream and self.m3u8Stream.videoExt)
+		target_ext = video_ext or extension if (self.videoStream or self.m3u8Stream) else audio_ext or extension
 		target_filename = filename or self.metadata.get("title", "")
 		target_filepath = get_file_path(
 			filename=target_filename, prefix=target_ext, folder=output_folder
@@ -106,6 +107,15 @@ class Downloader:
 				await self._convert(audio_temp, target_filepath, ffmpeg_progress, (self.metadata if add_audio_metadata else None))
 
 			self.remove_file(audio_temp)
+
+		elif self.m3u8Stream:
+			print(target_filepath)
+			print(self.m3u8Stream.url)
+			print(self.m3u8Stream.manifest_url)
+			# TODO
+
+		else:
+			raise ValueError("Failed to download Stream")
 
 		if self.can_download: return on_finish(target_filepath)
 		self.remove_file(target_filepath)
