@@ -108,10 +108,12 @@ class Downloader:
 			self.remove_file(audio_temp)
 
 		elif self.m3u8Stream:
-			print(target_filepath)
-			print(self.m3u8Stream.url)
-			print(self.m3u8Stream.manifest_url)
-			# TODO
+			codecs = ["-c", "copy"]
+			await self._ffmpeg([
+				"-i", self.m3u8Stream.url,
+				*codecs, "-y", target_filepath],
+				ffmpeg_progress
+			)
 
 		else:
 			raise ValueError("Failed to download Stream")
@@ -188,7 +190,6 @@ class Downloader:
 			except aiohttp.ClientPayloadError as e:
 				if attempt == retries - 1:
 					raise e
-
 
 	async def _ffmpeg(self, command, on_progress=None):
 		on_progress = on_progress or self._default_progress
