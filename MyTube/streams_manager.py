@@ -8,6 +8,7 @@ class StreamsManager:
 	def __repr__(self): return str(self)
 	def __len__(self): return len(self.streams)
 	def __iter__(self): return iter(self.streams)
+	def __add__(self, other): return StreamsManager(self.streams + other.streams)
 
 	def parse(self, formats:list, metadata:dict=None) -> None:
 		for format in formats:
