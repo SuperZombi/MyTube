@@ -125,12 +125,10 @@ class Stream:
 
 
 	async def download(self, *args, **kwargs) -> str:
-		if self.isVideo or self.isMuxed:
+		if self.isVideo or self.isMuxed or self.isM3U8:
 			dwnl = Downloader(video=self, metadata=self.metadata)
 		elif self.isAudio:
 			dwnl = Downloader(audio=self, metadata=self.metadata)
-		elif self.isM3U8:
-			dwnl = Downloader(m3u8=self, metadata=self.metadata)
 		else:
 			raise ValueError("Failed to download undefined stream type")
 		return await dwnl(*args, **kwargs)

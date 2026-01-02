@@ -10,12 +10,10 @@ class Downloader:
 	def __init__(self,
 		video:"Stream"=None,
 		audio:"Stream"=None,
-		m3u8:"Stream"=None,
 		metadata:dict=None
 	):
-		self.videoStream = video if (video and (video.isVideo or video.isMuxed)) else None
+		self.videoStream = video if (video and (video.isVideo or video.isMuxed or video.isM3U8)) else None
 		self.audioStream = audio if (audio and audio.isAudio) else None
-		self.m3u8Stream = m3u8 if (m3u8 and m3u8.isM3U8) else None
 		self.metadata = metadata or {}
 		self.can_download = True
 		self.CHUNK_SIZE = 10*1024*1024
@@ -54,8 +52,8 @@ class Downloader:
 		on_abort=None,
 		on_success=None
 	) -> str:
-		extension = (self.videoStream and self.videoStream.videoExt) or (self.audioStream and self.audioStream.audioExt) or (self.m3u8Stream and self.m3u8Stream.videoExt)
-		target_ext = video_ext or extension if (self.videoStream or self.m3u8Stream) else audio_ext or extension
+		extension = (self.videoStream and self.videoStream.videoExt) or (self.audioStream and self.audioStream.audioExt)
+		target_ext = video_ext or extension if self.videoStream else audio_ext or extension
 		target_filename = filename or self.metadata.get("title", "")
 		target_filepath = get_file_path(
 			filename=target_filename, prefix=target_ext, folder=output_folder
@@ -87,15 +85,17 @@ class Downloader:
 
 
 		elif self.videoStream:
-			video_temp = tempfile.TemporaryFile(delete=False).name
-			await self._download_stream(self.videoStream.url, video_temp, on_progress)
-			if extension == target_ext:
-				os.replace(video_temp, target_filepath)
+			if self.videoStream.isM3U8:
+				await self._download_m3u8(self.videoStream.url, target_filepath, ffmpeg_progress)
 			else:
-				await self._convert(video_temp, target_filepath, ffmpeg_progress)
+				video_temp = tempfile.TemporaryFile(delete=False).name
+				await self._download_stream(self.videoStream.url, video_temp, on_progress)
+				if extension == target_ext:
+					os.replace(video_temp, target_filepath)
+				else:
+					await self._convert(video_temp, target_filepath, ffmpeg_progress)
 
-			self.remove_file(video_temp)
-
+				self.remove_file(video_temp)
 
 		elif self.audioStream:
 			audio_temp = tempfile.TemporaryFile(delete=False).name
@@ -106,14 +106,6 @@ class Downloader:
 				await self._convert(audio_temp, target_filepath, ffmpeg_progress, (self.metadata if add_audio_metadata else None))
 
 			self.remove_file(audio_temp)
-
-		elif self.m3u8Stream:
-			codecs = ["-c", "copy"]
-			await self._ffmpeg([
-				"-i", self.m3u8Stream.url,
-				*codecs, "-y", target_filepath],
-				ffmpeg_progress
-			)
 
 		else:
 			raise ValueError("Failed to download Stream")
@@ -155,6 +147,9 @@ class Downloader:
 		await self._ffmpeg(["-i", inputFile, *codecs, output], progress)
 		if need_detele_thrumb: os.remove(thumb)
 
+	async def _download_m3u8(self, url, filename, on_progress=None):
+		codecs = ["-c", "copy"]
+		await self._ffmpeg(["-i", url, *codecs, "-y", filename], on_progress)
 
 	async def _download_stream(self, url, filename, on_progress=None):
 		if not self.can_download: return
