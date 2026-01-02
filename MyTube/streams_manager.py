@@ -29,8 +29,7 @@ class StreamsManager:
 					height=int(format.get('height')),
 					fps=int(format.get('fps')),
 					audioCodec=format.get('acodec'),
-					language=format.get('language'),
-					manifest_url=format.get('manifest_url')
+					language=format.get('language')
 				)
 			elif format.get('acodec') != 'none' and format.get('vcodec') != 'none':
 				stream.add_muxed_info(

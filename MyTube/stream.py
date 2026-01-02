@@ -84,9 +84,7 @@ class Stream:
 		height:int,
 		fps:int,
 		audioCodec:str,
-		language:str,
-
-		manifest_url: str # ???
+		language:str
 	):
 		self.videoCodec = videoCodec
 		self.videoExt = videoExt
@@ -95,8 +93,6 @@ class Stream:
 		self.fps = fps
 		self.audioCodec = audioCodec
 		self.language = language
-
-		self.manifest_url = manifest_url # ???
 		self.isM3U8 = True
 
 	def __str__(self):
