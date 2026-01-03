@@ -392,8 +392,12 @@ video = yt.streams.best_audio()
 print(video)
 
 print("Best muxed stream:")
-muxed = yt.streams.filter(only_muxed=True).order_by("res").first()
+muxed = yt.streams.best_muxed()
 print(muxed)
+
+print("Best m3u8 stream:")
+m3u8 = yt.streams.best_m3u8()
+print(m3u8)
 </code></pre>
 <details class="execute"><summary></summary>
 <pre><code>Best video stream:

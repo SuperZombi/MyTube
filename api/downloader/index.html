@@ -268,7 +268,7 @@ async def progress(current, total):
 
 async def main():
 	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-	stream = yt.streams.filter(only_muxed=True).first()
+	stream = yt.streams.best_muxed()
 	print(stream)
 
 	file = await yt.download(video=stream)("downloads", on_progress=progress)
@@ -283,7 +283,52 @@ asyncio.run(main())
 [pause]
 9 MB / 9 MB
 
-C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music Video) (1).mp4
+C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music Video).mp4
+</code></pre>
+</details>
+					<hr>
+					<h3 id="example.downloading_m3u8">
+						Downloading HLS (m3u8)<a href="#example.downloading_m3u8" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+import asyncio
+
+async def ffmpeg_progress(current, total):
+	print(round(current * 100 / total), "%", end="\r")
+
+async def main():
+	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	stream = yt.streams.best_m3u8()
+	print(stream)
+
+	# It's need some time for YouTube to load the stream
+	await asyncio.sleep(3)
+
+	file = await yt.download(video=stream)("downloads", ffmpeg_progress=ffmpeg_progress)
+	print(file)
+
+asyncio.run(main())
+</code></pre>
+<details class="execute" speed="100"><summary></summary>
+<pre><code>M3U8(1920x1080.mp4 [25fps] [en] avc1.640028+mp4a.40.2)
+
+[pause]
+[pause]
+0%
+[pause]
+10%
+[pause]
+25%
+[pause]
+40%
+[pause]
+76%
+[pause]
+90%
+[pause]
+100%
+
+C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music Video).mp4
 </code></pre>
 </details>
 					<hr>
