@@ -122,4 +122,6 @@ class YouTube:
 		return Channel(id=id, url=url, name=name, followers=followers)
 
 	def download(self, video=None, audio=None, metadata=None) -> Downloader:
-		return Downloader(video, audio, (metadata or self.metadata))
+		return Downloader(
+			video=video, audio=audio, metadata=(metadata or self.metadata)
+		)

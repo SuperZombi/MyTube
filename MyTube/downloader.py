@@ -7,8 +7,12 @@ from .utils import get_file_path, to_seconds
 
 
 class Downloader:
-	def __init__(self, video:"Stream"=None, audio:"Stream"=None, metadata:dict=None):
-		self.videoStream = video if (video and (video.isVideo or video.isMuxed)) else None
+	def __init__(self,
+		video:"Stream"=None,
+		audio:"Stream"=None,
+		metadata:dict=None
+	):
+		self.videoStream = video if (video and (video.isVideo or video.isMuxed or video.isM3U8)) else None
 		self.audioStream = audio if (audio and audio.isAudio) else None
 		self.metadata = metadata or {}
 		self.can_download = True
@@ -81,15 +85,17 @@ class Downloader:
 
 
 		elif self.videoStream:
-			video_temp = tempfile.TemporaryFile(delete=False).name
-			await self._download_stream(self.videoStream.url, video_temp, on_progress)
-			if extension == target_ext:
-				os.replace(video_temp, target_filepath)
+			if self.videoStream.isM3U8:
+				await self._download_m3u8(self.videoStream.url, target_filepath, ffmpeg_progress)
 			else:
-				await self._convert(video_temp, target_filepath, ffmpeg_progress)
+				video_temp = tempfile.TemporaryFile(delete=False).name
+				await self._download_stream(self.videoStream.url, video_temp, on_progress)
+				if extension == target_ext:
+					os.replace(video_temp, target_filepath)
+				else:
+					await self._convert(video_temp, target_filepath, ffmpeg_progress)
 
-			self.remove_file(video_temp)
-
+				self.remove_file(video_temp)
 
 		elif self.audioStream:
 			audio_temp = tempfile.TemporaryFile(delete=False).name
@@ -100,6 +106,9 @@ class Downloader:
 				await self._convert(audio_temp, target_filepath, ffmpeg_progress, (self.metadata if add_audio_metadata else None))
 
 			self.remove_file(audio_temp)
+
+		else:
+			raise ValueError("Failed to download Stream")
 
 		if self.can_download: return on_finish(target_filepath)
 		self.remove_file(target_filepath)
@@ -138,6 +147,9 @@ class Downloader:
 		await self._ffmpeg(["-i", inputFile, *codecs, output], progress)
 		if need_detele_thrumb: os.remove(thumb)
 
+	async def _download_m3u8(self, url, filename, on_progress=None):
+		codecs = ["-c", "copy"]
+		await self._ffmpeg(["-i", url, *codecs, "-y", filename], on_progress)
 
 	async def _download_stream(self, url, filename, on_progress=None):
 		if not self.can_download: return
@@ -173,7 +185,6 @@ class Downloader:
 			except aiohttp.ClientPayloadError as e:
 				if attempt == retries - 1:
 					raise e
-
 
 	async def _ffmpeg(self, command, on_progress=None):
 		on_progress = on_progress or self._default_progress
