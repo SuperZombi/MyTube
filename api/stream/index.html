@@ -111,6 +111,15 @@
 					</h4>
 					<ul>Flag indicating if the stream is muxed (both video and audio).</ul>
 
+					<h4 id="Stream.isM3U8">
+						<pre>
+							<code>isM3U8</code>
+							<a class="type">bool</a>
+							<a href="#Stream.isM3U8" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Flag indicating if the stream is HLS (m3u8) format (both video and audio).</ul>
+
 					<hr>
 
 					<h4 id="Stream.width">
@@ -411,6 +420,53 @@
 					</table></ul>
 					<hr>
 
+					<h4 id="Stream.add_m3u8_info">
+						<pre>
+							<code>add_m3u8_info(videoCodec, videoExt, width, height, fps, audioCodec, language)</code>
+							<a href="#Stream.add_m3u8_info" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Adds metadata for HLS (m3u8) streams that contain both video and audio. It also sets the <a href="#Stream.isM3U8">isM3U8</a> flag to True.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>video<wbr>Codec</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The codec used for the video portion of the stream.</td>
+						</tr>
+						<tr>
+							<td><strong>video<wbr>Ext</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The file extension of the muxed stream.</td>
+						</tr>
+						<tr>
+							<td><strong>width</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The width of the video in pixels.</td>
+						</tr>
+						<tr>
+							<td><strong>height</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The height of the video in pixels.</td>
+						</tr>
+						<tr>
+							<td><strong>fps</strong></td>
+							<td><a class="type">int</a></td>
+							<td>The frame rate (frames per second) of the video.</td>
+						</tr>
+						<tr>
+							<td><strong>audio<wbr>Codec</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The codec used for the audio portion of the stream.</td>
+						</tr>
+						<tr>
+							<td><strong>language</strong></td>
+							<td><a class="type">str</a></td>
+							<td>The language of the audio stream.</td>
+						</tr>
+					</table></ul>
+					<hr>
+
 					<h4 id="Stream.download">
 						<pre>
 							<code>async download(*args, **kwargs) -></code><a class="type" href="#">str</a>
@@ -442,14 +498,14 @@ t = PrettyTable(['Type', 'Quality', 'ext', 'fps/lang', 'codec'])
 for stream in yt.streams:
 	if stream.isVideo:
 		t.add_row(['Video',
-			stream.res,
+			f"{stream.res}p",
 			stream.videoExt,
-			stream.fps,
+			f"{stream.fps}fps",
 			stream.videoCodec
 		])
 	elif stream.isAudio:
 		t.add_row(['Audio',
-			stream.abr,
+			f"{stream.abr}kbps",
 			stream.audioExt,
 			stream.lang,
 			stream.audioCodec
@@ -458,45 +514,57 @@ for stream in yt.streams:
 		t.add_row(['Muxed',
 			stream.res,
 			stream.videoExt,
-			f"[{stream.fps}]+[{stream.lang}]",
+			f"{stream.fps}fps [{stream.lang}]",
+			f"({stream.videoCodec})+({stream.audioCodec})"
+		])
+	elif stream.isM3U8:
+		t.add_row(['M3U8',
+			stream.res,
+			stream.videoExt,
+			f"{stream.fps}fps [{stream.lang}]",
 			f"({stream.videoCodec})+({stream.audioCodec})"
 		])
 print(t)
 </code></pre>
 
 <details class="execute"><summary></summary>
-<pre><code>+-------+---------+------+-----------+---------------------------+
-|  Type | Quality | ext  |  fps/lang |           codec           |
-+-------+---------+------+-----------+---------------------------+
-| Audio |    30   | m4a  |     en    |         mp4a.40.5         |
-| Audio |    31   | webm |     en    |            opus           |
-| Audio |    48   | m4a  |     en    |         mp4a.40.5         |
-| Audio |    46   | webm |     en    |            opus           |
-| Audio |    61   | webm |     en    |            opus           |
-| Audio |   129   | m4a  |     en    |         mp4a.40.2         |
-| Audio |   129   | webm |     en    |            opus           |
-| Video |   144   | mp4  |     13    |        avc1.4d400b        |
-| Video |   144   | webm |     13    |            vp9            |
-| Video |   144   | mp4  |     25    |       av01.0.00M.08       |
-| Video |   144   | mp4  |     25    |        avc1.4D400C        |
-| Video |   144   | webm |     25    |       vp09.00.11.08       |
-| Video |   240   | mp4  |     25    |       av01.0.00M.08       |
-| Video |   240   | mp4  |     25    |        avc1.4D4015        |
-| Video |   240   | webm |     25    |       vp09.00.20.08       |
-| Video |   360   | mp4  |     25    |       av01.0.01M.08       |
-| Video |   360   | mp4  |     25    |        avc1.4D401E        |
-| Muxed |   360   | mp4  | [25]+[en] | (avc1.42001E)+(mp4a.40.2) |
-| Video |   360   | webm |     25    |       vp09.00.21.08       |
-| Video |   480   | mp4  |     25    |       av01.0.04M.08       |
-| Video |   480   | mp4  |     25    |        avc1.4D401E        |
-| Video |   480   | webm |     25    |       vp09.00.30.08       |
-| Video |   720   | mp4  |     25    |       av01.0.05M.08       |
-| Video |   720   | mp4  |     25    |        avc1.4D401F        |
-| Video |   720   | webm |     25    |       vp09.00.31.08       |
-| Video |   1080  | mp4  |     25    |       av01.0.08M.08       |
-| Video |   1080  | mp4  |     25    |        avc1.640028        |
-| Video |   1080  | webm |     25    |       vp09.00.40.08       |
-+-------+---------+------+-----------+---------------------------+
+<pre><code>+-------+---------+------+------------+---------------------------+
+|  Type | Quality | ext  |  fps/lang  |           codec           |
++-------+---------+------+------------+---------------------------+
+| Audio |  48kbps | m4a  |     en     |         mp4a.40.5         |
+| Audio |  46kbps | webm |     en     |            opus           |
+| Audio | 129kbps | m4a  |     en     |         mp4a.40.2         |
+| Audio | 128kbps | webm |     en     |            opus           |
+|  M3U8 |   144   | mp4  | 25fps [en] | (avc1.4D400C)+(mp4a.40.5) |
+| Video |   144p  | mp4  |   25fps    |        avc1.4d400c        |
+| Video |   144p  | webm |   25fps    |            vp9            |
+| Video |   144p  | mp4  |   25fps    |       av01.0.00M.08       |
+|  M3U8 |   240   | mp4  | 25fps [en] | (avc1.4D4015)+(mp4a.40.5) |
+| Video |   240p  | mp4  |   25fps    |        avc1.4d4015        |
+| Video |   240p  | webm |   25fps    |            vp9            |
+| Video |   240p  | mp4  |   25fps    |       av01.0.00M.08       |
+|  M3U8 |   360   | mp4  | 25fps [en] | (avc1.4D401E)+(mp4a.40.2) |
+| Video |   360p  | mp4  |   25fps    |        avc1.4d401e        |
+| Muxed |   360   | mp4  | 25fps [en] | (avc1.42001E)+(mp4a.40.2) |
+| Video |   360p  | webm |   25fps    |            vp9            |
+| Video |   360p  | mp4  |   25fps    |       av01.0.01M.08       |
+|  M3U8 |   480   | mp4  | 25fps [en] | (avc1.4D401E)+(mp4a.40.2) |
+| Video |   480p  | mp4  |   25fps    |        avc1.4d401e        |
+| Video |   480p  | webm |   25fps    |            vp9            |
+| Video |   480p  | mp4  |   25fps    |       av01.0.04M.08       |
+|  M3U8 |   720   | mp4  | 25fps [en] | (avc1.4D401F)+(mp4a.40.2) |
+| Video |   720p  | mp4  |   25fps    |        avc1.4d401f        |
+| Video |   720p  | webm |   25fps    |            vp9            |
+| Video |   720p  | mp4  |   25fps    |       av01.0.05M.08       |
+|  M3U8 |   1080  | mp4  | 25fps [en] | (avc1.640028)+(mp4a.40.2) |
+| Video |  1080p  | mp4  |   25fps    |        avc1.640028        |
+| Video |  1080p  | webm |   25fps    |            vp9            |
+| Video |  1080p  | mp4  |   25fps    |       av01.0.08M.08       |
+| Video |  1440p  | webm |   25fps    |            vp9            |
+| Video |  1440p  | mp4  |   25fps    |       av01.0.12M.08       |
+| Video |  2160p  | webm |   25fps    |            vp9            |
+| Video |  2160p  | mp4  |   25fps    |       av01.0.12M.08       |
++-------+---------+------+------------+---------------------------+
 </code></pre>
 </details>
 				</section>

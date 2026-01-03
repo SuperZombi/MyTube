@@ -80,6 +80,16 @@
 					<ul>Allows iteration over the list of streams.
 						<pre class="code"><code>for stream in yt.streams:<br>	print(stream)</code></pre>
 					</ul>
+
+					<h4 id="StreamsManager.add">
+						<pre>
+							<code>add()</code>
+							<a href="#StreamsManager.add" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Allows to connect two stream managers.
+						<pre class="code"><code>combined_streams = (<br>	yt.streams.filter(only_muxed=True) + yt.streams.filter(only_m3u8=True)<br>).order_by("res", "fps")</code></pre>
+					</ul>
 					<hr>
 
 					<h4 id="StreamsManager.filter">
@@ -110,7 +120,17 @@
 						<tr>
 							<td><strong>no_muxed</strong></td>
 							<td><a class="type">bool</a></td>
-							<td>Filters out muxed streams (leaves only single video or audio streams).</td>
+							<td>Filters out muxed streams.</td>
+						</tr>
+						<tr>
+							<td><strong>only_m3u8</strong></td>
+							<td><a class="type">bool</a></td>
+							<td>Filters to only include HLS (m3u8) streams that contain both audio and video.</td>
+						</tr>
+						<tr>
+							<td><strong>no_m3u8</strong></td>
+							<td><a class="type">bool</a></td>
+							<td>Filters out HLS (m3u8) streams.</td>
 						</tr>
 						<tr>
 							<td><strong>max_res</strong></td>
@@ -185,6 +205,25 @@
 						</pre>
 					</h4>
 					<ul>Returns the best available audio stream based on <a href="../stream/#Stream.audioBitrate">bitrate</a>.</ul>
+
+					<h4 id="StreamsManager.best_muxed">
+						<pre>
+							<code>best_muxed() -></code>
+							<a class="type" href="../stream/">Stream</a>
+							<a href="#StreamsManager.best_muxed" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the best available muxed stream based on <a href="../stream/#Stream.res">resolution</a> and <a href="../stream/#Stream.fps">fps</a>.</ul>
+					
+					<h4 id="StreamsManager.best_m3u8">
+						<pre>
+							<code>best_m3u8() -></code>
+							<a class="type" href="../stream/">Stream</a>
+							<a href="#StreamsManager.best_m3u8" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the best available HLS (m3u8) stream based on <a href="../stream/#Stream.res">resolution</a> and <a href="../stream/#Stream.fps">fps</a>.</ul>
+					
 					<hr>
 
 					<h4 id="StreamsManager.reverse">
