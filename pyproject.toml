@@ -1,0 +1,49 @@
+[tool.setuptools]
+packages = ["MyTube"]
+
+[project]
+name = "MyTube-dlp"
+version = "${VERSION}"
+description = "Python YouTube Downloader"
+readme = "README.md"
+requires-python = ">=3.9"
+
+authors = [
+  {name="Super_Zombi", email="super.zombi.yt@gmail.com"}
+]
+
+dependencies = [
+  "yt-dlp",
+  "Pillow",
+  "aiohttp",
+  "requests"
+]
+
+license = {text = "MIT"}
+
+keywords = [
+  "youtube",
+  "downloader",
+  "yt-dlp",
+  "video",
+  "streaming"
+]
+
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Multimedia :: Video",
+  "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+[project.urls]
+Homepage = "https://github.com/SuperZombi/MyTube"
+Documentation = "https://superzombi.github.io/MyTube/"
+Issues = "https://github.com/SuperZombi/MyTube/issues"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
