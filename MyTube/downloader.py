@@ -125,6 +125,9 @@ class Downloader:
 
 
 	async def _convert(self, inputFile, output, progress=None, metadata=None):
+		def clean(string):
+			return string.replace('"', '')
+
 		self.remove_file(output)
 		if not self.can_download: return
 		codecs = []
@@ -137,11 +140,17 @@ class Downloader:
 					codecs.extend(["-i", thumb, "-map", "0:0", "-map", "1:0"])
 				codecs.extend(["-ar", "48000", "-b:a", "192k"])
 				if metadata.get('title'):
-					title = metadata.get('title').replace('"', '')
+					title = clean(metadata.get('title'))
 					codecs.extend(["-metadata", f"title={title}"])
 				if metadata.get('author'):
-					artist = metadata.get('author').replace('"', '')
-					codecs.extend(["-metadata", f"artist={artist}"])
+					author = clean(metadata.get('author'))
+					codecs.extend(["-metadata", f"artist={author}"])
+				if metadata.get('album'):
+					album = clean(metadata.get('album'))
+					codecs.extend(["-metadata", f"album={album}"])
+				if metadata.get('year'):
+					year = str(metadata.get('year'))
+					codecs.extend(["-metadata", f"date={year}"])
 				codecs.extend(["-id3v2_version", "3"])
 				
 		await self._ffmpeg(["-i", inputFile, *codecs, output], progress)

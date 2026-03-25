@@ -53,6 +53,10 @@ class YouTube:
 		return str(self.channel.name)
 
 	@property
+	def artists(self) -> list:
+		return self._vid_info.get("artists") or []
+
+	@property
 	def type(self) -> str:
 		'''"video" or "music"'''
 		if any(e.lower() == "music" for e in self._vid_info.get("categories")):
@@ -60,6 +64,10 @@ class YouTube:
 		if "music.youtube" in self.link:
 			return "music"
 		return "video"
+
+	@property
+	def album(self) -> str:
+		return self._vid_info.get("album") or ""
 
 	@property
 	def description(self) -> str:
@@ -95,6 +103,10 @@ class YouTube:
 		return datetime.utcfromtimestamp(ts)
 
 	@property
+	def release_year(self) -> int:
+		return int(self._vid_info.get("release_year")) if self._vid_info.get("release_year") else None
+
+	@property
 	def subtitles(self) -> SubtitlesManager:
 		return SubtitlesManager(self._vid_info.get("subtitles"))
 
@@ -106,11 +118,17 @@ class YouTube:
 		return streamsManager
 
 	@property
+	def tags(self) -> list:
+		return list(self._vid_info.get("tags"))
+
+	@property
 	def metadata(self) -> dict:
 		return {
 			"title": self.title,
-			"author": self.author,
-			"thumbnail": self.thumbnail
+			"author": ", ".join(self.artists) if len(self.artists) > 0 else self.author,
+			"thumbnail": self.thumbnail,
+			"album": self.album,
+			"year": self.release_year
 		}
 
 	@property
