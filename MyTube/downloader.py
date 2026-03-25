@@ -164,13 +164,13 @@ class Downloader:
 		if not self.can_download: return
 		on_progress = on_progress or self._default_progress
 		async with aiohttp.ClientSession(headers=self.HEADERS) as session:
-			resp_head = await session.get(url)
-			if not resp_head.ok:
-				raise Exception(f"HTTP: {resp_head.status} {resp_head.reason}")
-			
-			file_size = int(resp_head.headers.get('Content-Length'))
-			if not (file_size > 0):
-				raise Exception("Stream filesize is 0")
+			async with session.get(url) as resp_head:
+				if not resp_head.ok:
+					raise Exception(f"HTTP: {resp_head.status} {resp_head.reason}")
+
+				file_size = int(resp_head.headers.get('Content-Length', 0))
+				if not (file_size > 0):
+					raise Exception("Stream filesize is 0")
 
 			downloaded = 0
 			await on_progress(downloaded, file_size)
@@ -188,9 +188,9 @@ class Downloader:
 	async def _make_request(self, session, url, retries=3):
 		for attempt in range(retries):
 			try:
-				resp = await session.get(url)
-				chunk = await resp.content.read()
-				return chunk
+				async with session.get(url) as resp:
+					chunk = await resp.content.read()
+					return chunk
 			except aiohttp.ClientPayloadError as e:
 				if attempt == retries - 1:
 					raise e
