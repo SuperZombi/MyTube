@@ -32,19 +32,14 @@
 			<div class="main-content">
 				<section>
 					<h2 id="constructor">Constructor<a href="#constructor" class="linker"></a></h2>
-					<h4><pre><code>class SubtitlesManager(subtitles_dict, filter_orig)</code></pre></h4>
-					<ul>Processes raw subtitles data, providing easy access to subtitles by language code.</ul>
+					<h4><pre><code>class SubtitlesManager(subs_dict)</code></pre></h4>
+					<ul>Processes raw subtitles data, providing easy access to subtitles by language code and filtering.</ul>
 					<h4>Parameters:</h4>
 					<ul><table>
 						<tr>
-							<td><strong>subtitles_dict</strong></td>
+							<td><strong>subs_dict</strong></td>
 							<td><a class="type">dict</a></td>
 							<td></td>
-						</tr>
-						<tr>
-							<td><strong>filter_orig</strong></td>
-							<td><a class="type">bool</a></td>
-							<td>Add only subtitles marked "orig" (for auto-generated captions)</td>
 						</tr>
 					</table></ul>
 				</section>
@@ -81,6 +76,40 @@
 							<td>The ISO language code for the subtitle.</td>
 						</tr>
 					</table></ul>
+
+					<h4 id="SubtitlesManager.keys">
+						<pre>
+							<code>keys()</code>
+							<a class="type">list</a>
+							<a href="#SubtitlesManager.keys" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns the languages keys managed by the instance.
+						<pre class="code"><code>yt.subtitles.keys()</code></pre>
+					</ul>
+
+					<h4 id="SubtitlesManager.values">
+						<pre>
+							<code>values()</code>
+							<a class="type">list</a>
+							<a href="#SubtitlesManager.values" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>Returns flat list of <a class="type" href="../subtitles">Subtitles</a>.
+						<pre class="code"><code>yt.subtitles.values()</code></pre>
+					</ul>
+
+					<h4 id="SubtitlesManager.items">
+						<pre>
+							<code>items()</code>
+							<a class="type">dict</a>
+							<a href="#SubtitlesManager.items" class="linker"></a>
+						</pre>
+					</h4>
+					<ul>A dict with lang_code and list of <a class="type" href="../subtitles">Subtitles</a> objects.
+						<pre class="code"><code>yt.subtitles.items()</code></pre>
+					</ul>
+
 					<hr>
 
 					<h4 id="SubtitlesManager.len">
@@ -94,17 +123,6 @@
 						<pre class="code"><code>len(yt.subtitles)</code></pre>
 					</ul>
 
-					<h4 id="SubtitlesManager.keys">
-						<pre>
-							<code>keys()</code>
-							<a class="type">list</a>
-							<a href="#SubtitlesManager.keys" class="linker"></a>
-						</pre>
-					</h4>
-					<ul>Returns the languages keys managed by the instance.
-						<pre class="code"><code>yt.subtitles.keys()</code></pre>
-					</ul>
-
 					<h4 id="SubtitlesManager.iter">
 						<pre>
 							<code>iter()</code>
@@ -115,64 +133,43 @@
 						<pre class="code"><code>for code, arr in yt.subtitles:<br>	for sub in arr:<br>		print(sub)</code></pre>
 					</ul>
 
-					<h4 id="SubtitlesManager.all">
-						<pre>
-							<code>all()</code>
-							<a class="type">list</a>
-							<a href="#SubtitlesManager.all" class="linker"></a>
-						</pre>
-					</h4>
-					<ul>Returns flat list of <a class="type" href="../subtitles">Subtitles</a>.
-						<pre class="code"><code>yt.subtitles.all()</code></pre>
-					</ul>
+					<hr>
 
-					<h4 id="SubtitlesManager.clean">
+					<h4 id="SubtitlesManager.filter">
 						<pre>
-							<code>clean()</code>
+							<code>filter(**kwargs) -></code>
 							<a class="type">SubtitlesManager</a>
-							<a href="#SubtitlesManager.clean" class="linker"></a>
+							<a href="#SubtitlesManager.filter" class="linker"></a>
 						</pre>
 					</h4>
-					<ul>Returns SubtitlesManager without auto-generated subtitles.
-						<pre class="code"><code>yt.subtitles.clean()</code></pre>
-					</ul>
+					<ul>Filters subtitles based on various options.</ul>
+					<h4>Parameters:</h4>
+					<ul><table>
+						<tr>
+							<td><strong>ext</strong></td>
+							<td><a class="type">str</a></td>
+							<td>Filters to only include extension provided.</td>
+						</tr>
+						<tr>
+							<td><strong>only_autogen</strong></td>
+							<td><a class="type">bool</a></td>
+							<td>Filters to only include auto-generated subtitles.</td>
+						</tr>
+						<tr>
+							<td><strong>no_autogen</strong></td>
+							<td><a class="type">bool</a></td>
+							<td>Filters to only include manual subtitles.</td>
+						</tr>
+						<tr>
+							<td><strong>custom</strong></td>
+							<td><a class="type">func</a></td>
+							<td>A custom filter function that takes a <a class="type" href="../subtitles">Subtitles</a> object as input.</td>
+						</tr>
+					</table></ul>
 				</section>
 
 				<section>
 					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
-
-					<h3 id="example.get_all_subtitles">
-						Get all subtitles<a href="#example.get_all_subtitles" class="linker"></a>
-					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
-
-for sub in yt.subtitles.all():
-	print(sub)
-</code></pre>
-<details class="execute"><summary></summary>
-<pre><code>Subtitles(en-auto.srt)
-Subtitles(en-auto.vtt)
-Subtitles(en.srt)
-Subtitles(en.vtt)
-Subtitles(ar.srt)
-Subtitles(ar.vtt)
-Subtitles(bn.srt)
-Subtitles(bn.vtt)
-Subtitles(zh-hans.srt)
-Subtitles(zh-hans.vtt)
-Subtitles(zh-hant.srt)
-Subtitles(zh-hant.vtt)
-Subtitles(fr.srt)
-Subtitles(fr.vtt)
-Subtitles(de.srt)
-Subtitles(de.vtt)
-Subtitles(ru.srt)
-Subtitles(ru.vtt)
-Subtitles(es.srt)
-Subtitles(es.vtt)
-</code></pre>
-</details>
 
 					<h3 id="example.get_subtitles_with_specific_language">
 						Get subtitles with specific language<a href="#example.get_subtitles_with_specific_language" class="linker"></a>
@@ -191,6 +188,55 @@ else:
 <details class="execute"><summary></summary>
 <pre><code>iso_code=de, lang=German, fotmat=srt
 iso_code=de, lang=German, fotmat=vtt
+</code></pre>
+</details>
+
+					<h3 id="example.get_all_subtitles">
+						Get all subtitles<a href="#example.get_all_subtitles" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+
+for sub in yt.subtitles.values():
+	print(sub)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>Subtitles(en-auto.srt)
+Subtitles(en-auto.vtt)
+Subtitles(en.srt)
+Subtitles(en.vtt)
+Subtitles(zh-hans.srt)
+Subtitles(zh-hans.vtt)
+Subtitles(zh-hant.srt)
+Subtitles(zh-hant.vtt)
+Subtitles(fr.srt)
+Subtitles(fr.vtt)
+Subtitles(de.srt)
+Subtitles(de.vtt)
+Subtitles(ru.srt)
+Subtitles(ru.vtt)
+Subtitles(es.srt)
+Subtitles(es.vtt)
+</code></pre>
+</details>
+
+					<h3 id="example.filter_subtitles">
+						Filter subtitles<a href="#example.filter_subtitles" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+
+for sub in yt.subtitles.filter(ext="vtt", no_autogen=True).values():
+	print(sub)
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>Subtitles(en.vtt)
+Subtitles(zh-hans.vtt)
+Subtitles(zh-hant.vtt)
+Subtitles(fr.vtt)
+Subtitles(de.vtt)
+Subtitles(ru.vtt)
+Subtitles(es.vtt)
 </code></pre>
 </details>
 				</section>
