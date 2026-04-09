@@ -151,6 +151,11 @@
 							<td>Filters to only include extension provided.</td>
 						</tr>
 						<tr>
+							<td><strong>lang</strong></td>
+							<td><a class="type">str</a></td>
+							<td>Filters to only include language provided.</td>
+						</tr>
+						<tr>
 							<td><strong>only_autogen</strong></td>
 							<td><a class="type">bool</a></td>
 							<td>Filters to only include auto-generated subtitles.</td>
@@ -170,26 +175,6 @@
 
 				<section>
 					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
-
-					<h3 id="example.get_subtitles_with_specific_language">
-						Get subtitles with specific language<a href="#example.get_subtitles_with_specific_language" class="linker"></a>
-					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
-
-lang_code = 'de'
-subs = yt.subtitles.get(lang_code)
-if not subs:
-	print(f"{lang_code} subtitles not found")
-else:
-	for sub in subs:
-		print(f"iso_code={sub.code}, lang={sub.name}, fotmat={sub.ext}")
-</code></pre>
-<details class="execute"><summary></summary>
-<pre><code>iso_code=de, lang=German, fotmat=srt
-iso_code=de, lang=German, fotmat=vtt
-</code></pre>
-</details>
 
 					<h3 id="example.get_all_subtitles">
 						Get all subtitles<a href="#example.get_all_subtitles" class="linker"></a>
@@ -237,6 +222,40 @@ Subtitles(fr.vtt)
 Subtitles(de.vtt)
 Subtitles(ru.vtt)
 Subtitles(es.vtt)
+</code></pre>
+</details>
+
+					<h3 id="example.get_subtitles_with_specific_language">
+						Get subtitles with specific language<a href="#example.get_subtitles_with_specific_language" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+
+lang_code = 'de'
+subs = yt.subtitles.get(lang_code)
+if not subs:
+	print(f"{lang_code} subtitles not found")
+else:
+	for sub in subs:
+		print(f"iso_code={sub.code}, lang={sub.name}, fotmat={sub.ext}")
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>iso_code=de, lang=German, fotmat=srt
+iso_code=de, lang=German, fotmat=vtt
+</code></pre>
+</details>
+
+					<h3 id="example.filter_with_specific_language">
+						Filter subtitles with specific language<a href="#example.filter_with_specific_language" class="linker"></a>
+					</h3>
+<pre class="code"><code>import MyTube
+yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+
+subs = yt.subtitles.filter(lang="en")
+print(subs.values())
+</code></pre>
+<details class="execute"><summary></summary>
+<pre><code>[Subtitles(en-auto.srt), Subtitles(en-auto.vtt), Subtitles(en.srt), Subtitles(en.vtt)]
 </code></pre>
 </details>
 				</section>
