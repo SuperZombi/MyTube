@@ -108,7 +108,9 @@ class YouTube:
 
 	@property
 	def subtitles(self) -> SubtitlesManager:
-		return SubtitlesManager(self._vid_info.get("subtitles"))
+		automatic_captions = SubtitlesManager(self._vid_info.get("automatic_captions"), filter_orig=True)
+		subtitles = SubtitlesManager(self._vid_info.get("subtitles"))
+		return automatic_captions + subtitles
 
 	@property
 	def streams(self) -> StreamsManager:
