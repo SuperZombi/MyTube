@@ -130,7 +130,7 @@
 						</pre>
 					</h4>
 					<ul>Allows iteration over the list of subtitles.
-						<pre class="code"><code>for code, arr in yt.subtitles:<br>	for sub in arr:<br>		print(sub)</code></pre>
+						<pre class="code"><code>for lang, arr in yt.subtitles:<br>	for sub in arr:<br>		print(sub)</code></pre>
 					</ul>
 
 					<hr>
@@ -237,11 +237,11 @@ if not subs:
 	print(f"{lang_code} subtitles not found")
 else:
 	for sub in subs:
-		print(f"iso_code={sub.code}, lang={sub.name}, fotmat={sub.ext}")
+		print(f"lang={sub.lang}, name={sub.name}, fotmat={sub.ext}")
 </code></pre>
 <details class="execute"><summary></summary>
-<pre><code>iso_code=de, lang=German, fotmat=srt
-iso_code=de, lang=German, fotmat=vtt
+<pre><code>lang=de, name=German, fotmat=srt
+lang=de, name=German, fotmat=vtt
 </code></pre>
 </details>
 

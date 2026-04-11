@@ -66,11 +66,11 @@
 				<section>
 					<h2 id="properties">Properties<a href="#properties" class="linker"></a></h2>
 
-					<h4 id="Subtitles.code">
+					<h4 id="Subtitles.lang">
 						<pre>
-							<code>code</code>
+							<code>lang</code>
 							<a class="type">str</a>
-							<a href="#Subtitles.code" class="linker"></a>
+							<a href="#Subtitles.lang" class="linker"></a>
 						</pre>
 					</h4>
 					<ul>The <a href="https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes#Table" target="_blank">ISO language code</a>.</ul>
@@ -119,17 +119,17 @@
 from prettytable import PrettyTable
 
 yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
-t = PrettyTable(['Code', 'Name', 'Extension', 'URL'])
+t = PrettyTable(['Lang', 'Name', 'Extension', 'URL'])
 
 for lang_code, subs in yt.subtitles:
 	for sub in subs:
-		t.add_row([sub.code, sub.name, sub.extension, sub.url])
+		t.add_row([sub.lang, sub.name, sub.extension, sub.url])
 print(t)
 </code></pre>
 
 <details class="execute"><summary></summary>
 <pre><code>+---------+----------------------+-----------+-------------------------+
-|   Code  |         Name         | Extension |           URL           |
+|   Lang  |         Name         | Extension |           URL           |
 +---------+----------------------+-----------+-------------------------+
 |    ar   |        Arabic        |    vtt    | www.youtube.com/api/... |
 | zh-hans | Chinese (Simplified) |    vtt    | www.youtube.com/api/... |
