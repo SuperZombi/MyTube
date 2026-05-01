@@ -54,7 +54,7 @@ class YouTube:
 
 	@property
 	def artists(self) -> list:
-		return self._vid_info.get("artists") or []
+		return self._vid_info.get("artists") or self._vid_info.get("creators") or []
 
 	@property
 	def type(self) -> str:
@@ -67,11 +67,11 @@ class YouTube:
 
 	@property
 	def album(self) -> str:
-		return self._vid_info.get("album") or ""
+		return str(self._vid_info.get("album") or "")
 
 	@property
 	def description(self) -> str:
-		return str(self._vid_info.get("description"))
+		return str(self._vid_info.get("description") or "")
 
 	@property
 	def duration(self) -> int:
@@ -140,7 +140,7 @@ class YouTube:
 		id = self._vid_info.get("channel_id")
 		url = self._vid_info.get("channel_url")
 		name = self._vid_info.get("channel")
-		followers = int(self._vid_info.get("channel_follower_count"))
+		followers = int(self._vid_info.get("channel_follower_count") or 0)
 		return Channel(id=id, url=url, name=name, followers=followers)
 
 	def download(self, video=None, audio=None, metadata=None) -> Downloader:
