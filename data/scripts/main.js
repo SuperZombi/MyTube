@@ -1,4 +1,4 @@
-var origin = "https://superzombi.github.io/MyTube"
+var origin = "https://superzombi.github.io/mytube"
 init_theme()
 
 window.onload=_=>{
