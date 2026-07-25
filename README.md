@@ -1,11 +1,11 @@
 <h1 align="center">MyTube</h1>
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/SuperZombi/MyTube/main/github/images/icon.png" width="128px">
+    <img src="https://raw.githubusercontent.com/SuperZombi/mytube/main/github/images/icon.png" width="128px">
 </p>
 <p align="center">
-    <a href="https://pypi.org/project/MyTube-dlp/"><img src="https://img.shields.io/pypi/v/MyTube-dlp"></a><br>
-    <a href="https://superzombi.github.io/MyTube/"><img src="https://shields.io/badge/📖-Documentation-ffbc5c"></a><br>
+    <a href="https://pypi.org/project/mytube-dlp/"><img src="https://img.shields.io/pypi/v/mytube-dlp"></a><br>
+    <a href="https://superzombi.github.io/mytube/"><img src="https://shields.io/badge/📖-Documentation-ffbc5c"></a><br>
     <a href="#donate"><img src="https://shields.io/badge/💲-Support_Project-2ea043"></a>
 </p>
 <p align="center">
@@ -19,15 +19,15 @@
 
 ### Quick Start
 ```
-pip install MyTube_dlp
+pip install mytube-dlp
 ```
 ```python
-import MyTube
+import mytube
 import asyncio
 
 async def main():
 	link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-	yt = MyTube.YouTube(link)
+	yt = mytube.YouTube(link)
 	stream = yt.streams.filter(only_muxed=True).order_by("res").first()
 	file = await stream.download("downloads")
 
