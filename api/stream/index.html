@@ -483,16 +483,16 @@
 						</tr>
 					</table></ul>
 					<h4>Parameters:</h4>
-					<ul>See in <a href="../downloader/#Downloader.call" class="type">MyTube.Downloader.call()</a></ul>
+					<ul>See in <a href="../downloader/#Downloader.call" class="type">mytube.Downloader.call()</a></ul>
 				</section>
 
 				<section>
 					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
 <pre class="code"><code>pip install prettytable</code></pre>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 from prettytable import PrettyTable
 
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 t = PrettyTable(['Type', 'Quality', 'ext', 'fps/lang', 'codec'])
 
 for stream in yt.streams:

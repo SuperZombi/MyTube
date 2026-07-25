@@ -141,7 +141,7 @@
 					<h4 id="YouTube.comments">
 						<pre>
 							<code>comments</code>
-							<a class="type" href="../comments_manager/">MyTube.CommentsManager</a>
+							<a class="type" href="../comments_manager/">mytube.CommentsManager</a>
 							<a href="#YouTube.comments" class="linker"></a>
 						</pre>
 					</h4>
@@ -179,7 +179,7 @@
 					<h4 id="YouTube.channel">
 						<pre>
 							<code>channel</code>
-							<a href="../channel/" class="type">MyTube.Channel</a>
+							<a href="../channel/" class="type">mytube.Channel</a>
 							<a href="#YouTube.channel" class="linker"></a>
 						</pre>
 					</h4>
@@ -188,7 +188,7 @@
 					<h4 id="YouTube.thumbnail">
 						<pre>
 							<code>thumbnail</code>
-							<a href="../thumbnail/" class="type">MyTube.Thumbnail</a>
+							<a href="../thumbnail/" class="type">mytube.Thumbnail</a>
 							<a href="#YouTube.thumbnail" class="linker"></a>
 						</pre>
 					</h4>
@@ -197,7 +197,7 @@
 					<h4 id="YouTube.subtitles">
 						<pre>
 							<code>subtitles</code>
-							<a href="../subtitles_manager/" class="type">MyTube.SubtitlesManager</a>
+							<a href="../subtitles_manager/" class="type">mytube.SubtitlesManager</a>
 							<a href="#YouTube.subtitles" class="linker"></a>
 						</pre>
 					</h4>
@@ -206,7 +206,7 @@
 					<h4 id="YouTube.streams">
 						<pre>
 							<code>streams</code>
-							<a href="../streams_manager/" class="type">MyTube.StreamsManager</a>
+							<a href="../streams_manager/" class="type">mytube.StreamsManager</a>
 							<a href="#YouTube.streams" class="linker"></a>
 						</pre>
 					</h4>
@@ -227,7 +227,7 @@
 
 					<h4 id="YouTube.download">
 						<pre>
-							<code>download(video, audio) -></code><a class="type" href="../downloader/">MyTube.Downloader</a>
+							<code>download(video, audio) -></code><a class="type" href="../downloader/">mytube.Downloader</a>
 							<a href="#YouTube.download" class="linker"></a>
 						</pre>
 					</h4>
@@ -236,12 +236,12 @@
 					<ul><table>
 						<tr>
 							<td><strong>video</strong></td>
-							<td><a href="../stream/" class="type">MyTube.Stream</a></td>
+							<td><a href="../stream/" class="type">mytube.Stream</a></td>
 							<td>Optional</td>
 						</tr>
 						<tr>
 							<td><strong>audio</strong></td>
-							<td><a href="../stream/" class="type">MyTube.Stream</a></td>
+							<td><a href="../stream/" class="type">mytube.Stream</a></td>
 							<td>Optional</td>
 						</tr>
 					</table></ul>
@@ -249,9 +249,9 @@
 
 				<section>
 					<h2 id="example">Example<a href="#example" class="linker"></a></h2>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 print(yt.title)        # Title of the video
 print(yt.author)       # Author (channel name)
@@ -277,14 +277,14 @@ print(yt.duration)     # Video duration in seconds
 						We are not developing this extensions, so install them at your own risk! Be careful what you install.
 					</p>
 <pre class="code"><code>import json
-import MyTube
+import mytube
 
 with open("my_cookies.json", 'r') as f:
 	cookies = json.loads(f.read())
 
 link = "https://youtube.com/watch?v=HtVdAasjOgU"
 
-yt = MyTube.YouTube(link, cookies=cookies)
+yt = mytube.YouTube(link, cookies=cookies)
 print(yt.title)
 </code></pre>
 				</section>

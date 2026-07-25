@@ -104,7 +104,7 @@
 					<h4 id="Playlist.videos">
 						<pre>
 							<code>videos</code>
-							<a href="../playlist_manager" class="type">MyTube.PlaylistManager</a>
+							<a href="../playlist_manager" class="type">mytube.PlaylistManager</a>
 							<a href="#Playlist.videos" class="linker"></a>
 						</pre>
 					</h4>
@@ -131,10 +131,10 @@
 					<h3 id="example.get_info">
 						Get playlist info<a href="#example.get_info" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 
 link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
-p = MyTube.Playlist(link)
+p = mytube.Playlist(link)
 
 print(p.type)
 print(p.title)
@@ -151,12 +151,12 @@ All the YouTube Rewinds so far.
 </details>
 					<h3 id="example.cookies">Cookies example<a href="#example.cookies" class="linker"></a></h3>
 <pre class="code"><code>import json
-import MyTube
+import mytube
 
 with open("my_cookies.json", 'r') as f:
 	cookies = json.loads(f.read())
 
-p = MyTube.Playlist(link, cookies=cookies)
+p = mytube.Playlist(link, cookies=cookies)
 
 print(p.type)
 print(p.title)
@@ -166,10 +166,10 @@ print(p.title)
 						Get video's basic info<a href="#example.get_videos_basic_info" class="linker"></a>
 					</h3>
 					<p>This method does not make additional requests to YouTube.</p>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 
 link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
-p = MyTube.Playlist(link)
+p = mytube.Playlist(link)
 
 for video in p.raw_videos:
 	if video:
@@ -221,10 +221,10 @@ https://www.youtube.com/watch?v=PKtnafFtfEo
 					<h3 id="example.get_videos_streams">
 						Get playlist's videos streams<a href="#example.get_videos_streams" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 
 link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
-p = MyTube.Playlist(link)
+p = mytube.Playlist(link)
 
 for video in p.videos:
 	print(video.title)

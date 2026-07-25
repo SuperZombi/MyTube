@@ -31,14 +31,14 @@
 						<li>Download <a href="https://ffmpeg.org/download.html" target="_blank">FFmpeg</a> and add it to $PATH.</li>
 						<li>Install package from <a href="https://pypi.org/project/MyTube-dlp/" target="_blank">PyPi</a>.</li>
 					</ol>
-					<pre class="code"><code>pip install MyTube_dlp</code></pre>
+					<pre class="code"><code>pip install mytube-dlp</code></pre>
 				</section>
 				<section>
 					<h2 id="usage">Usage<a href="#usage" class="linker"></a></h2>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 import asyncio</code></pre>
 <pre class="code"><code>link = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-yt = MyTube.YouTube(link)</code></pre>
+yt = mytube.YouTube(link)</code></pre>
 					<h3 id="usage.get_video_info">Get video info<a href="#usage.get_video_info" class="linker"></a></h3>
 <pre class="code"><code>print(yt.title)
 print(yt.author)
@@ -92,7 +92,7 @@ asyncio.run(main())
 					<hr>
 					<h3 id="usage.playlist">Playlist<a href="#usage.playlist" class="linker"></a></h3>
 <pre class="code"><code>link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
-playlist = MyTube.Playlist(link)
+playlist = mytube.Playlist(link)
 
 print(playlist.title)
 print(len(playlist.videos))
@@ -106,16 +106,16 @@ for video in playlist.videos:
 					<hr>
 					<h3 id="custom_yt_dlp">Custom yt-dlp<a href="#custom_yt_dlp" class="linker"></a></h3>
 <pre class="code"><code>import os
-import MyTube
+import mytube
 
 yt_dlp_path = os.path.join(os.getcwd(), "yt-dlp.exe")
-yt = MyTube.YouTube(link, yt_dlp=yt_dlp_path)
+yt = mytube.YouTube(link, yt_dlp=yt_dlp_path)
 </code></pre>
 					<h3 id="yt_dlp_ver">yt-dlp version<a href="#yt_dlp_ver" class="linker"></a></h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 
-print(MyTube.ytdlp_version())
-print(MyTube.ytdlp_version(yt_dlp_path))
+print(mytube.ytdlp_version())
+print(mytube.ytdlp_version(yt_dlp_path))
 </code></pre>
 				</section>
 			</div>

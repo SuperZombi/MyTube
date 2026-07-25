@@ -179,8 +179,8 @@
 					<h3 id="example.get_all_subtitles">
 						Get all subtitles<a href="#example.get_all_subtitles" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
 
 for sub in yt.subtitles.values():
 	print(sub)
@@ -208,8 +208,8 @@ Subtitles(es.vtt)
 					<h3 id="example.filter_subtitles">
 						Filter subtitles<a href="#example.filter_subtitles" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
 
 for sub in yt.subtitles.filter(ext="vtt", no_autogen=True).values():
 	print(sub)
@@ -228,8 +228,8 @@ Subtitles(es.vtt)
 					<h3 id="example.get_subtitles_with_specific_language">
 						Get subtitles with specific language<a href="#example.get_subtitles_with_specific_language" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
 
 lang_code = 'de'
 subs = yt.subtitles.get(lang_code)
@@ -248,8 +248,8 @@ lang=de, name=German, fotmat=vtt
 					<h3 id="example.filter_with_specific_language">
 						Filter subtitles with specific language<a href="#example.filter_with_specific_language" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
 
 subs = yt.subtitles.filter(lang="en")
 print(subs.values())

@@ -277,8 +277,8 @@
 					<h3 id="example.get_all_streams">
 						Get all streams<a href="#example.get_all_streams" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 print(f"Streams count: {len(yt.streams)}")
 for stream in yt.streams:
@@ -321,8 +321,8 @@ Video(1920x1080.webm [25fps] vp09.00.40.08)
 					<h3 id="example.get_video_streams">
 						Get video streams<a href="#example.get_video_streams" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 streams = yt.streams.filter(
 	only_video=True, no_muxed=True
@@ -358,8 +358,8 @@ Video(256x144.webm [13fps] vp9)
 					<h3 id="example.get_audio_streams">
 						Get audio streams<a href="#example.get_audio_streams" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 streams = yt.streams.filter(only_audio=True).order_by("abr").streams
 
@@ -380,8 +380,8 @@ Audio(30.m4a [en] mp4a.40.5)
 					<h3 id="example.get_best_streams">
 						Get best streams<a href="#example.get_best_streams" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 print("Best video stream:")
 video = yt.streams.best_video()
@@ -414,8 +414,8 @@ Muxed(640x360.mp4 [25fps] [en] avc1.42001E+mp4a.40.2)
 					<h3 id="example.limit_video_resolution">
 						Limit video resolution<a href="#example.limit_video_resolution" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 streams = yt.streams.filter(
 	only_video=True, no_muxed=True, max_res=720, min_res=480
@@ -437,8 +437,8 @@ Video(854x480.webm [25fps] vp09.00.30.08)
 					<h3 id="example.get_stream_with_specific_language">
 						Get stream with specific language<a href="#example.get_stream_with_specific_language" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=Xj0Jtjg3lHQ")
 
 de_stream = yt.streams.filter(only_audio=True,
 	custom=lambda x: x.get("lang") == "de"
@@ -456,8 +456,8 @@ Audio(129.m4a [de] mp4a.40.2)
 					<h3 id="example.get_stream_by_itag">
 						Get stream by itag<a href="#example.get_stream_by_itag" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
-yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+<pre class="code"><code>import mytube
+yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 for stream in yt.streams.filter(only_video=True, min_res=720):
 	print(stream.itag, stream)

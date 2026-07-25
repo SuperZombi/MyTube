@@ -37,20 +37,20 @@
 					<h3 id="example.videos_count">
 						Get videos count<a href="#example.videos_count" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 
 link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
-p = MyTube.Playlist(link)
+p = mytube.Playlist(link)
 print(len(p.videos))
 </code></pre>
 					<hr>
 					<h3 id="example.slice">
 						Slice<a href="#example.slice" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 
 link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
-p = MyTube.Playlist(link)
+p = mytube.Playlist(link)
 
 for video in p.videos[:3]:
 	print(video.title)
@@ -75,10 +75,10 @@ StreamsManager(24 streams)
 					<h3 id="example.index">
 						Index<a href="#example.index" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 
 link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
-p = MyTube.Playlist(link)
+p = mytube.Playlist(link)
 
 yt = p.videos[0]
 print(yt.title)

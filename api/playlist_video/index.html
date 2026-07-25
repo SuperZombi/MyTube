@@ -53,12 +53,12 @@
 						</tr>
 						<tr>
 							<td><strong>channel</strong></td>
-							<td><a href="../channel/" class="type">MyTube.Channel</a></td>
+							<td><a href="../channel/" class="type">mytube.Channel</a></td>
 							<td>The channel object that uploaded the video.</td>
 						</tr>
 						<tr>
 							<td><strong>thumbnail</strong></td>
-							<td><a href="../thumbnail/" class="type">MyTube.Thumbnail</a></td>
+							<td><a href="../thumbnail/" class="type">mytube.Thumbnail</a></td>
 							<td>A thumbnail object representing the video thumbnail.</td>
 						</tr>
 						<tr>
@@ -116,7 +116,7 @@
 					<h4 id="PlaylistVideo.channel">
 						<pre>
 							<code>channel</code>
-							<a href="../channel/" class="type">MyTube.Channel</a>
+							<a href="../channel/" class="type">mytube.Channel</a>
 							<a href="#PlaylistVideo.channel" class="linker"></a>
 						</pre>
 					</h4>
@@ -125,7 +125,7 @@
 					<h4 id="PlaylistVideo.thumbnail">
 						<pre>
 							<code>thumbnail</code>
-							<a href="../thumbnail/" class="type">MyTube.Thumbnail</a>
+							<a href="../thumbnail/" class="type">mytube.Thumbnail</a>
 							<a href="#PlaylistVideo.thumbnail" class="linker"></a>
 						</pre>
 					</h4>
@@ -138,7 +138,7 @@
 					<h4 id="PlaylistVideo.load">
 						<pre>
 							<code>load() -></code>
-							<a href="../youtube/" class="type">MyTube.YouTube</a>
+							<a href="../youtube/" class="type">mytube.YouTube</a>
 							<a href="#PlaylistVideo.load" class="linker"></a>
 						</pre>
 					</h4>
@@ -150,10 +150,10 @@
 					<h3 id="example.lazy_loading">
 						Lazy loading<a href="#example.lazy_loading" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 
 link = "https://www.youtube.com/playlist?list=PLBnetXbvs5BGzGIsoxe6MYhX1hB7iRoOD"
-p = MyTube.Playlist(link)
+p = mytube.Playlist(link)
 
 for video in p.raw_videos:
 	if video:

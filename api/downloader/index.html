@@ -38,12 +38,12 @@
 					<ul><table>
 						<tr>
 							<td><strong>video</strong></td>
-							<td><a class="type" href="../stream">MyTube.Stream</a></td>
+							<td><a class="type" href="../stream">mytube.Stream</a></td>
 							<td>Video stream object. (Optional)</td>
 						</tr>
 						<tr>
 							<td><strong>audio</strong></td>
-							<td><a class="type" href="../stream">MyTube.Stream</a></td>
+							<td><a class="type" href="../stream">mytube.Stream</a></td>
 							<td>Audio stream object. (Optional)</td>
 						</tr>
 						<tr>
@@ -158,7 +158,7 @@
 					<h3 id="example.downloading_video">
 						Downloading video<a href="#example.downloading_video" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 import asyncio
 
 def mb(bytes_value):
@@ -172,7 +172,7 @@ async def ffmpeg_progress(current, total):
 
 
 async def main():
-	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 	video = yt.streams.best_video()
 	audio = yt.streams.best_audio()
 	print(video)
@@ -222,7 +222,7 @@ C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music
 					<h3 id="example.downloading_music">
 						Downloading music<a href="#example.downloading_music" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 import asyncio
 
 def mb(bytes_value):
@@ -233,7 +233,7 @@ async def progress(current, total):
 
 
 async def main():
-	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 	audio = yt.streams.best_audio()
 	print(audio)
 
@@ -256,7 +256,7 @@ C:\Python\MyTube\downloads\music.mp3
 					<h3 id="example.downloading_muxed">
 						Downloading muxed<a href="#example.downloading_muxed" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 import asyncio
 
 def mb(bytes_value):
@@ -267,7 +267,7 @@ async def progress(current, total):
 
 
 async def main():
-	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 	stream = yt.streams.best_muxed()
 	print(stream)
 
@@ -290,14 +290,14 @@ C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music
 					<h3 id="example.downloading_m3u8">
 						Downloading HLS (m3u8)<a href="#example.downloading_m3u8" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 import asyncio
 
 async def ffmpeg_progress(current, total):
 	print(round(current * 100 / total), "%", end="\r")
 
 async def main():
-	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 	stream = yt.streams.best_m3u8()
 	print(stream)
 
@@ -335,7 +335,7 @@ C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music
 					<h3 id="example.downloading_stream">
 						Downloading stream<a href="#example.downloading_stream" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 import asyncio
 
 def mb(bytes_value):
@@ -346,7 +346,7 @@ async def progress(current, total):
 
 
 async def main():
-	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 
 	stream = yt.streams.filter(
 		only_video=True, no_muxed=True, max_res=720
@@ -376,7 +376,7 @@ C:\Python\MyTube\downloads\Rick Astley - Never Gonna Give You Up (Official Music
 					<h3 id="example.aborting">
 						Aborting process<a href="#example.aborting" class="linker"></a>
 					</h3>
-<pre class="code"><code>import MyTube
+<pre class="code"><code>import mytube
 import asyncio
 from threading import Timer
 
@@ -388,7 +388,7 @@ async def progress(current, total):
 
 
 async def main():
-	yt = MyTube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+	yt = mytube.YouTube("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
 	video = yt.streams.best_video()
 	audio = yt.streams.best_audio()
 	print(video)
